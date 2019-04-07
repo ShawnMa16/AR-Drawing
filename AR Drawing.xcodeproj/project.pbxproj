@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5C7B6FC1707EBA12B7DBAC /* Pods_AR_DrawingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
 		29B034F2225A9C150096FB0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034F1225A9C150096FB0B /* ViewController.swift */; };
-		29B034F5225A9C150096FB0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F3225A9C150096FB0B /* Main.storyboard */; };
 		29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F6225A9C170096FB0B /* Assets.xcassets */; };
 		29B034FA225A9C170096FB0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */; };
 		29B03505225A9C170096FB0B /* AR_DrawingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03504225A9C170096FB0B /* AR_DrawingTests.swift */; };
 		29B03510225A9C170096FB0B /* AR_DrawingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0350F225A9C170096FB0B /* AR_DrawingUITests.swift */; };
+		74B139B4C08B869C670DA9F6 /* Pods_AR_Drawing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */; };
+		DF6C5D78AC2CCB95EE8AE003 /* Pods_AR_DrawingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,11 +37,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_DrawingTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A1C206E40DB35C6D757C224 /* Pods-AR DrawingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0BD5EC22C654FC2F0C325BA9 /* Pods-AR Drawing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR Drawing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing.debug.xcconfig"; sourceTree = "<group>"; };
+		0DA38F407BC6F6571C626CB6 /* Pods-AR Drawing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR Drawing.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing.release.xcconfig"; sourceTree = "<group>"; };
+		10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.release.xcconfig"; sourceTree = "<group>"; };
+		13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.release.xcconfig"; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29B034EF225A9C150096FB0B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		29B034F1225A9C150096FB0B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		29B034F4225A9C150096FB0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		29B034F6225A9C170096FB0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29B034F9225A9C170096FB0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29B034FB225A9C170096FB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +56,9 @@
 		29B0350B225A9C170096FB0B /* AR DrawingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR DrawingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B0350F225A9C170096FB0B /* AR_DrawingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_DrawingUITests.swift; sourceTree = "<group>"; };
 		29B03511225A9C170096FB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_Drawing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_DrawingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74B139B4C08B869C670DA9F6 /* Pods_AR_Drawing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F5C7B6FC1707EBA12B7DBAC /* Pods_AR_DrawingTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF6C5D78AC2CCB95EE8AE003 /* Pods_AR_DrawingUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +96,8 @@
 				29B03503225A9C170096FB0B /* AR DrawingTests */,
 				29B0350E225A9C170096FB0B /* AR DrawingUITests */,
 				29B034EB225A9C150096FB0B /* Products */,
+				33EDCEF700790BF6F583F983 /* Pods */,
+				536B1C75E3F72D3A7A2C0646 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,7 +117,6 @@
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				29B034F1225A9C150096FB0B /* ViewController.swift */,
-				29B034F3225A9C150096FB0B /* Main.storyboard */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
 				29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
@@ -128,6 +142,29 @@
 			path = "AR DrawingUITests";
 			sourceTree = "<group>";
 		};
+		33EDCEF700790BF6F583F983 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0BD5EC22C654FC2F0C325BA9 /* Pods-AR Drawing.debug.xcconfig */,
+				0DA38F407BC6F6571C626CB6 /* Pods-AR Drawing.release.xcconfig */,
+				0A1C206E40DB35C6D757C224 /* Pods-AR DrawingTests.debug.xcconfig */,
+				10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */,
+				E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */,
+				13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		536B1C75E3F72D3A7A2C0646 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */,
+				06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */,
+				F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +172,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29B03514225A9C170096FB0B /* Build configuration list for PBXNativeTarget "AR Drawing" */;
 			buildPhases = (
+				212C7375B84243E21192AD0B /* [CP] Check Pods Manifest.lock */,
 				29B034E6225A9C150096FB0B /* Sources */,
 				29B034E7225A9C150096FB0B /* Frameworks */,
 				29B034E8225A9C150096FB0B /* Resources */,
+				C15BF86AAF921E3D5E711FED /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +191,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29B03517225A9C170096FB0B /* Build configuration list for PBXNativeTarget "AR DrawingTests" */;
 			buildPhases = (
+				2DCF21146F02A6DA8200916F /* [CP] Check Pods Manifest.lock */,
 				29B034FC225A9C170096FB0B /* Sources */,
 				29B034FD225A9C170096FB0B /* Frameworks */,
 				29B034FE225A9C170096FB0B /* Resources */,
@@ -170,6 +210,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29B0351A225A9C170096FB0B /* Build configuration list for PBXNativeTarget "AR DrawingUITests" */;
 			buildPhases = (
+				029F9F68AC11F45271B740E6 /* [CP] Check Pods Manifest.lock */,
 				29B03507225A9C170096FB0B /* Sources */,
 				29B03508225A9C170096FB0B /* Frameworks */,
 				29B03509225A9C170096FB0B /* Resources */,
@@ -235,7 +276,6 @@
 				29B034F0225A9C150096FB0B /* art.scnassets in Resources */,
 				29B034FA225A9C170096FB0B /* LaunchScreen.storyboard in Resources */,
 				29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */,
-				29B034F5225A9C150096FB0B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +294,81 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		029F9F68AC11F45271B740E6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AR DrawingUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		212C7375B84243E21192AD0B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AR Drawing-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2DCF21146F02A6DA8200916F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AR DrawingTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C15BF86AAF921E3D5E711FED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		29B034E6225A9C150096FB0B /* Sources */ = {
@@ -297,14 +412,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		29B034F3225A9C150096FB0B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				29B034F4225A9C150096FB0B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -434,6 +541,7 @@
 		};
 		29B03515225A9C170096FB0B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BD5EC22C654FC2F0C325BA9 /* Pods-AR Drawing.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -452,6 +560,7 @@
 		};
 		29B03516225A9C170096FB0B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0DA38F407BC6F6571C626CB6 /* Pods-AR Drawing.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -470,6 +579,7 @@
 		};
 		29B03518225A9C170096FB0B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A1C206E40DB35C6D757C224 /* Pods-AR DrawingTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -491,6 +601,7 @@
 		};
 		29B03519225A9C170096FB0B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -512,6 +623,7 @@
 		};
 		29B0351B225A9C170096FB0B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -532,6 +644,7 @@
 		};
 		29B0351C225A9C170096FB0B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

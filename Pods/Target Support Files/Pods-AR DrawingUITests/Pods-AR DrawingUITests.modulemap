@@ -1,0 +1,6 @@
+framework module Pods_AR_DrawingUITests {
+  umbrella header "Pods-AR DrawingUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -9,10 +9,14 @@
 import UIKit
 import SceneKit
 import ARKit
+import SnapKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-    @IBOutlet var sceneView: ARSCNView!
+    var sceneView: ARSCNView = {
+        let view = ARSCNView()
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +26,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
+        
+        view.addSubview(sceneView)
+        sceneView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
         
         // Create a new scene
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
