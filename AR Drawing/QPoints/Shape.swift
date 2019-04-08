@@ -15,7 +15,7 @@ struct Shape {
     private let SAMPLING_RESOLUTION: Int = 32                            // default number of points on the gesture path
     private let MAX_INT_COORDINATES: Int = 1024                           // $Q only: each point has two additional x and y integer coordinates in the interval [0..MAX_INT_COORDINATES-1] used to operate the LUT table efficiently (O(1))
     public let LUT_SIZE: Int = 64                                        // $Q only: the default size of the lookup table is 64 x 64
-    public let LUT_SCALE_FACTOR: Int
+    public static let LUT_SCALE_FACTOR = 16
     
     public var LUT: [[Int]] = [[]]        // lookup table
     
@@ -134,8 +134,8 @@ struct Shape {
                 var indexMin = -1
                 
                 for t in 0 ..< self.points.count {
-                    let row = points[t].intX / LUT_SCALE_FACTOR
-                    let col = points[t].intY / LUT_SCALE_FACTOR
+                    let row = points[t].intX / Shape.LUT_SCALE_FACTOR
+                    let col = points[t].intY / Shape.LUT_SCALE_FACTOR
                     let dist = (row - i) * (row - i) + (col - j) * (col - j)
                     if dist < minDistance {
                         minDistance = dist
@@ -151,8 +151,6 @@ struct Shape {
         
         self.points = []
         self.name = name
-        
-        self.LUT_SCALE_FACTOR = MAX_INT_COORDINATES / LUT_SIZE
         
         let scaled = scale(points: points)
     }
