@@ -18,9 +18,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    fileprivate func setupViews() {
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -31,12 +29,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
