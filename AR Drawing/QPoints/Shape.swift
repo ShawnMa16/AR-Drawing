@@ -153,6 +153,12 @@ struct Shape {
         self.name = name
         
         let scaled = scale(points: points)
+        let translated = translateTo(points: scaled, p: centroid(points: scaled))
+        let resampled = resample(points: translated, n: SAMPLING_RESOLUTION)
+        self.points = resampled
+        
+        transformCoordinatesToIntegers()
+        constructLUT()
     }
     
 }
