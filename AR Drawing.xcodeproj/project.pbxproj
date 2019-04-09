@@ -19,6 +19,7 @@
 		29B03521225AA3640096FB0B /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03520225AA3640096FB0B /* Point.swift */; };
 		29B03523225AA4D70096FB0B /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03522225AA4D70096FB0B /* Shape.swift */; };
 		29B03525225AAFEE0096FB0B /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03524225AAFEE0096FB0B /* Geometry.swift */; };
+		29B03527225C35130096FB0B /* SCNVector3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03526225C35130096FB0B /* SCNVector3Extensions.swift */; };
 		74B139B4C08B869C670DA9F6 /* Pods_AR_Drawing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */; };
 		DF6C5D78AC2CCB95EE8AE003 /* Pods_AR_DrawingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,7 @@
 		29B03520225AA3640096FB0B /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		29B03522225AA4D70096FB0B /* Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		29B03524225AAFEE0096FB0B /* Geometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geometry.swift; sourceTree = "<group>"; };
+		29B03526225C35130096FB0B /* SCNVector3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3Extensions.swift; sourceTree = "<group>"; };
 		C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_Drawing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_DrawingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				29B034F1225A9C150096FB0B /* ViewController.swift */,
+				29B03526225C35130096FB0B /* SCNVector3Extensions.swift */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
 				29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
@@ -397,6 +400,7 @@
 			files = (
 				29B03523225AA4D70096FB0B /* Shape.swift in Sources */,
 				29B03525225AAFEE0096FB0B /* Geometry.swift in Sources */,
+				29B03527225C35130096FB0B /* SCNVector3Extensions.swift in Sources */,
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
 				29B034F2225A9C150096FB0B /* ViewController.swift in Sources */,

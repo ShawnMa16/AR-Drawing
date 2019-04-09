@@ -22,12 +22,12 @@ struct Shape {
     private func scale(points: [Point]) -> [Point] {
         var minX = Float.greatestFiniteMagnitude,
         minY = Float.greatestFiniteMagnitude,
-        maxX = Float.leastNonzeroMagnitude,
-        maxY = Float.leastNonzeroMagnitude
+        maxX = Float.leastNormalMagnitude,
+        maxY = Float.leastNormalMagnitude
         
         points.forEach { (point) in
             if (minX > point.x) {minX = point.x}
-            if (minY < point.y) {minY = point.y}
+            if (minY > point.y) {minY = point.y}
             if (maxX < point.x) {maxX = point.x}
             if (maxY < point.y) {maxY = point.y}
         }
@@ -83,7 +83,7 @@ struct Shape {
     
     /// Resamples the array of points into n equally-distanced points
     public func resample(points: [Point], n: Int) -> [Point] {
-        var result: [Point?] = [Point?](repeating: nil, count: points.count)
+        var result: [Point?] = [Point?](repeating: nil, count: n)
         result[0] = points[0]
         
         var numPoints:Int = 1
@@ -153,6 +153,7 @@ struct Shape {
         self.name = name
         
         let scaled = scale(points: points)
+        print(scaled)
         let translated = translateTo(points: scaled, p: centroid(points: scaled))
         let resampled = resample(points: translated, n: SAMPLING_RESOLUTION)
         self.points = resampled

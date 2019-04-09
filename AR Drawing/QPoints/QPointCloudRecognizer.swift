@@ -76,7 +76,7 @@ class QPointCloudRecognizer {
         var indexLB = 1
         for i in stride(from: step, to: n, by: step) {
             let nextNum = Float(i) * SAT[n - 1]! - Float(n) * SAT[i - 1]!
-            LB[indexLB]! = LB[0]! + nextNum
+            LB[indexLB] = LB[0]! + nextNum
             indexLB += 1
         }
         
