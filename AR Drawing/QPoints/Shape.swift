@@ -86,7 +86,7 @@ struct Shape {
         var result: [Point?] = [Point?](repeating: nil, count: n)
         result[0] = points[0]
         
-        var numPoints:Int = 1
+        var numPoints: Int = 1
         let I: Float = pathLength(points: points) / Float(n - 1)
         var D: Float = 0
         
@@ -101,8 +101,8 @@ struct Shape {
                         
                         // add interpolated point
                         let maxNum = max((I - D) / d, 0.0)
-                        let t = min(maxNum, 1.0)
-//                        if t == nil {t = 0.5}
+                        var t = min(maxNum, 1.0)
+                        if t.isNaN {t = 0.5}
                         result[numPoints] = Point(
                             x: (1.0 - t) * firstPoint.x + t * points[i].x,
                             y: (1.0 - t) * firstPoint.y + t * points[i].y,
@@ -134,8 +134,8 @@ struct Shape {
                 var indexMin = -1
                 
                 for t in 0 ..< self.points.count {
-                    let row = points[t].intX / Shape.LUT_SCALE_FACTOR
-                    let col = points[t].intY / Shape.LUT_SCALE_FACTOR
+                    let row = points[t].intY / Shape.LUT_SCALE_FACTOR
+                    let col = points[t].intX / Shape.LUT_SCALE_FACTOR
                     let dist = (row - i) * (row - i) + (col - j) * (col - j)
                     if dist < minDistance {
                         minDistance = dist
@@ -145,6 +145,7 @@ struct Shape {
                 LUT[i].append(indexMin)
             }
         }
+        LUT.removeLast()
     }
     
     init(points: [Point], name: String = "") {
@@ -153,13 +154,14 @@ struct Shape {
         self.name = name
         
         let scaled = scale(points: points)
-        print(scaled)
+//        print(scaled)
         let translated = translateTo(points: scaled, p: centroid(points: scaled))
         let resampled = resample(points: translated, n: SAMPLING_RESOLUTION)
         self.points = resampled
         
         transformCoordinatesToIntegers()
         constructLUT()
+//        print(self.points.count)
     }
     
 }
