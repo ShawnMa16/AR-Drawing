@@ -63,9 +63,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         didSet {
             if let type = typeString {
                 typeLabel.text = type
+                infoLabel.text = "This is a \(type)"
+                Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
             }
         }
     }
+    
+    var infoLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .white
+        label.font = UIFont.systemFont(ofSize: 25)
+        return label
+    }()
     
     private let clearButton: UIButton = {
         let button = UIButton()
@@ -150,6 +159,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
             make.right.equalToSuperview().offset(-30)
             make.top.equalToSuperview().offset(100)
         }
+        
+        view.addSubview(infoLabel)
+        infoLabel.snp.makeConstraints { (make) in
+            make.width.equalTo(180)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(triangleButton.snp.top).offset(-30)
+        }
+        infoLabel.textAlignment = .center
+        infoLabel.alpha = 0
         
     }
     
@@ -349,7 +367,11 @@ extension ViewController {
             testingShape?.append(latestShape)
             strokeIDCount += 1
             guard let shapes = testingShape else {return}
-            print(QPointCloudRecognizer.classify(inputShape: latestShape, templateSet: shapes))
+            let type = QPointCloudRecognizer.classify(inputShape: latestShape, templateSet: shapes)
+            let count = shapes.filter({$0.name == type}).count - 1
+            infoLabel.text = "\(type):\(count) added"
+            Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
+            print(type)
         }
     }
 }

@@ -55,4 +55,19 @@ class Service: NSObject {
             toNode.addChildNode(node)
         }
     }
+    
+    static func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
+        
+        let animationDuration = 1.5
+        
+        // Fade in the view
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            view.alpha = 1
+        }) { (Bool) -> Void in
+            
+            UIView.animate(withDuration: animationDuration, delay: delay, options: .curveEaseInOut, animations: { () -> Void in
+                view.alpha = 0
+            }, completion: nil)
+        }
+    }
 }
