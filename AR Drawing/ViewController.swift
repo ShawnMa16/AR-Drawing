@@ -59,6 +59,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         return label
     }()
     
+    var typeString: String? {
+        didSet {
+            if let type = typeString {
+                typeLabel.text = type
+            }
+        }
+    }
+    
     private let clearButton: UIButton = {
         let button = UIButton()
         button.setTitle("Clear", for: .normal)
@@ -133,9 +141,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
             make.left.equalToSuperview().offset(30)
             make.top.equalTo(testButton.snp.bottom).offset(20)
         }
+        typeLabel.textAlignment = .center
         
         view.addSubview(clearButton)
-        testButton.snp.makeConstraints { (make) in
+        clearButton .snp.makeConstraints { (make) in
             make.height.equalTo(50)
             make.width.equalTo(80)
             make.right.equalToSuperview().offset(-30)
@@ -152,6 +161,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         self.arView.addGestureRecognizer(tap)
     }
     
+    fileprivate func setupButtons() {
+        circleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
+        triangleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
+        lineButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
+        testButton.addTarget(self, action: #selector(testButtonDown), for: .touchUpInside)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -159,10 +175,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         
         setupGesture()
         
-        circleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
-        triangleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
-        lineButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
-        testButton.addTarget(self, action: #selector(testButtonDown), for: .touchUpInside)
+        setupButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -223,18 +236,6 @@ extension ViewController {
 
 extension ViewController {
     
-    func getPointerPosition() -> (pos : SCNVector3, valid: Bool, camPos : SCNVector3) {
-        guard let camera = self.arView.session.currentFrame?.camera else {return (SCNVector3Zero, false, SCNVector3Zero)}
-        guard let pointOfView = self.arView.pointOfView else { return (SCNVector3Zero, false, SCNVector3Zero) }
-        
-        let mat = SCNMatrix4.init(camera.transform)
-        let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33)
-        
-        let currentPosition = pointOfView.position + cameraRelativePosition
-        
-        return (currentPosition, true, pointOfView.position)
-    }
-    
     func classify() {
         testingMode = !testingMode
         self.currentType = "test"
@@ -256,41 +257,25 @@ extension ViewController {
             sphere.geometry = SCNSphere(radius: 0.0025)
             //        print(sphere.simdWorldPosition)
             sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-            
-            guard let currentFrame = self.arView.session.currentFrame else { return }
-            let camera = currentFrame.camera
-            let transform = camera.transform
-            var translationMatrix = matrix_identity_float4x4
-            translationMatrix.columns.3.x = self.cameraRelativePosition.x
-            translationMatrix.columns.3.y = self.cameraRelativePosition.y
-            translationMatrix.columns.3.z = self.cameraRelativePosition.z
-            let modifiedMatrix = simd_mul(transform, translationMatrix)
-            sphere.simdTransform = modifiedMatrix
 
-            let pointer = Service.getPointerPosition(inView: self.arView, cameraRelativePosition: self.cameraRelativePosition).pos
-//            print((sphere.presentation.worldPosition - pointer).length())
+            Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
             
-//            Service.to2D(startPoint: self.startPoint!, inView: self.arView)
+            guard let startPoint = self.startPoint else {return}
+            let position = Service.to2D(startPoint: startPoint, inView: self.arView)
             
-//            if (sphere.presentation.worldPosition - pointer).length() > 1.0 || self.testingPoints.count == 0 {
-//                print(sphere.presentation)
-            
-//                sphere.presentation.worldPosition = pointer
-                
-                let position = Service.to2D(startPoint: self.startPoint!, inView: self.arView)
-                
-                let point = Point(x: position.x, y: position.y, strokeID: self.strokeIDCount)
-                
-                if !self.testingMode {
-                    self.templatePoints[self.templatePoints.count - 1].append(point)
-                } else {
-                    self.testingPoints.append(point)
-                }
-                
-                
-                
-                self.scene.rootNode.addChildNode(sphere)
-//            }
+            self.addPoint(pointPos: position)
+
+            self.scene.rootNode.addChildNode(sphere)
+        }
+    }
+    
+    private func addPoint(pointPos: (x: Float, y: Float)) {
+        let point = Point(x: pointPos.x, y: pointPos.y, strokeID: self.strokeIDCount)
+        
+        if !self.testingMode {
+            self.templatePoints[self.templatePoints.count - 1].append(point)
+        } else {
+            self.testingPoints.append(point)
         }
     }
     
@@ -301,8 +286,6 @@ extension ViewController {
                 node.removeFromParentNode()
             }
         }
-        
-        
     }
     
     @objc
@@ -350,17 +333,12 @@ extension ViewController {
     func screenTouchUp() {
         screenDown = false
         startPoint = nil
-//        print(testingPoints)
-//        let shapes = templatePoints.filter({$0.count != 0}).map { (points) -> Shape in
-//            return Shape(points: points, name: self.currentType)
-//        }
-//
-//        print(shapes)
-        
+
         if testingMode {
             let shape = Shape(points: self.testingPoints, name: "test")
             guard let shapes = testingShape else {return}
-            print(QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes))
+            let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
+            self.typeString = type
             self.testingPoints = []
         } else {
             let latestPoints = templatePoints.filter({$0.count != 0}).last
@@ -370,7 +348,6 @@ extension ViewController {
             }
             testingShape?.append(latestShape)
             strokeIDCount += 1
-            print(testingShape)
             guard let shapes = testingShape else {return}
             print(QPointCloudRecognizer.classify(inputShape: latestShape, templateSet: shapes))
         }
