@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F5C7B6FC1707EBA12B7DBAC /* Pods_AR_DrawingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */; };
+		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
 		29B034F2225A9C150096FB0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034F1225A9C150096FB0B /* ViewController.swift */; };
@@ -50,6 +51,7 @@
 		0DA38F407BC6F6571C626CB6 /* Pods-AR Drawing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR Drawing.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing.release.xcconfig"; sourceTree = "<group>"; };
 		10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.release.xcconfig"; sourceTree = "<group>"; };
 		13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.release.xcconfig"; sourceTree = "<group>"; };
+		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29B034EF225A9C150096FB0B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -103,6 +105,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		298709722266530200FF3470 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */,
+				29B03526225C35130096FB0B /* SCNVector3Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		298709732266533600FF3470 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				298709742266534C00FF3470 /* Circle.swift */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
 		29B034E1225A9C150096FB0B = {
 			isa = PBXGroup;
 			children = (
@@ -128,13 +147,13 @@
 		29B034EC225A9C150096FB0B /* AR Drawing */ = {
 			isa = PBXGroup;
 			children = (
+				298709732266533600FF3470 /* Shapes */,
 				29B0351D225AA1B00096FB0B /* QPoints */,
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				29B034F1225A9C150096FB0B /* ViewController.swift */,
 				29B03528225CE9B90096FB0B /* Service.swift */,
-				29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */,
-				29B03526225C35130096FB0B /* SCNVector3Extensions.swift */,
+				298709722266530200FF3470 /* Extensions */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
 				29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
@@ -387,10 +406,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -409,6 +430,7 @@
 				29B03529225CE9B90096FB0B /* Service.swift in Sources */,
 				29B03525225AAFEE0096FB0B /* Geometry.swift in Sources */,
 				29B03527225C35130096FB0B /* SCNVector3Extensions.swift in Sources */,
+				298709752266534C00FF3470 /* Circle.swift in Sources */,
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
 				29B034F2225A9C150096FB0B /* ViewController.swift in Sources */,

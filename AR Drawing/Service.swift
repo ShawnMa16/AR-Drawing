@@ -13,6 +13,12 @@ class Service: NSObject {
     
     public static let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     
+    public static let testPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 0.05, height: 0.05))
+    
+//    public static func to3D(startPoint: SCNVector3, inView: ARSCNView, point: Point) -> SCNNode {
+//
+//    }
+    
     public static func to2D(startPoint: SCNVector3, inView: ARSCNView) -> (x: Float, y: Float) {
         let planePos = startPoint
         let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos
@@ -69,5 +75,43 @@ class Service: NSObject {
                 view.alpha = 0
             }, completion: nil)
         }
+    }
+    
+    static func get3DShapeNode(forShape shape: Shape) -> SCNNode? {
+        guard let path = self.generatePath(forShape: shape) else {return nil}
+        switch shape.name {
+        case "circle":
+            return Circle(path: path)
+        default:
+            return nil
+        }
+    }
+    
+    private static func generatePath(forShape shape: Shape) -> UIBezierPath? {
+        switch shape.name {
+        case "circle":
+            return self.computeCircle(shape: shape)
+        default:
+            return nil
+        }
+    }
+    
+    private static func computeCircle(shape: Shape) -> UIBezierPath? {
+        guard let center = shape.center else {return nil}
+        guard let firstPoint = shape.points.first else {return nil}
+        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
+
+        let strokeBezierPath = UIBezierPath(arcCenter: .zero, radius: radius, startAngle: .zero, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        strokeBezierPath.lineWidth = 0.01
+        
+        let cgPath = strokeBezierPath.cgPath.copy(
+            strokingWithWidth: strokeBezierPath.lineWidth,
+            lineCap: strokeBezierPath.lineCapStyle,
+            lineJoin: strokeBezierPath.lineJoinStyle,
+            miterLimit: strokeBezierPath.miterLimit)
+        
+        let path = UIBezierPath(cgPath: cgPath)
+        
+        return path
     }
 }

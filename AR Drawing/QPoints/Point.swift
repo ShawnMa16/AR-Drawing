@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Point {
     public var x: Float
@@ -27,5 +28,13 @@ struct Point {
     mutating func toInt(floatX: Float, floatY: Float) {
         self.intX = Int(floatX)
         self.intY = Int(floatY)
+    }
+}
+
+extension Point {
+    static func distanceBetween(pointA: Point, pointB: Point) -> CGFloat {
+        let xDist = pointA.intX - pointB.intX
+        let yDist = pointA.intY - pointB.intY
+        return CGFloat(sqrt(Float(xDist * xDist + yDist * yDist)))
     }
 }

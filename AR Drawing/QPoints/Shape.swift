@@ -12,6 +12,12 @@ struct Shape {
     public var points: [Point]
     public var name: String = ""
     
+    public var center: Point? {
+        get {
+            return centroid(points: self.points)
+        }
+    }
+    
     private let SAMPLING_RESOLUTION: Int = 32                            // default number of points on the gesture path
     private let MAX_INT_COORDINATES: Int = 1024                           // $Q only: each point has two additional x and y integer coordinates in the interval [0..MAX_INT_COORDINATES-1] used to operate the LUT table efficiently (O(1))
     public let LUT_SIZE: Int = 64                                        // $Q only: the default size of the lookup table is 64 x 64

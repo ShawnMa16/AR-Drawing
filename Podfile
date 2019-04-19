@@ -7,6 +7,7 @@ target 'AR Drawing' do
 
   # Pods for AR Drawing
   pod 'SnapKit', '~> 4.0.0'
+  pod 'SwiftyBeaver'
 
   target 'AR DrawingTests' do
     inherit! :search_paths

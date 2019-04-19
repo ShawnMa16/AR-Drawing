@@ -184,6 +184,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         triangleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
         lineButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
         testButton.addTarget(self, action: #selector(testButtonDown), for: .touchUpInside)
+        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
     }
     
     override func viewDidLoad() {
@@ -211,6 +212,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         
         // Pause the view's session
         arView.session.pause()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     // MARK: - ARSCNViewDelegate
@@ -270,21 +275,17 @@ extension ViewController {
     }
     
     func addSphere() {
-        DispatchQueue.main.async {
-            let sphere = SCNNode()
-            sphere.geometry = SCNSphere(radius: 0.0025)
-            //        print(sphere.simdWorldPosition)
-            sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-
-            Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-            
-            guard let startPoint = self.startPoint else {return}
-            let position = Service.to2D(startPoint: startPoint, inView: self.arView)
-            
-            self.addPoint(pointPos: position)
-
-            self.scene.rootNode.addChildNode(sphere)
-        }
+        let sphere = SCNNode()
+        sphere.geometry = SCNSphere(radius: 0.0025)
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        
+        guard let startPoint = self.startPoint else {return}
+        let position = Service.to2D(startPoint: startPoint, inView: self.arView)
+        
+        self.addPoint(pointPos: position)
+        
+        Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+        
     }
     
     private func addPoint(pointPos: (x: Float, y: Float)) {
@@ -299,11 +300,15 @@ extension ViewController {
     
     @objc
     func clear() {
-        DispatchQueue.main.async {
-            self.scene.rootNode.childNodes.forEach { (node) in
-                node.removeFromParentNode()
-            }
-        }
+//        DispatchQueue.main.async {
+//            self.scene.rootNode.childNodes.forEach { (node) in
+//                node.removeFromParentNode()
+//            }
+//        }
+        
+        let path = Service.testPath
+        let circle = Circle(path: path)
+        Service.addNode(circle, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
     }
     
     @objc
@@ -364,6 +369,7 @@ extension ViewController {
             if testingShape == nil {
                 testingShape = []
             }
+//            print(latestShape.points)
             testingShape?.append(latestShape)
             strokeIDCount += 1
             guard let shapes = testingShape else {return}
