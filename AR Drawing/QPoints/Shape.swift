@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Shape {
     public var points: [Point]
@@ -167,7 +168,6 @@ struct Shape {
         
         transformCoordinatesToIntegers()
         constructLUT()
-//        print(self.points.count)
     }
     
 }

@@ -21,7 +21,6 @@ class QPointCloudRecognizer {
         
         templateSet.forEach { (template) in
             let dist = greedyCloudMatch(shape1: inputShape, shape2: template, minSoFar: minDistance)
-            print(dist)
             if dist < minDistance {
                 minDistance = dist
                 shapeClass = template.name
@@ -124,8 +123,6 @@ class QPointCloudRecognizer {
             i = (i + 1) % n                           // advance to the next point in the 1st cloud
             indexNotMatched += 1                         // update the number of points from the 2nd cloud that haven't been matched yet
         } while (i != startIndex)
-
-        print(sum)
         return sum
     }
 }

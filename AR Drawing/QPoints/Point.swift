@@ -33,8 +33,8 @@ struct Point {
 
 extension Point {
     static func distanceBetween(pointA: Point, pointB: Point) -> CGFloat {
-        let xDist = pointA.intX - pointB.intX
-        let yDist = pointA.intY - pointB.intY
-        return CGFloat(sqrt(Float(xDist * xDist + yDist * yDist)))
+        let xDist = pointA.x - pointB.x
+        let yDist = pointA.y - pointB.y
+        return CGFloat(sqrt(xDist * xDist + yDist * yDist))
     }
 }

@@ -351,6 +351,7 @@ extension ViewController {
         screenDown = true
         templatePoints.append([])
         startPoint = Service.getPointerPosition(inView: self.arView, cameraRelativePosition: self.cameraRelativePosition).pos
+        log.info(startPoint)
     }
     @objc
     func screenTouchUp() {
@@ -362,6 +363,9 @@ extension ViewController {
             guard let shapes = testingShape else {return}
             let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
             self.typeString = type
+            
+            Service.get3DShapeNode(forShape: shape)
+            
             self.testingPoints = []
         } else {
             let latestPoints = templatePoints.filter({$0.count != 0}).last
@@ -369,7 +373,11 @@ extension ViewController {
             if testingShape == nil {
                 testingShape = []
             }
-//            print(latestShape.points)
+            
+            let node = Service.get3DShapeNode(forShape: latestShape)
+            
+//            Service.addNode(node!, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+            
             testingShape?.append(latestShape)
             strokeIDCount += 1
             guard let shapes = testingShape else {return}
@@ -377,7 +385,7 @@ extension ViewController {
             let count = shapes.filter({$0.name == type}).count - 1
             infoLabel.text = "\(type):\(count) added"
             Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
-            print(type)
+            log.debug(type)
         }
     }
 }

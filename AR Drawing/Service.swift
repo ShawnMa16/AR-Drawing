@@ -20,16 +20,25 @@ class Service: NSObject {
 //    }
     
     public static func to2D(startPoint: SCNVector3, inView: ARSCNView) -> (x: Float, y: Float) {
-        let planePos = startPoint
-        let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos
-        let nodePos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).pos
         
-        let f = (camPos - planePos).length()
-        let x = (nodePos.x - camPos.x) * (f / nodePos.z) + camPos.x
-        let y = (nodePos.y - camPos.y) * (f / nodePos.z) + camPos.y
-        print(f)
-        print(x , y)
-        return (x + 1, y + 1)
+        let planePos = startPoint
+        let normalizedVector = startPoint.normalized()
+        
+        let nodePos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).pos
+        let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos - startPoint
+        
+        let target = nodePos - planePos
+        let dist = target * normalizedVector
+        
+        log.debug(dist.length())
+
+        let x = (nodePos.x - camPos.x) * (dist.length() / nodePos.z) + camPos.x
+        let y = (nodePos.y - camPos.y) * (dist.length() / nodePos.z) + camPos.y
+        
+        log.debug(x)
+        log.debug(y)
+        
+        return (x, y)
     }
     
     public static func getPointerPosition(inView: ARSCNView, cameraRelativePosition: SCNVector3) -> (pos : SCNVector3, valid: Bool, camPos : SCNVector3) {
@@ -76,6 +85,12 @@ class Service: NSObject {
             }, completion: nil)
         }
     }
+
+}
+
+//MARK:- 3D shapes go here
+extension Service {
+    
     
     static func get3DShapeNode(forShape shape: Shape) -> SCNNode? {
         guard let path = self.generatePath(forShape: shape) else {return nil}
@@ -99,10 +114,22 @@ class Service: NSObject {
     private static func computeCircle(shape: Shape) -> UIBezierPath? {
         guard let center = shape.center else {return nil}
         guard let firstPoint = shape.points.first else {return nil}
-        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
-
-        let strokeBezierPath = UIBezierPath(arcCenter: .zero, radius: radius, startAngle: .zero, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center) / 10
+        log.debug(radius)
+        
+//        let strokeBezierPath = UIBezierPath(arcCenter: .zero, radius: radius/10, startAngle: .zero, endAngle: CGFloat(Double.pi * 2), clockwise: true)
+//        strokeBezierPath.lineWidth = 0.01
+        let strokeBezierPath = UIBezierPath(ovalIn: CGRect(x: -radius, y: -radius, width: 2 *  radius, height: 2 * radius))
         strokeBezierPath.lineWidth = 0.01
+
+//                let strokeBezierPath = UIBezierPath()
+//                strokeBezierPath.lineWidth = 0.01
+//                strokeBezierPath.move(to: CGPoint.zero)
+//                strokeBezierPath.addLine(to: CGPoint(x: radius, y: 0))
+//                strokeBezierPath.addLine(to: CGPoint(x: radius, y: radius))
+//                strokeBezierPath.addLine(to: CGPoint(x: 0.0, y: radius))
+//                strokeBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+//                strokeBezierPath.close()
         
         let cgPath = strokeBezierPath.cgPath.copy(
             strokingWithWidth: strokeBezierPath.lineWidth,

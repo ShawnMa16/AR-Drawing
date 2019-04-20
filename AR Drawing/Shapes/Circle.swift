@@ -18,26 +18,26 @@ class Circle: SCNNode {
     init(path: UIBezierPath) {
         super.init()
         
-        let strokeBezierPath = UIBezierPath()
-        strokeBezierPath.lineWidth = 0.01
-        strokeBezierPath.move(to: CGPoint.zero)
-        strokeBezierPath.addLine(to: CGPoint(x: 0.1, y: 0))
-        strokeBezierPath.addLine(to: CGPoint(x: 0.1, y: 0.1))
-        strokeBezierPath.addLine(to: CGPoint(x: 0.0, y: 0.1))
-        strokeBezierPath.addLine(to: CGPoint(x: 0, y: 0))
-        strokeBezierPath.close()
-        let cgPath = strokeBezierPath.cgPath.copy(
-            strokingWithWidth: strokeBezierPath.lineWidth,
-            lineCap: strokeBezierPath.lineCapStyle,
-            lineJoin: strokeBezierPath.lineJoinStyle,
-            miterLimit: strokeBezierPath.miterLimit)
-        
-        let bezierPath = UIBezierPath(cgPath: cgPath)
-        let shape = SCNShape(path: bezierPath, extrusionDepth: 0.01)
-        shape.firstMaterial?.diffuse.contents = UIColor.blue
-        let node = SCNNode(geometry: shape)
-        
-        self.addChildNode(node)
+//        let strokeBezierPath = UIBezierPath()
+//        strokeBezierPath.lineWidth = 0.01
+//        strokeBezierPath.move(to: CGPoint.zero)
+//        strokeBezierPath.addLine(to: CGPoint(x: 0.1, y: 0))
+//        strokeBezierPath.addLine(to: CGPoint(x: 0.1, y: 0.1))
+//        strokeBezierPath.addLine(to: CGPoint(x: 0.0, y: 0.1))
+//        strokeBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+//        strokeBezierPath.close()
+//        let cgPath = strokeBezierPath.cgPath.copy(
+//            strokingWithWidth: strokeBezierPath.lineWidth,
+//            lineCap: strokeBezierPath.lineCapStyle,
+//            lineJoin: strokeBezierPath.lineJoinStyle,
+//            miterLimit: strokeBezierPath.miterLimit)
+//
+//        let bezierPath = UIBezierPath(cgPath: cgPath)
+//        let shape = SCNShape(path: bezierPath, extrusionDepth: 0.01)
+//        shape.firstMaterial?.diffuse.contents = UIColor.blue
+//        let node = SCNNode(geometry: shape)
+//
+//        self.addChildNode(node)
 ////        path.flatness = 0.001
 //        path.flatness = 0
 //        shape = SCNShape(path: path, extrusionDepth: 0.01)
@@ -54,12 +54,13 @@ class Circle: SCNNode {
 ////        material.lightingModel = .constant
 ////        material.emission.contents = UIColor.blue
 ////
-////        let shape = SCNShape(path: outerPath, extrusionDepth: 0.01)
-////        shape.materials = [material]
-//
-//        let shapeNode = SCNNode(geometry: shape)
-//
-//        self.addChildNode(shapeNode)
+        let shape = SCNShape(path: path, extrusionDepth: 0.01)
+        
+        shape.firstMaterial?.diffuse.contents = UIColor.blue
+
+        let node = SCNNode(geometry: shape)
+        
+        self.addChildNode(node)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -10,7 +10,6 @@ import UIKit
 import SwiftyBeaver
 
 let log = SwiftyBeaver.self
-let console = ConsoleDestination()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,15 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let deviceFileDest = FileDestination()
-        deviceFileDest.logFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("swiftybeaver.log")
-        deviceFileDest.levelColor.verbose = "💜 "     // silver
-        deviceFileDest.levelColor.debug = "💚 "        // green
-        deviceFileDest.levelColor.info = "💙 "         // blue
-        deviceFileDest.levelColor.warning = "💛 "     // yellow
-        deviceFileDest.levelColor.error = "❤️ "       // red
+        let console = ConsoleDestination()
+
+        console.levelColor.verbose = "💜 "     // silver
+        console.levelColor.debug = "💚 "        // green
+        console.levelColor.info = "💙 "         // blue
+        console.levelColor.warning = "💛 "     // yellow
+        console.levelColor.error = "❤️ "       // red
         
-        log.addDestination(deviceFileDest)
+        log.addDestination(console)
         
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
