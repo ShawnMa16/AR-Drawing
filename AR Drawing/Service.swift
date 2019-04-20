@@ -22,15 +22,13 @@ class Service: NSObject {
     public static func to2D(startPoint: SCNVector3, inView: ARSCNView) -> (x: Float, y: Float) {
         
         let planePos = startPoint
-        let normalizedVector = startPoint.normalized()
+        let normalizedVector = SCNVector3Make(0, 0, 1)
         
-        let nodePos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).pos
-        let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos - startPoint
-        
+        let nodePos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).pos - planePos
+        let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos - planePos
+
         let target = nodePos - planePos
         let dist = target * normalizedVector
-        
-        log.debug(dist.length())
 
         let x = (nodePos.x - camPos.x) * (dist.length() / nodePos.z) + camPos.x
         let y = (nodePos.y - camPos.y) * (dist.length() / nodePos.z) + camPos.y
