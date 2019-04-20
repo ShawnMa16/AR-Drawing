@@ -290,6 +290,7 @@ extension ViewController {
     
     private func addPoint(pointPos: (x: Float, y: Float)) {
         let point = Point(x: pointPos.x, y: pointPos.y, strokeID: self.strokeIDCount)
+        guard !point.x.isNaN, !point.y.isNaN else {return}
         
         if !self.testingMode {
             self.templatePoints[self.templatePoints.count - 1].append(point)
@@ -374,9 +375,6 @@ extension ViewController {
                 testingShape = []
             }
             
-            let node = Service.get3DShapeNode(forShape: latestShape)
-            
-//            Service.addNode(node!, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
             
             testingShape?.append(latestShape)
             strokeIDCount += 1
@@ -386,6 +384,11 @@ extension ViewController {
             infoLabel.text = "\(type):\(count) added"
             Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
             log.debug(type)
+            
+            if let node = Service.get3DShapeNode(forShape: latestShape) {
+                Service.addNode(node, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+            }
+
         }
     }
 }

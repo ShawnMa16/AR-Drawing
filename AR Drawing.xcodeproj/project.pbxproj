@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F5C7B6FC1707EBA12B7DBAC /* Pods_AR_DrawingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */; };
+		294BCD89226B9CD000AABDA0 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BCD88226B9CD000AABDA0 /* Line.swift */; };
 		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
@@ -51,6 +52,7 @@
 		0DA38F407BC6F6571C626CB6 /* Pods-AR Drawing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR Drawing.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing.release.xcconfig"; sourceTree = "<group>"; };
 		10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.release.xcconfig"; sourceTree = "<group>"; };
 		13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.release.xcconfig"; sourceTree = "<group>"; };
+		294BCD88226B9CD000AABDA0 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				298709742266534C00FF3470 /* Circle.swift */,
+				294BCD88226B9CD000AABDA0 /* Line.swift */,
 			);
 			path = Shapes;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
 				29B034F2225A9C150096FB0B /* ViewController.swift in Sources */,
+				294BCD89226B9CD000AABDA0 /* Line.swift in Sources */,
 				29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

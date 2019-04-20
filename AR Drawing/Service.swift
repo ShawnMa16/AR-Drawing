@@ -32,7 +32,6 @@ class Service: NSObject {
 
         let x = (nodePos.x - camPos.x) * (dist.length() / nodePos.z) + camPos.x
         let y = (nodePos.y - camPos.y) * (dist.length() / nodePos.z) + camPos.y
-        
         log.debug(x)
         log.debug(y)
         
@@ -89,14 +88,16 @@ class Service: NSObject {
 //MARK:- 3D shapes go here
 extension Service {
     
-    
     static func get3DShapeNode(forShape shape: Shape) -> SCNNode? {
         guard let path = self.generatePath(forShape: shape) else {return nil}
+        
         switch shape.name {
         case "circle":
             return Circle(path: path)
+        case "line":
+            return SCNNode()
         default:
-            return nil
+            return SCNNode()
         }
     }
     
@@ -104,15 +105,30 @@ extension Service {
         switch shape.name {
         case "circle":
             return self.computeCircle(shape: shape)
+        case "line":
+            return self.computeLine(shape: shape)
         default:
             return nil
         }
     }
     
+    private static func computeLine(shape: Shape) -> UIBezierPath? {
+        guard let firstPoint = shape.originalPoints.first else {return nil}
+        guard let lastPoint = shape.originalPoints.last else {return nil}
+        
+        let distance = Point.distanceBetween(pointA: firstPoint, pointB: lastPoint)
+        
+        
+        return nil
+    }
+    
     private static func computeCircle(shape: Shape) -> UIBezierPath? {
         guard let center = shape.center else {return nil}
-        guard let firstPoint = shape.points.first else {return nil}
-        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center) / 10
+        guard let firstPoint = shape.originalPoints.first else {return nil}
+        log.info(center)
+        log.info(firstPoint)
+        
+        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
         log.debug(radius)
         
 //        let strokeBezierPath = UIBezierPath(arcCenter: .zero, radius: radius/10, startAngle: .zero, endAngle: CGFloat(Double.pi * 2), clockwise: true)

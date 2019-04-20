@@ -10,12 +10,17 @@ import Foundation
 import UIKit
 
 struct Shape {
-    public var points: [Point]
+    // original points
+    public let originalPoints: [Point]
+    
+    // points for classification
+    private var points: [Point]
     public var name: String = ""
     
+    // center for orignal points
     public var center: Point? {
         get {
-            return centroid(points: self.points)
+            return centroid(points: originalPoints)
         }
     }
     
@@ -159,9 +164,10 @@ struct Shape {
         
         self.points = []
         self.name = name
+        self.originalPoints = points
         
         let scaled = scale(points: points)
-//        print(scaled)
+
         let translated = translateTo(points: scaled, p: centroid(points: scaled))
         let resampled = resample(points: translated, n: SAMPLING_RESOLUTION)
         self.points = resampled
