@@ -15,7 +15,7 @@ class Service: NSObject {
     
     public static let testPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 0.05, height: 0.05))
     
-//    public static func to3D(startPoint: SCNVector3, inView: ARSCNView, point: Point) -> SCNNode {
+//    public static func to3D(startPoint: SCNVector3, inView: ARSCNView, point: Point) -> SCNVector3 {
 //
 //    }
     
@@ -89,11 +89,12 @@ class Service: NSObject {
 extension Service {
     
     static func get3DShapeNode(forShape shape: Shape) -> SCNNode? {
-        guard let path = self.generatePath(forShape: shape) else {return nil}
+//        guard let path = self.generatePath(forShape: shape) else {return nil}
         
         switch shape.name {
         case "circle":
-            return Circle(path: path)
+            guard let radius = computeCircle(shape: shape) else {return nil}
+            return Circle(radius: radius)
         case "line":
             return SCNNode()
         default:
@@ -101,16 +102,16 @@ extension Service {
         }
     }
     
-    private static func generatePath(forShape shape: Shape) -> UIBezierPath? {
-        switch shape.name {
-        case "circle":
-            return self.computeCircle(shape: shape)
-        case "line":
-            return self.computeLine(shape: shape)
-        default:
-            return nil
-        }
-    }
+//    private static func generatePath(forShape shape: Shape) -> UIBezierPath? {
+//        switch shape.name {
+//        case "circle":
+//            return self.computeCircle(shape: shape)
+//        case "line":
+//            return self.computeLine(shape: shape)
+//        default:
+//            return nil
+//        }
+//    }
     
     private static func computeLine(shape: Shape) -> UIBezierPath? {
         guard let firstPoint = shape.originalPoints.first else {return nil}
@@ -122,7 +123,7 @@ extension Service {
         return nil
     }
     
-    private static func computeCircle(shape: Shape) -> UIBezierPath? {
+    private static func computeCircle(shape: Shape) -> CGFloat? {
         guard let center = shape.center else {return nil}
         guard let firstPoint = shape.originalPoints.first else {return nil}
         log.info(center)
@@ -131,28 +132,6 @@ extension Service {
         let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
         log.debug(radius)
         
-//        let strokeBezierPath = UIBezierPath(arcCenter: .zero, radius: radius/10, startAngle: .zero, endAngle: CGFloat(Double.pi * 2), clockwise: true)
-//        strokeBezierPath.lineWidth = 0.01
-        let strokeBezierPath = UIBezierPath(ovalIn: CGRect(x: -radius, y: -radius, width: 2 *  radius, height: 2 * radius))
-        strokeBezierPath.lineWidth = 0.01
-
-//                let strokeBezierPath = UIBezierPath()
-//                strokeBezierPath.lineWidth = 0.01
-//                strokeBezierPath.move(to: CGPoint.zero)
-//                strokeBezierPath.addLine(to: CGPoint(x: radius, y: 0))
-//                strokeBezierPath.addLine(to: CGPoint(x: radius, y: radius))
-//                strokeBezierPath.addLine(to: CGPoint(x: 0.0, y: radius))
-//                strokeBezierPath.addLine(to: CGPoint(x: 0, y: 0))
-//                strokeBezierPath.close()
-        
-        let cgPath = strokeBezierPath.cgPath.copy(
-            strokingWithWidth: strokeBezierPath.lineWidth,
-            lineCap: strokeBezierPath.lineCapStyle,
-            lineJoin: strokeBezierPath.lineJoinStyle,
-            miterLimit: strokeBezierPath.miterLimit)
-        
-        let path = UIBezierPath(cgPath: cgPath)
-        
-        return path
+        return radius / 2
     }
 }

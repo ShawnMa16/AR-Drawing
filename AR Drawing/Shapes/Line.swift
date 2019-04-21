@@ -12,4 +12,13 @@ import SpriteKit
 
 class Line: SCNNode {
     
+    init(startPoint: SCNVector3, endPoint: SCNVector3) {
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
 }

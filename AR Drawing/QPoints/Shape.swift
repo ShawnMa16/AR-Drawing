@@ -14,7 +14,7 @@ struct Shape {
     public let originalPoints: [Point]
     
     // points for classification
-    private var points: [Point]
+    public var points: [Point]
     public var name: String = ""
     
     // center for orignal points

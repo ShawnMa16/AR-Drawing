@@ -307,9 +307,9 @@ extension ViewController {
 //            }
 //        }
         
-        let path = Service.testPath
-        let circle = Circle(path: path)
-        Service.addNode(circle, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+//        let path = Service.testPath
+//        let circle = Circle(path: path)
+//        Service.addNode(circle, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
     }
     
     @objc
