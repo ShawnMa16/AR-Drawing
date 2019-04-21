@@ -12,8 +12,15 @@ import SpriteKit
 
 class Line: SCNNode {
     
-    init(startPoint: SCNVector3, endPoint: SCNVector3) {
+    init(height: CGFloat) {
         super.init()
+        
+        let shape = SCNCylinder(radius: 0.001, height: height)
+        
+        shape.firstMaterial?.diffuse.contents = UIColor.red
+
+        let node = SCNNode(geometry: shape)
+        self.addChildNode(node)
     }
     
     required init?(coder aDecoder: NSCoder) {

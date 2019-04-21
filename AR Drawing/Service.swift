@@ -96,7 +96,8 @@ extension Service {
             guard let radius = computeCircle(shape: shape) else {return nil}
             return Circle(radius: radius)
         case "line":
-            return SCNNode()
+            guard let height = computeLine(shape: shape) else {return nil}
+            return Line(height: height)
         default:
             return SCNNode()
         }
@@ -113,14 +114,12 @@ extension Service {
 //        }
 //    }
     
-    private static func computeLine(shape: Shape) -> UIBezierPath? {
+    private static func computeLine(shape: Shape) -> CGFloat? {
         guard let firstPoint = shape.originalPoints.first else {return nil}
         guard let lastPoint = shape.originalPoints.last else {return nil}
         
         let distance = Point.distanceBetween(pointA: firstPoint, pointB: lastPoint)
-        
-        
-        return nil
+        return distance / 2
     }
     
     private static func computeCircle(shape: Shape) -> CGFloat? {
