@@ -93,9 +93,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
     var templatePoints: [[Point]] = [[]]
     var testingShape: [Shape]?
     var testingPoints: [Point] = []
+    private let pointsThreshold: CGFloat = 0.005
     
     var testingMode: Bool = false
-    var startPoint: SCNVector3?
+    
+    var startNode: SCNNode?
+    
+    var interestNodePositions = [Int: [SCNVector3]]()
     
     fileprivate func setupViews() {
         // Set the view's delegate
@@ -276,14 +280,25 @@ extension ViewController {
     
     func addSphere() {
         let sphere = SCNNode()
-        sphere.geometry = SCNSphere(radius: 0.0025)
+        sphere.geometry = SCNSphere(radius: 0.0015)
         sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         
-        guard let startPoint = self.startPoint else {return}
-        let position = Service.to2D(startPoint: startPoint, inView: self.arView)
+        guard let startNode = self.startNode else {return}
+//        let position = Service.to2D(startPoint: startPoint, inView: self.arView)
+        
+//        let currentNode = Service.getPointerNode(inView: self.arView)
+//        let pointerPos = Service.getPointerPosition(inView: self.arView, cameraRelativePosition: self.cameraRelativePosition).pos
+//        let node = SCNNode()
+//        node.position = SCNVector3Make(0, 0, 0)
+//        startNode?.addChildNode(node)
+//        let newPos = Service.transformVector(originNode: startNode!, targetNode: currentNode!, targetPosition: pointerPos)
+        
+        let position = Service.to2D(originNode: startNode, inView: self.arView)
+//        let pos = (let x: Float = newPos.y, let y: Float = -newPos.x)
+//        log.debug(newPos)
         
         self.addPoint(pointPos: position)
-        
+//
         Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
         
     }
@@ -293,10 +308,31 @@ extension ViewController {
         guard !point.x.isNaN, !point.y.isNaN else {return}
         
         if !self.testingMode {
-            self.templatePoints[self.templatePoints.count - 1].append(point)
+            if self.templatePoints[self.templatePoints.count - 1].isEmpty {
+                self.templatePoints[self.templatePoints.count - 1].append(point)
+                addInterestNode(id: self.strokeIDCount)
+            } else {
+                let lastPoint = self.templatePoints[self.templatePoints.count - 1].last
+                let distance = Point.distanceBetween(pointA: point, pointB: lastPoint!)
+                log.debug(distance)
+                
+                if distance > self.pointsThreshold {
+                    self.templatePoints[self.templatePoints.count - 1].append(point)
+                    addInterestNode(id: self.strokeIDCount)
+                }
+            }
         } else {
             self.testingPoints.append(point)
         }
+    }
+    
+    private func addInterestNode(id: Int) {
+        if interestNodePositions[id] == nil {interestNodePositions[id] = []}
+        
+        guard self.startNode != nil else {return}
+        let pointerNode = Service.getPointerNode(inView: self.arView)
+        let target = Service.transformPosition(originNode: self.startNode!, targetNode: pointerNode!)
+        interestNodePositions[id]?.append(target)
     }
     
     @objc
@@ -351,22 +387,21 @@ extension ViewController {
     func screenTouchDown() {
         screenDown = true
         templatePoints.append([])
-        startPoint = Service.getPointerPosition(inView: self.arView, cameraRelativePosition: self.cameraRelativePosition).pos
-        log.info(startPoint)
+        
+        startNode = Service.getPointerNode(inView: self.arView)
     }
     @objc
     func screenTouchUp() {
         screenDown = false
-        startPoint = nil
 
         if testingMode {
             let shape = Shape(points: self.testingPoints, name: "test")
             guard let shapes = testingShape else {return}
             let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
             self.typeString = type
-            
-            Service.get3DShapeNode(forShape: shape)
-            
+
+//            Service.get3DShapeNode(forShape: shape)
+
             self.testingPoints = []
         } else {
             let latestPoints = templatePoints.filter({$0.count != 0}).last
@@ -374,8 +409,8 @@ extension ViewController {
             if testingShape == nil {
                 testingShape = []
             }
-            
-            
+
+
             testingShape?.append(latestShape)
             strokeIDCount += 1
             guard let shapes = testingShape else {return}
@@ -384,11 +419,20 @@ extension ViewController {
             infoLabel.text = "\(type):\(count) added"
             Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
             log.debug(type)
+
+            let currentStroke = strokeIDCount - 1
+
+            let pointerNode = Service.getPointerNode(inView: self.arView)!
+            let centerNode = Service.getShapeCenterNodePosition(originNode: startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
             
             if let node = Service.get3DShapeNode(forShape: latestShape) {
-                Service.addNode(node, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+                // get the pivoted child node
+                centerNode.childNodes.first?.addChildNode(node)
+                Service.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
             }
 
         }
+        
+        startNode = nil
     }
 }

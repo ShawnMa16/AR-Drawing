@@ -87,7 +87,7 @@ extension float4x4 {
   }
   
   static func degrees(toRad angle: Float) -> Float {
-    return Float(Double(angle) * M_PI / 180)
+    return Float(Double(angle) * Double.pi / 180)
   }
   
   mutating func multiplyLeft(_ matrix: float4x4) {

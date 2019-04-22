@@ -25,6 +25,7 @@ class Circle: SCNNode {
         // roate the node to face the camera
 
         node.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
+        
         self.addChildNode(node)
     }
     
