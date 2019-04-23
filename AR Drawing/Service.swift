@@ -17,30 +17,26 @@ class Service: NSObject {
     
     
     public static func getShapeCenterNodePosition(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
-        let x = nodePositions.reduce(0) { (result, node) -> Float in
-            return result + node.x
-        }
-        let y = nodePositions.reduce(0) { (result, node) -> Float in
-            return result + node.y
-        }
-        
-        let z = nodePositions.reduce(0) { (result, node) -> Float in
-            return result + node.z
-        }
-        
-        let centerPosition = SCNVector3Make(x / Float(nodePositions.count), y / Float(nodePositions.count), z / Float(nodePositions.count))
+
+        let centerPosition = SCNVector3Center(positions: nodePositions)
         
         // pivoted child node
+        let node = to3D(originNode: originNode, targetPosition: centerPosition, targetNode: targetNode)
+        let rootNode = SCNNode()
+        rootNode.addChildNode(node)
+        return rootNode
+    }
+    
+    private static func to3D(originNode: SCNNode, targetPosition: SCNVector3, targetNode: SCNNode) -> SCNNode{
+        // pivoted child node
         let node = SCNNode()
+        
         // convert centered position based on originNode(plane origin) and pointer
         
         // As the center position was transformed based on originNode(plane origin),
         // we need to tranform back to it
-        node.position = targetNode.convertPosition(centerPosition, from: originNode)
-        
-        let rootNode = SCNNode()
-        rootNode.addChildNode(node)
-        return rootNode
+        node.position = targetNode.convertPosition(targetPosition, from: originNode)
+        return node
     }
     
 //    public static func to3D(startPoint: SCNVector3, interestPoint: Point, inView: ARSCNView) -> SCNNode {
@@ -162,7 +158,6 @@ class Service: NSObject {
 extension Service {
     
     static func get3DShapeNode(forShape shape: Shape) -> SCNNode? {
-//        guard let path = self.generatePath(forShape: shape) else {return nil}
         
         switch shape.name {
         case "circle":
@@ -212,6 +207,27 @@ extension Service {
 }
 
 extension Service {
+    
+    class func lineFrom(vector vector1: SCNVector3, toVector vector2: SCNVector3) -> SCNGeometry {
+        let indices: [Int32] = [0, 1]
+        
+        let source = SCNGeometrySource(vertices: [vector1, vector2])
+        let element = SCNGeometryElement(indices: indices, primitiveType: .line)
+        
+        return SCNGeometry(sources: [source], elements: [element])
+        
+    }
+    static func farthestPointsin3D(nodePositions: [SCNVector3]) {
+
+        let centerPosition = SCNVector3Center(positions: nodePositions)
+        
+        let sorted = nodePositions.sorted { (nodeA, nodeB) -> Bool in
+            let distA = SCNVector3Distance(vectorStart: nodeA, vectorEnd: centerPosition)
+            let distB = SCNVector3Distance(vectorStart: nodeB, vectorEnd: centerPosition)
+            
+            return distA > distB
+        }
+    }
     
     static func farthestPoints(center: Point, points: [Point], type: String) -> [Point]? {
         let center = center

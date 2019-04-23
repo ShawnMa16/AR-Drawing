@@ -95,6 +95,42 @@ extension SCNVector3
 }
 
 /**
+ * Get sorted points based on distance to center.
+ */
+
+func SCNVector3FarthestPoints(positions: [SCNVector3]) -> [SCNVector3] {
+    let centerPosition = SCNVector3Center(positions: positions)
+    
+    let sorted = positions.sorted { (nodeA, nodeB) -> Bool in
+        let distA = SCNVector3Distance(vectorStart: nodeA, vectorEnd: centerPosition)
+        let distB = SCNVector3Distance(vectorStart: nodeB, vectorEnd: centerPosition)
+        
+        return distA > distB
+    }
+    
+    return sorted
+}
+
+/**
+ * Get center position from array of SCNVector3.
+ */
+func SCNVector3Center(positions: [SCNVector3]) -> SCNVector3 {
+    let x = positions.reduce(0) { (result, node) -> Float in
+        return result + node.x
+    }
+    let y = positions.reduce(0) { (result, node) -> Float in
+        return result + node.y
+    }
+    
+    let z = positions.reduce(0) { (result, node) -> Float in
+        return result + node.z
+    }
+    
+    let centerPosition = SCNVector3Make(x / Float(positions.count), y / Float(positions.count), z / Float(positions.count))
+    return centerPosition
+}
+
+/**
  * Adds two SCNVector3 vectors and returns the result as a new SCNVector3.
  */
 func + (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
