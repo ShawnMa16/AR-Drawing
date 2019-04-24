@@ -15,19 +15,27 @@ class Service: NSObject {
     
     public static let testPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 0.05, height: 0.05))
     
-    
-    public static func getShapeCenterNodePosition(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
-
-        let centerPosition = SCNVector3Center(positions: nodePositions)
+    public static func getFirstNode(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
+        let firstNode = SCNVector3FarthestPoints(positions: nodePositions).first
+        let node = getNode(originNode: originNode, targetPosition: firstNode!, targetNode: targetNode)
         
-        // pivoted child node
-        let node = to3D(originNode: originNode, targetPosition: centerPosition, targetNode: targetNode)
         let rootNode = SCNNode()
         rootNode.addChildNode(node)
         return rootNode
     }
     
-    private static func to3D(originNode: SCNNode, targetPosition: SCNVector3, targetNode: SCNNode) -> SCNNode{
+    public static func getShapeCenterNode(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
+
+        let centerPosition = SCNVector3Center(positions: nodePositions)
+        
+        // pivoted child node
+        let node = getNode(originNode: originNode, targetPosition: centerPosition, targetNode: targetNode)
+        let rootNode = SCNNode()
+        rootNode.addChildNode(node)
+        return rootNode
+    }
+    
+    public static func getNode(originNode: SCNNode, targetPosition: SCNVector3, targetNode: SCNNode) -> SCNNode {
         // pivoted child node
         let node = SCNNode()
         
@@ -38,47 +46,7 @@ class Service: NSObject {
         node.position = targetNode.convertPosition(targetPosition, from: originNode)
         return node
     }
-    
-//    public static func to3D(startPoint: SCNVector3, interestPoint: Point, inView: ARSCNView) -> SCNNode {
-//        let planePos = startPoint
-//        let normalizedVector = SCNVector3Make(0, 0, 1)
-//        let x = interestPoint.x, y = interestPoint.y
-//        
-//        
-//        let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos - planePos
-//        let targetNode = SCNNode()
-//        
-//        
-//        return targetNode
-//    }
-    
-    
-    // project the point to a 2D plane
-//    public static func to2D(startPoint: SCNVector3, inView: ARSCNView) -> (x: Float, y: Float) {
-//
-//        let planeOrg = SCNVector3Make(0, 0, 0)
-//        let normalizedVector = SCNVector3Make(0, 0, 1)
-//
-//        let nodePos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).pos - startPoint
-//        let camPos = getPointerPosition(inView: inView, cameraRelativePosition: self.cameraRelativePosition).camPos - startPoint
-//
-//
-////        log.debug(nodePos)
-////        log.debug(camPos - nodePos)
-//
-//        let target = nodePos - planeOrg
-//        let dist = target * normalizedVector
-//        let length = target.dot(vector: normalizedVector)
-//        let projected = nodePos - dist * normalizedVector
-//        log.debug(projected)
-//
-//        let x = (nodePos.x - camPos.x) * (length / nodePos.z) + camPos.x
-//        let y = (nodePos.y - camPos.y) * (length / nodePos.z) + camPos.y
-//        log.debug(x)
-//
-//        return (x, y)
-//    }
-    
+
     public static func to2D(originNode: SCNNode, inView: ARSCNView) -> (x: Float, y: Float) {
         let nodePos = getPointerNode(inView: inView)!
         let position = transformPosition(originNode: originNode, targetNode: nodePos)
@@ -90,21 +58,7 @@ class Service: NSObject {
     public static func transformPosition(originNode: SCNNode, targetNode: SCNNode) -> SCNVector3 {
         return targetNode.convertPosition(SCNVector3Make(0, 0, 0), to: originNode)
     }
-    
-//    public static func getPointerPosition(inView: ARSCNView, cameraRelativePosition: SCNVector3) -> (pos : SCNVector3, valid: Bool, camPos : SCNVector3) {
-//        
-//        guard let pointOfView = inView.pointOfView else { return (SCNVector3Zero, false, SCNVector3Zero) }
-//        
-//        let transform = pointOfView.transform
-//        let orientation = SCNVector3(-transform.m31, -transform.m32, transform.m33)
-//        let location = SCNVector3(transform.m41, transform.m42, transform.m43)
-//        let currentPositionOfCamera = orientation + location
-//        
-//        let pointerPosition = currentPositionOfCamera + cameraRelativePosition
-//        
-//        return (pointerPosition, true, currentPositionOfCamera)
-//    }
-    
+
     public static func getPointerNode(inView: ARSCNView) -> SCNNode? {
         guard let currentFrame = inView.session.currentFrame else { return nil }
         let node = SCNNode()
@@ -157,49 +111,37 @@ class Service: NSObject {
 //MARK:- 3D shapes go here
 extension Service {
     
-    static func get3DShapeNode(forShape shape: Shape) -> SCNNode? {
+    static func get3DShapeNode(forShape shape: Shape, nodePositions: [SCNVector3]) -> SCNNode? {
         
         switch shape.name {
         case "circle":
             guard let radius = computeCircle(shape: shape) else {return nil}
             return Circle(radius: radius)
         case "line":
-            guard let height = computeLine(shape: shape) else {return nil}
-            return Line(height: height)
+            let heightAndLine = computeLine(shape: shape)
+            guard let height = heightAndLine.lineHeight else {return nil}
+            guard let angle = heightAndLine.angle else {return nil}
+            return Line(height: height, angle: angle)
         case "triangle":
-            guard let points = farthestPoints(center: shape.center!, points: shape.originalPoints, type: "triangle") else {return nil}
+            guard let points = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "triangle").points else {return nil}
             return Trianlge(points: points)
         default:
             return SCNNode()
         }
     }
     
-//    private static func generatePath(forShape shape: Shape) -> UIBezierPath? {
-//        switch shape.name {
-//        case "circle":
-//            return self.computeCircle(shape: shape)
-//        case "line":
-//            return self.computeLine(shape: shape)
-//        default:
-//            return nil
-//        }
-//    }
-    
-    private static func computeLine(shape: Shape) -> CGFloat? {
-        let points = self.farthestPoints(center: shape.center!, points: shape.originalPoints, type: "line")
-        let distance = Point.distanceBetween(pointA: points![0], pointB: points![1])
-        
-        return distance
+    private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
+        let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "line")
+        let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
+        let angle = pointsAndAngle.angle
+        return (distance, angle)
     }
     
     private static func computeCircle(shape: Shape) -> CGFloat? {
         guard let center = shape.center else {return nil}
-        guard let firstPoint = farthestPoints(center: center, points: shape.originalPoints, type: "circle")?.first else {return nil}
-        log.info(center)
-        log.info(firstPoint)
-        
+        guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: "circle").points?.first else {return nil}
+
         let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
-        log.debug(radius)
         
         return radius
     }
@@ -217,19 +159,8 @@ extension Service {
         return SCNGeometry(sources: [source], elements: [element])
         
     }
-    static func farthestPointsin3D(nodePositions: [SCNVector3]) {
-
-        let centerPosition = SCNVector3Center(positions: nodePositions)
-        
-        let sorted = nodePositions.sorted { (nodeA, nodeB) -> Bool in
-            let distA = SCNVector3Distance(vectorStart: nodeA, vectorEnd: centerPosition)
-            let distB = SCNVector3Distance(vectorStart: nodeB, vectorEnd: centerPosition)
-            
-            return distA > distB
-        }
-    }
     
-    static func farthestPoints(center: Point, points: [Point], type: String) -> [Point]? {
+    static func farthestPointsAndAngle(center: Point, points: [Point], type: String) -> (points: [Point]?, angle: Float?) {
         let center = center
         let sorted = points.sorted { (pointA, pointB) -> Bool in
             let distA = Point.distanceBetween(pointA: pointA, pointB: center)
@@ -241,15 +172,16 @@ extension Service {
         switch type {
         case "triangle":
             let tri = sorted[0 ..< 3]
-            return Array(tri)
+            return (Array(tri), nil)
         case "line":
             let line = sorted[0 ..< 2]
-            return Array(line)
+            let angle = PointAngle(pontA: line[1], pointB: line[0])
+            return (Array(line), angle)
         case "circle":
             let point = sorted.first
-            return [point!]
+            return ([point!], nil)
         default:
-            return nil
+            return (nil, nil)
         }
     }
 }

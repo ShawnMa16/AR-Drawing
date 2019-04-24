@@ -12,7 +12,11 @@ import SpriteKit
 
 class Line: SCNNode {
     
-    init(height: CGFloat) {
+    public var angle: Float
+    
+    init(height: CGFloat, angle: Float) {
+        self.angle = angle
+
         super.init()
         
         let shape = SCNCylinder(radius: 0.001, height: height)

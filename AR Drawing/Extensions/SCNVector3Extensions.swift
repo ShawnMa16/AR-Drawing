@@ -92,6 +92,13 @@ extension SCNVector3
     func cross(vector: SCNVector3) -> SCNVector3 {
         return SCNVector3Make(y * vector.z - z * vector.y, z * vector.x - x * vector.z, x * vector.y - y * vector.x)
     }
+    
+    /// Calculate the magnitude of this vector
+    var magnitude:Float {
+        get {
+            return sqrt(self.dot(vector: self))
+        }
+    }
 }
 
 /**
@@ -273,6 +280,18 @@ func SCNVector3Project(vectorToProject: SCNVector3, projectionVector: SCNVector3
     let scale: Float = SCNVector3DotProduct(projectionVector, right: vectorToProject) / SCNVector3DotProduct(projectionVector, right: projectionVector)
     let v: SCNVector3 = projectionVector * scale
     return v
+}
+
+/*
+ Calculate the angle between two vectors
+ 
+ - parameter vectorB: Other vector in the calculation
+ */
+func SCNVector3Angle(vectorA: SCNVector3, vectorB:SCNVector3) -> SCNFloat {
+    
+    //cos(angle) = (A.B)/(|A||B|)
+    let cosineAngle = (vectorA.dot(vector: vectorB) / (vectorA.magnitude * vectorB.magnitude))
+    return SCNFloat(acos(cosineAngle))
 }
 
 /*

@@ -400,7 +400,6 @@ extension ViewController {
             let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
             self.typeString = type
 
-//            Service.get3DShapeNode(forShape: shape)
 
             self.testingPoints = []
         } else {
@@ -423,12 +422,32 @@ extension ViewController {
             let currentStroke = strokeIDCount - 1
 
             let pointerNode = Service.getPointerNode(inView: self.arView)!
-            let centerNode = Service.getShapeCenterNodePosition(originNode: startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
+            let centerNode = Service.getShapeCenterNode(originNode: startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
             
-            if let node = Service.get3DShapeNode(forShape: latestShape) {
+//            let sorted = SCNVector3FarthestPoints(positions: self.interestNodePositions[currentStroke]!)
+            
+            let firstNode = Service.getFirstNode(originNode: self.startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
+            
+            let sorted = SCNVector3FarthestPoints(positions: self.interestNodePositions[currentStroke]!)
+            let center = SCNVector3Center(positions: self.interestNodePositions[currentStroke]!)
+            if let node = Service.get3DShapeNode(forShape: latestShape, nodePositions: self.interestNodePositions[currentStroke]!) {
                 // get the pivoted child node
+                
+//                if latestShape.name == "line" {
+////                    firstNode.addChildNode(node)
+//                    firstNode.childNodes.first?.addChildNode(node)
+//                    Service.addNode(firstNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+//                    return
+//                }
+                if latestShape.name == "line" {
+                    let target = node as! Line
+                    node.eulerAngles.z -= target.angle
+                }
                 centerNode.childNodes.first?.addChildNode(node)
                 Service.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+
+                log.debug( SCNVector3Angle(vectorA: SCNVector3(0, 0, 0), vectorB: center))
+//                centerNode.look(at: center - center)
             }
 
         }
