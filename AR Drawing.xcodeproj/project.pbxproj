@@ -11,6 +11,7 @@
 		294BCD89226B9CD000AABDA0 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BCD88226B9CD000AABDA0 /* Line.swift */; };
 		294BCD8B226CF21500AABDA0 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BCD8A226CF21500AABDA0 /* Triangle.swift */; };
 		297BC31922712DB200D62F5E /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC31822712DB200D62F5E /* Rectangle.swift */; };
+		297BC31B227141CB00D62F5E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC31A227141CB00D62F5E /* Constants.swift */; };
 		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
@@ -57,6 +58,7 @@
 		294BCD88226B9CD000AABDA0 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		294BCD8A226CF21500AABDA0 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		297BC31822712DB200D62F5E /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
+		297BC31A227141CB00D62F5E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				29B034F1225A9C150096FB0B /* ViewController.swift */,
+				297BC31A227141CB00D62F5E /* Constants.swift */,
 				29B03528225CE9B90096FB0B /* Service.swift */,
 				298709722266530200FF3470 /* Extensions */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
@@ -445,6 +448,7 @@
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
 				29B034F2225A9C150096FB0B /* ViewController.swift in Sources */,
+				297BC31B227141CB00D62F5E /* Constants.swift in Sources */,
 				294BCD89226B9CD000AABDA0 /* Line.swift in Sources */,
 				29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */,
 			);

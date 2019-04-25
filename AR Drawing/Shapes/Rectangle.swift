@@ -13,9 +13,9 @@ import UIKit
 class Rectangle: SCNNode {
     init(width: CGFloat, height: CGFloat) {
         super.init()
-        
+        let stroke = Constants.shared.stroke
         let strokeBezierPath = UIBezierPath()
-        strokeBezierPath.lineWidth = CGFloat.random(in: 0 ... 0.002)
+        strokeBezierPath.lineWidth = stroke
         
         strokeBezierPath.move(to: CGPoint.zero)
         strokeBezierPath.addLine(to: CGPoint(x: width, y: 0))
@@ -31,18 +31,20 @@ class Rectangle: SCNNode {
         
         let bezierPath = UIBezierPath(cgPath: cgPath)
         let shape = SCNShape(path: bezierPath, extrusionDepth: 0.001)
-        shape.firstMaterial?.diffuse.contents = UIColor.black
+        shape.firstMaterial?.diffuse.contents = Constants.shared.black
         let node = SCNNode(geometry: shape)
         
         
         let plane = SCNPlane(width: width, height: height)
-        plane.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.3)
+        plane.firstMaterial?.isDoubleSided = true
+        plane.firstMaterial?.diffuse.contents = Constants.shared.randomColor
+        let planeNode = SCNNode(geometry: plane)
         
         node.position.x = Float(-width / 2 )
         node.position.y = Float(-height / 2)
 
         self.addChildNode(node)
-        self.addChildNode(SCNNode(geometry: plane))
+        self.addChildNode(planeNode)
     }
     
     required init?(coder aDecoder: NSCoder) {
