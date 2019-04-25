@@ -28,6 +28,7 @@ class Circle: SCNNode {
         plane.firstMaterial?.diffuse.contents = Constants.shared.randomColor
         plane.firstMaterial?.isDoubleSided = true
         let planeNode = SCNNode(geometry: plane)
+        
         // roate the node to face the camera
         node.rotation = SCNVector4Make(1, 0, 0, .pi / 2)
         
