@@ -19,9 +19,11 @@ class Line: SCNNode {
 
         super.init()
         
-        let shape = SCNCylinder(radius: 0.001, height: height)
+        let radius = CGFloat.random(in: 0.0001 ... 0.001)
         
-        shape.firstMaterial?.diffuse.contents = UIColor.red
+        let shape = SCNCylinder(radius: radius, height: height)
+        
+        shape.firstMaterial?.diffuse.contents = UIColor.black
 
         let node = SCNNode(geometry: shape)
         self.addChildNode(node)

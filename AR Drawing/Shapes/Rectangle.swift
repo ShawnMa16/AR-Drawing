@@ -1,0 +1,51 @@
+//
+//  Rectangle.swift
+//  AR Drawing
+//
+//  Created by Shawn Ma on 4/24/19.
+//  Copyright © 2019 Shawn Ma. All rights reserved.
+//
+
+import Foundation
+import SceneKit
+import UIKit
+
+class Rectangle: SCNNode {
+    init(width: CGFloat, height: CGFloat) {
+        super.init()
+        
+        let strokeBezierPath = UIBezierPath()
+        strokeBezierPath.lineWidth = CGFloat.random(in: 0 ... 0.002)
+        
+        strokeBezierPath.move(to: CGPoint.zero)
+        strokeBezierPath.addLine(to: CGPoint(x: width, y: 0))
+        strokeBezierPath.addLine(to: CGPoint(x: width, y: height))
+        strokeBezierPath.addLine(to: CGPoint(x: 0.0, y: height))
+        strokeBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+        strokeBezierPath.close()
+        let cgPath = strokeBezierPath.cgPath.copy(
+            strokingWithWidth: strokeBezierPath.lineWidth,
+            lineCap: strokeBezierPath.lineCapStyle,
+            lineJoin: strokeBezierPath.lineJoinStyle,
+            miterLimit: strokeBezierPath.miterLimit)
+        
+        let bezierPath = UIBezierPath(cgPath: cgPath)
+        let shape = SCNShape(path: bezierPath, extrusionDepth: 0.001)
+        shape.firstMaterial?.diffuse.contents = UIColor.black
+        let node = SCNNode(geometry: shape)
+        
+        
+        let plane = SCNPlane(width: width, height: height)
+        plane.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.3)
+        
+        node.position.x = Float(-width / 2 )
+        node.position.y = Float(-height / 2)
+
+        self.addChildNode(node)
+        self.addChildNode(SCNNode(geometry: plane))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

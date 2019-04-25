@@ -22,6 +22,7 @@ class Trianlge: SCNNode {
         
         let shape = SCNShape(path: bezierPath, extrusionDepth: 0.001)
         shape.materials.first?.diffuse.contents = UIColor.orange
+        shape.materials.first?.fillMode = .lines
         let node = SCNNode(geometry: shape)
         self.addChildNode(node)
     }

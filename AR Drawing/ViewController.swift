@@ -45,6 +45,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         return button
     }()
     
+    private let rectangleButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Rectangle", for: .normal)
+        button.backgroundColor = .blue
+        return button
+    }()
+    
     private let testButton: UIButton = {
         let button = UIButton()
         button.setTitle("Classify", for: .normal)
@@ -139,6 +146,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-30)
         }
         
+        view.addSubview(rectangleButton)
+        rectangleButton.snp.makeConstraints { (make) in
+            make.height.equalTo(50)
+            make.width.equalTo(80)
+            make.right.equalToSuperview().offset(-30)
+            make.bottom.equalTo(lineButton.snp.top).offset(-30)
+        }
+        
         view.addSubview(testButton)
         testButton.snp.makeConstraints { (make) in
             make.height.equalTo(50)
@@ -187,7 +202,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         circleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
         triangleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
         lineButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
+        rectangleButton.addTarget(self, action: #selector(switchType), for: .touchUpInside)
+        
         testButton.addTarget(self, action: #selector(testButtonDown), for: .touchUpInside)
+        
         clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
     }
     
@@ -260,7 +278,7 @@ extension ViewController {
         }
     }
 }
-
+//MARK:- Add shape to scene
 extension ViewController {
     
     func classify() {
@@ -280,6 +298,7 @@ extension ViewController {
     
     func addSphere() {
         let sphere = SCNNode()
+        sphere.name = "dot"
         sphere.geometry = SCNSphere(radius: 0.0015)
         sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         
@@ -364,6 +383,8 @@ extension ViewController {
             self.currentType = "triangle"
         case "Line":
             self.currentType = "line"
+        case "Rectangle":
+            self.currentType = "rectangle"
         default:
             break
         }
@@ -424,34 +445,34 @@ extension ViewController {
             let pointerNode = Service.getPointerNode(inView: self.arView)!
             let centerNode = Service.getShapeCenterNode(originNode: startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
             
-//            let sorted = SCNVector3FarthestPoints(positions: self.interestNodePositions[currentStroke]!)
+            self.hideDots()
             
-            let firstNode = Service.getFirstNode(originNode: self.startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
-            
-            let sorted = SCNVector3FarthestPoints(positions: self.interestNodePositions[currentStroke]!)
-            let center = SCNVector3Center(positions: self.interestNodePositions[currentStroke]!)
-            if let node = Service.get3DShapeNode(forShape: latestShape, nodePositions: self.interestNodePositions[currentStroke]!) {
-                // get the pivoted child node
+            if let node = Service.get3DShapeNode(forShape: latestShape, nodePositions:
                 
-//                if latestShape.name == "line" {
-////                    firstNode.addChildNode(node)
-//                    firstNode.childNodes.first?.addChildNode(node)
-//                    Service.addNode(firstNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-//                    return
-//                }
+                self.interestNodePositions[currentStroke]!) {
+
                 if latestShape.name == "line" {
                     let target = node as! Line
                     node.eulerAngles.z -= target.angle
                 }
                 centerNode.childNodes.first?.addChildNode(node)
                 Service.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-
-                log.debug( SCNVector3Angle(vectorA: SCNVector3(0, 0, 0), vectorB: center))
-//                centerNode.look(at: center - center)
             }
 
         }
         
         startNode = nil
+    }
+}
+
+//MARK: - SCNNode actions here
+extension ViewController {
+    public func hideDots() {
+        let dots = self.scene.rootNode.childNodes.filter({$0.name == "dot"})
+        dots.forEach { (dot) in
+            DispatchQueue.main.async {
+                dot.removeFromParentNode()
+            }
+        }
     }
 }

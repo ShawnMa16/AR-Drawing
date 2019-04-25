@@ -125,9 +125,29 @@ extension Service {
         case "triangle":
             guard let points = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "triangle").points else {return nil}
             return Trianlge(points: points)
+        case "rectangle":
+            let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "rectangle")
+            guard let points = rectAndAngle.points else {return nil}
+            guard let angle = rectAndAngle.angle else {return nil}
+            
+            let shortDist = Point.distanceBetween(pointA: shape.center!, pointB: points[1])
+            let longDist = Point.distanceBetween(pointA: shape.center!, pointB: points[0])
+            
+            // if |angle * 180 / Float.pi| > 45, means width < heigt
+            log.debug(angle * 180 / Float.pi)
+            let angleIn180 = abs(angle * 180 / Float.pi)
+            let halfWidth = angleIn180 >= 45 ? longDist : shortDist
+            let halfHeight = angleIn180 >= 45 ? shortDist : longDist
+            
+            return Rectangle(width: halfWidth * 2, height: halfHeight * 2)
+            
         default:
             return SCNNode()
         }
+    }
+    
+    private static func computeRectangle(shape: Shape) {
+        
     }
     
     private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
@@ -180,6 +200,10 @@ extension Service {
         case "circle":
             let point = sorted.first
             return ([point!], nil)
+        case "rectangle":
+            let points = [sorted.first!, sorted.last!]
+            let angle = PointAngle(pontA: points[1], pointB: Point(x: 0, y: 0, strokeID: -1))
+            return (points, angle)
         default:
             return (nil, nil)
         }
