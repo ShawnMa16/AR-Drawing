@@ -322,21 +322,11 @@ extension ViewController {
         sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         
         guard let startNode = self.startNode else {return}
-//        let position = Service.to2D(startPoint: startPoint, inView: self.arView)
-        
-//        let currentNode = Service.getPointerNode(inView: self.arView)
-//        let pointerPos = Service.getPointerPosition(inView: self.arView, cameraRelativePosition: self.cameraRelativePosition).pos
-//        let node = SCNNode()
-//        node.position = SCNVector3Make(0, 0, 0)
-//        startNode?.addChildNode(node)
-//        let newPos = Service.transformVector(originNode: startNode!, targetNode: currentNode!, targetPosition: pointerPos)
-        
+
         let position = Service.to2D(originNode: startNode, inView: self.arView)
-//        let pos = (let x: Float = newPos.y, let y: Float = -newPos.x)
-//        log.debug(newPos)
-        
+
         self.addPoint(pointPos: position)
-//
+
         Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
         
     }
@@ -375,15 +365,9 @@ extension ViewController {
     
     @objc
     func clear() {
-//        DispatchQueue.main.async {
-//            self.scene.rootNode.childNodes.forEach { (node) in
-//                node.removeFromParentNode()
-//            }
-//        }
-        
-//        let path = Service.testPath
-//        let circle = Circle(path: path)
-//        Service.addNode(circle, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+        DispatchQueue.main.async {
+            self.scene.rootNode.childNodes.forEach({$0.removeFromParentNode()})
+        }
     }
     
     @objc
@@ -446,7 +430,7 @@ extension ViewController {
             self.testingPoints = []
         } else {
             let latestPoints = templatePoints.filter({$0.count != 0}).last
-                        
+            
             let latestShape = Shape(points: latestPoints!, type: self.currentType)
             if testingShape == nil {
                 testingShape = []

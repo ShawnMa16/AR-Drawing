@@ -132,45 +132,16 @@ extension Service {
             guard let points = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type).points else {return nil}
             return Trianlge(points: points)
         case .rectangle:
-            let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
-            guard let points = rectAndAngle.points else {return nil}
-            guard let angle = rectAndAngle.angle else {return nil}
-            
-            let shortDist = Point.distanceBetween(pointA: shape.center!, pointB: points[1])
-            let longDist = Point.distanceBetween(pointA: shape.center!, pointB: points[0])
-            
-            // if |angle * 180 / Float.pi| > 45, means width < heigt
-            log.debug(angle * 180 / Float.pi)
-            let angleIn180 = abs(angle * 180 / Float.pi)
-            let halfWidth = angleIn180 >= 45 ? longDist : shortDist
-            let halfHeight = angleIn180 >= 45 ? shortDist : longDist
-            
+            let widthAndHeight = computeRectangle(shape: shape)
+            guard let halfWidth = widthAndHeight.halfWidth else {return nil}
+            guard let halfHeight = widthAndHeight.halfHeight else {return nil}
             return Rectangle(width: halfWidth * 2, height: halfHeight * 2)
             
         default:
             return SCNNode()
         }
     }
-    
-    private static func computeRectangle(shape: Shape) {
-        
-    }
-    
-    private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
-        let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
-        let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
-        let angle = pointsAndAngle.angle
-        return (distance, angle)
-    }
-    
-    private static func computeCircle(shape: Shape) -> CGFloat? {
-        guard let center = shape.center else {return nil}
-        guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: .circle).points?.first else {return nil}
 
-        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
-        
-        return radius
-    }
     
 }
 
@@ -184,6 +155,40 @@ extension Service {
         
         return SCNGeometry(sources: [source], elements: [element])
         
+    }
+    
+    
+    private static func computeRectangle(shape: Shape) -> (halfWidth: CGFloat?, halfHeight: CGFloat?){
+        let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
+        guard let points = rectAndAngle.points else {return (nil, nil)}
+        guard let angle = rectAndAngle.angle else {return (nil, nil)}
+        
+        let shortDist = Point.distanceBetween(pointA: shape.center!, pointB: points[1])
+        let longDist = Point.distanceBetween(pointA: shape.center!, pointB: points[0])
+        
+        // if |angle * 180 / Float.pi| > 45, means width < heigt
+        log.debug(angle * 180 / Float.pi)
+        let angleIn180 = abs(angle * 180 / Float.pi)
+        let halfWidth = angleIn180 >= 45 ? longDist : shortDist
+        let halfHeight = angleIn180 >= 45 ? shortDist : longDist
+        
+        return (halfWidth, halfHeight)
+    }
+    
+    private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
+        let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
+        let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
+        let angle = pointsAndAngle.angle
+        return (distance, angle)
+    }
+    
+    private static func computeCircle(shape: Shape) -> CGFloat? {
+        guard let center = shape.center else {return nil}
+        guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: .circle).points?.first else {return nil}
+        
+        let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
+        
+        return radius
     }
     
     static func farthestPointsAndAngle(center: Point, points: [Point], type: ShapeType) -> (points: [Point]?, angle: Float?) {
