@@ -471,6 +471,15 @@ extension ViewController {
                 }
                 centerNode.childNodes.first?.addChildNode(node)
                 Service.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+               // centerNode.setHighlighted()
+                
+                if let path = Bundle.main.path(forResource: "NodeTechnique", ofType: "plist") {
+                    if let dict = NSDictionary(contentsOfFile: path)  {
+                        let dict2 = dict as! [String : AnyObject]
+                        let technique = SCNTechnique(dictionary:dict2)
+                        self.arView.technique = technique
+                    }
+                }
             }
 
         }

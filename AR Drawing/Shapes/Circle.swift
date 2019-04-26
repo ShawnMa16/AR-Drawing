@@ -22,6 +22,7 @@ class Circle: SCNNode {
         tube.firstMaterial?.diffuse.contents = Constants.shared.black
         
         let node = SCNNode(geometry: tube)
+        node.setHighlighted()
         
         let plane = SCNPlane(width: radius * 2, height: radius * 2)
         plane.cornerRadius = radius * 2
@@ -34,6 +35,8 @@ class Circle: SCNNode {
         
         self.addChildNode(node)
         self.addChildNode(planeNode)
+        
+        //self.setHighlighted()
     }
     
     required init?(coder aDecoder: NSCoder) {
