@@ -8,17 +8,8 @@
 
 import Foundation
 import UIKit
-import SceneKit
 
 class Constants {
-    private let growBlue = float3(0, 1, 1)
-    private let growRed = float3(1.0, 0, 0)
-    
-    public var randomGrowColor: float3 {
-        get {
-            return [growRed, growBlue].randomElement()!
-        }
-    }
     
     public let black = UIColor.black
     public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.002)}}
