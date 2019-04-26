@@ -121,6 +121,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		297BC32822738DF100D62F5E /* Shader */ = {
+			isa = PBXGroup;
+			children = (
+				297BC322227382F900D62F5E /* NodeRender.metal */,
+				297BC323227382F900D62F5E /* NodeTechnique.plist */,
+			);
+			path = Shader;
+			sourceTree = "<group>";
+		};
 		298709722266530200FF3470 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,13 +177,12 @@
 		29B034EC225A9C150096FB0B /* AR Drawing */ = {
 			isa = PBXGroup;
 			children = (
+				297BC32822738DF100D62F5E /* Shader */,
 				298709732266533600FF3470 /* Shapes */,
 				29B0351D225AA1B00096FB0B /* QPoints */,
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				29B034F1225A9C150096FB0B /* ViewController.swift */,
-				297BC322227382F900D62F5E /* NodeRender.metal */,
-				297BC323227382F900D62F5E /* NodeTechnique.plist */,
 				297BC31A227141CB00D62F5E /* Constants.swift */,
 				29B03528225CE9B90096FB0B /* Service.swift */,
 				298709722266530200FF3470 /* Extensions */,
