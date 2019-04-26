@@ -15,19 +15,19 @@ class QPointCloudRecognizer {
     /// Main function of the $Q recognizer.
     /// Classifies a candidate gesture against a set of templates.
     /// Returns the class of the closest neighbor in the template set.
-    public static func classify(inputShape: Shape, templateSet: [Shape]) -> String {
+    public static func classify(inputShape: Shape, templateSet: [Shape]) -> ShapeType {
         var minDistance = Float.greatestFiniteMagnitude
-        var shapeClass = ""
+        var shapeClass: ShapeType? = nil
         
         templateSet.forEach { (template) in
             let dist = greedyCloudMatch(shape1: inputShape, shape2: template, minSoFar: minDistance)
             if dist < minDistance {
                 minDistance = dist
-                shapeClass = template.name
+                shapeClass = template.type
             }
         }
         
-        return shapeClass
+        return shapeClass!
     }
     
     /// Implements greedy search for a minimum-distance matching between two point clouds.

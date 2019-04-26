@@ -9,6 +9,12 @@
 import Foundation
 import ARKit
 
+enum ShapeType: String {
+    typealias RawValue = String
+    case circle, rectangle, line, halfCircle, triangle
+    case test
+}
+
 class Service: NSObject {
     
     public static let cameraRelativePosition = SCNVector3(0, 0, -0.1)
@@ -113,20 +119,20 @@ extension Service {
     
     static func get3DShapeNode(forShape shape: Shape, nodePositions: [SCNVector3]) -> SCNNode? {
         
-        switch shape.name {
-        case "circle":
+        switch shape.type {
+        case .circle:
             guard let radius = computeCircle(shape: shape) else {return nil}
             return Circle(radius: radius)
-        case "line":
+        case .line:
             let heightAndLine = computeLine(shape: shape)
             guard let height = heightAndLine.lineHeight else {return nil}
             guard let angle = heightAndLine.angle else {return nil}
             return Line(height: height, angle: angle)
-        case "triangle":
-            guard let points = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "triangle").points else {return nil}
+        case .triangle:
+            guard let points = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type).points else {return nil}
             return Trianlge(points: points)
-        case "rectangle":
-            let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "rectangle")
+        case .rectangle:
+            let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
             guard let points = rectAndAngle.points else {return nil}
             guard let angle = rectAndAngle.angle else {return nil}
             
@@ -151,7 +157,7 @@ extension Service {
     }
     
     private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
-        let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: "line")
+        let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
         let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
         let angle = pointsAndAngle.angle
         return (distance, angle)
@@ -159,7 +165,7 @@ extension Service {
     
     private static func computeCircle(shape: Shape) -> CGFloat? {
         guard let center = shape.center else {return nil}
-        guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: "circle").points?.first else {return nil}
+        guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: .circle).points?.first else {return nil}
 
         let radius = Point.distanceBetween(pointA: firstPoint, pointB: center)
         
@@ -180,7 +186,7 @@ extension Service {
         
     }
     
-    static func farthestPointsAndAngle(center: Point, points: [Point], type: String) -> (points: [Point]?, angle: Float?) {
+    static func farthestPointsAndAngle(center: Point, points: [Point], type: ShapeType) -> (points: [Point]?, angle: Float?) {
         let center = center
         let sorted = points.sorted { (pointA, pointB) -> Bool in
             let distA = Point.distanceBetween(pointA: pointA, pointB: center)
@@ -190,17 +196,17 @@ extension Service {
         }
         
         switch type {
-        case "triangle":
+        case .triangle:
             let tri = sorted[0 ..< 3]
             return (Array(tri), nil)
-        case "line":
+        case .line:
             let line = sorted[0 ..< 2]
             let angle = PointAngle(pontA: line[1], pointB: line[0])
             return (Array(line), angle)
-        case "circle":
+        case .circle:
             let point = sorted.first
             return ([point!], nil)
-        case "rectangle":
+        case .rectangle:
             let points = [sorted.first!, sorted.last!]
             let angle = PointAngle(pontA: points[1], pointB: Point(x: 0, y: 0, strokeID: -1))
             return (points, angle)

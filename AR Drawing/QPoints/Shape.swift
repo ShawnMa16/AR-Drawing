@@ -15,7 +15,7 @@ struct Shape {
     
     // points for classification
     public var points: [Point]
-    public var name: String = ""
+    public var type: ShapeType
     
     // center for orignal points
     public var center: Point? {
@@ -160,10 +160,10 @@ struct Shape {
         LUT.removeLast()
     }
     
-    init(points: [Point], name: String = "") {
+    init(points: [Point], type: ShapeType) {
         
         self.points = []
-        self.name = name
+        self.type = type
         self.originalPoints = points
         
         let scaled = scale(points: points)
