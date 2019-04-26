@@ -350,7 +350,6 @@ extension ViewController {
             } else {
                 let lastPoint = self.templatePoints[self.templatePoints.count - 1].last
                 let distance = Point.distanceBetween(pointA: point, pointB: lastPoint!)
-                log.debug(distance)
                 
                 if distance > self.pointsThreshold {
                     self.templatePoints[self.templatePoints.count - 1].append(point)
