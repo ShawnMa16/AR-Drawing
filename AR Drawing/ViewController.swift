@@ -127,6 +127,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         arView.autoenablesDefaultLighting = true
         arView.debugOptions = [.showWorldOrigin]
         
+        if let path = Bundle.main.path(forResource: "NodeTechnique", ofType: "plist") {
+            if let dict = NSDictionary(contentsOfFile: path)  {
+                let dict2 = dict as! [String : AnyObject]
+                let technique = SCNTechnique(dictionary:dict2)
+                self.arView.technique = technique
+            }
+        }
+        
         view.addSubview(arView)
         arView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -471,15 +479,12 @@ extension ViewController {
                 }
                 centerNode.childNodes.first?.addChildNode(node)
                 Service.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-               // centerNode.setHighlighted()
                 
-                if let path = Bundle.main.path(forResource: "NodeTechnique", ofType: "plist") {
-                    if let dict = NSDictionary(contentsOfFile: path)  {
-                        let dict2 = dict as! [String : AnyObject]
-                        let technique = SCNTechnique(dictionary:dict2)
-                        self.arView.technique = technique
-                    }
+                let shouldSetHeightlighted = Float.random(in: 0 ... 1)
+                if shouldSetHeightlighted <= 0.3 {
+                    centerNode.setHighlighted()
                 }
+                
             }
 
         }

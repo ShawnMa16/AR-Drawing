@@ -13,8 +13,8 @@ extension SCNNode {
     func setHighlighted( _ highlighted : Bool = true, _ highlightedBitMask : Int = 3 ) {
         categoryBitMask = highlightedBitMask
         
-        //for child in self.childNodes {
-        //    child.setHighlighted()
-        //}
+        for child in self.childNodes {
+            child.setHighlighted()
+        }
     }
 }
