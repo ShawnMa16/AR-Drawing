@@ -16,8 +16,6 @@
 		297BC324227382F900D62F5E /* NodeRender.metal in Sources */ = {isa = PBXBuildFile; fileRef = 297BC322227382F900D62F5E /* NodeRender.metal */; };
 		297BC325227382F900D62F5E /* NodeTechnique.plist in Resources */ = {isa = PBXBuildFile; fileRef = 297BC323227382F900D62F5E /* NodeTechnique.plist */; };
 		297BC32722738B6500D62F5E /* UIColor + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32622738B6500D62F5E /* UIColor + Extensions.swift */; };
-		297BC32C2273958400D62F5E /* loki.metal in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32A2273958400D62F5E /* loki.metal */; };
-		297BC32D2273958400D62F5E /* loki_header.metal in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32B2273958400D62F5E /* loki_header.metal */; };
 		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
@@ -69,8 +67,6 @@
 		297BC322227382F900D62F5E /* NodeRender.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = NodeRender.metal; sourceTree = "<group>"; };
 		297BC323227382F900D62F5E /* NodeTechnique.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NodeTechnique.plist; sourceTree = "<group>"; };
 		297BC32622738B6500D62F5E /* UIColor + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extensions.swift"; sourceTree = "<group>"; };
-		297BC32A2273958400D62F5E /* loki.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = loki.metal; sourceTree = "<group>"; };
-		297BC32B2273958400D62F5E /* loki_header.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = loki_header.metal; sourceTree = "<group>"; };
 		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,15 +130,6 @@
 			path = Shader;
 			sourceTree = "<group>";
 		};
-		297BC3292273958400D62F5E /* Loki */ = {
-			isa = PBXGroup;
-			children = (
-				297BC32A2273958400D62F5E /* loki.metal */,
-				297BC32B2273958400D62F5E /* loki_header.metal */,
-			);
-			path = Loki;
-			sourceTree = "<group>";
-		};
 		298709722266530200FF3470 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,7 +189,6 @@
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
 				29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
-				297BC3292273958400D62F5E /* Loki */,
 			);
 			path = "AR Drawing";
 			sourceTree = "<group>";
@@ -476,7 +462,6 @@
 				29B0352B225D00D40096FB0B /* float4x4+Extensions.swift in Sources */,
 				29B03529225CE9B90096FB0B /* Service.swift in Sources */,
 				297BC32722738B6500D62F5E /* UIColor + Extensions.swift in Sources */,
-				297BC32C2273958400D62F5E /* loki.metal in Sources */,
 				297BC31922712DB200D62F5E /* Rectangle.swift in Sources */,
 				294BCD8B226CF21500AABDA0 /* Triangle.swift in Sources */,
 				29B03525225AAFEE0096FB0B /* Geometry.swift in Sources */,
@@ -484,7 +469,6 @@
 				297BC324227382F900D62F5E /* NodeRender.metal in Sources */,
 				298709752266534C00FF3470 /* Circle.swift in Sources */,
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
-				297BC32D2273958400D62F5E /* loki_header.metal in Sources */,
 				297BC32122737BAD00D62F5E /* SCNNode + Extensions.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
 				29B034F2225A9C150096FB0B /* ViewController.swift in Sources */,

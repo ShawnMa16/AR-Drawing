@@ -1,7 +1,6 @@
 #include <metal_stdlib>
 using namespace metal;
 #include <SceneKit/scn_metal>
-#import "../Loki/loki_header.metal"
 
 struct custom_node_t3 {
     float4x4 modelTransform;
@@ -68,19 +67,7 @@ fragment half4 combine_fragment(out_vertex_t vert [[stage_in]],
         return half4(FragmentColor);
     }
     
-    // Initialize a random number generator, seeds 2 and 3 are optional
-    Loki rng = Loki(1);
-    // get a random float [0,1)
-    float random_float = rng.rand();
-    
-    float3 randomGrowColor [3] = {
-        float3(1.0, 0.0, 0.0),
-        float3(0.0, 0.0, 1.0),
-        float3(1.0, 1.0, 0.0)
-    };
-    
-    int randomIndex = int(random_float * 3);
-    float3 glowColor = randomGrowColor[randomIndex];
+    float3 glowColor = float3(0.0, 0.0, 0.0);
     
     float alpha = maskColor.r;
     float3 out = FragmentColor.rgb * ( 1.0 - alpha ) + alpha * glowColor;
@@ -99,9 +86,9 @@ vertex out_vertex_t blur_vertex(custom_vertex_t in [[stage_in]])
 };
 
 // http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/
-constant float offset[] = { 0.0, 4.0, 8.0, 12.0, 16.0 };
+constant float offset[] = { 0.0, 5.0, 10.0, 15.0, 20.0};
 constant float weight[] = { 0.2270270270, 0.1945945946, 0.1216216216, 0.0540540541, 0.0162162162 };
-constant float bufferSize = 512.0;
+constant float bufferSize = 1024.0;
 
 fragment half4 blur_fragment_h(out_vertex_t vert [[stage_in]],
                                           texture2d<float, access::sample> maskSampler [[texture(0)]])
