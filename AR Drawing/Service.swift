@@ -97,6 +97,11 @@ class Service: NSObject {
         }
     }
     
+    /**
+     Fade in a UIView in 1.5s and show it for a certain than fade it out in 1.5s
+     - Parameter view: UIView that needed to be faded in and out
+     - Parameter delay: TimeInterval you want to stay between fade in and out
+     */
     static func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
         
         let animationDuration = 1.5
@@ -136,8 +141,7 @@ extension Service {
             guard let halfWidth = widthAndHeight.halfWidth else {return nil}
             guard let halfHeight = widthAndHeight.halfHeight else {return nil}
             return Rectangle(width: halfWidth * 2, height: halfHeight * 2)
-            
-        default:
+         default:
             return SCNNode()
         }
     }
@@ -157,7 +161,11 @@ extension Service {
         
     }
     
-    
+    /**
+     Compute rectangle
+     - Parameter shape: A Shape object
+     - Returns: halfWidth and halfHeight
+     */
     private static func computeRectangle(shape: Shape) -> (halfWidth: CGFloat?, halfHeight: CGFloat?){
         let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
         guard let points = rectAndAngle.points else {return (nil, nil)}
@@ -175,6 +183,11 @@ extension Service {
         return (halfWidth, halfHeight)
     }
     
+    /**
+     Compute line
+     - Parameter shape: A Shape object
+     - Returns: lineHeight and angle
+     */
     private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
         let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
         let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
@@ -182,6 +195,12 @@ extension Service {
         return (distance, angle)
     }
     
+    
+    /**
+     Compute circle
+     - Parameter shape: A Shape object
+     - Returns: circle's radius
+     */
     private static func computeCircle(shape: Shape) -> CGFloat? {
         guard let center = shape.center else {return nil}
         guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: .circle).points?.first else {return nil}
@@ -191,6 +210,13 @@ extension Service {
         return radius
     }
     
+    /**
+     Sort the farthest points distance from each point to the center Point
+     - Parameter center: Center of the Points
+     - Parameter points: Points for sorting
+     - Parameter type: Type of the shape, for returning different result
+     - Returns: Sorted farthest points and angle between line(PointA - PointB) to (0.01, 0)
+     */
     static func farthestPointsAndAngle(center: Point, points: [Point], type: ShapeType) -> (points: [Point]?, angle: Float?) {
         let center = center
         let sorted = points.sorted { (pointA, pointB) -> Bool in
@@ -205,13 +231,16 @@ extension Service {
             let tri = sorted[0 ..< 3]
             return (Array(tri), nil)
         case .line:
+            // get the farthest two points to form a line
             let line = sorted[0 ..< 2]
             let angle = PointAngle(pontA: line[1], pointB: line[0])
             return (Array(line), angle)
         case .circle:
+            // get the first point to form a circle
             let point = sorted.first
             return ([point!], nil)
         case .rectangle:
+            // get the closest and farthest points for calculating width and height for rectangle
             let points = [sorted.first!, sorted.last!]
             let angle = PointAngle(pontA: points[1], pointB: Point(x: 0, y: 0, strokeID: -1))
             return (points, angle)
