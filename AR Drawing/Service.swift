@@ -15,13 +15,15 @@ enum ShapeType: String {
     case test
 }
 
-class Service: NSObject {
+class Service {
     
-    public static let cameraRelativePosition = SCNVector3(0, 0, -0.1)
+    let cameraRelativePosition = Constants.shared.cameraRelativePosition
     
-    public static let testPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 0.05, height: 0.05))
+    static let shared = Service()
     
-    public static func getFirstNode(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
+    public let testPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 0.05, height: 0.05))
+    
+    public func getFirstNode(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
         let firstNode = SCNVector3FarthestPoints(positions: nodePositions).first
         let node = getNode(originNode: originNode, targetPosition: firstNode!, targetNode: targetNode)
         
@@ -30,7 +32,7 @@ class Service: NSObject {
         return rootNode
     }
     
-    public static func getShapeCenterNode(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
+    public func getShapeCenterNode(originNode: SCNNode, nodePositions: [SCNVector3], targetNode: SCNNode) -> SCNNode {
 
         let centerPosition = SCNVector3Center(positions: nodePositions)
         
@@ -41,7 +43,7 @@ class Service: NSObject {
         return rootNode
     }
     
-    public static func getNode(originNode: SCNNode, targetPosition: SCNVector3, targetNode: SCNNode) -> SCNNode {
+    public func getNode(originNode: SCNNode, targetPosition: SCNVector3, targetNode: SCNNode) -> SCNNode {
         // pivoted child node
         let node = SCNNode()
         
@@ -53,7 +55,7 @@ class Service: NSObject {
         return node
     }
 
-    public static func to2D(originNode: SCNNode, inView: ARSCNView) -> (x: Float, y: Float) {
+    public func to2D(originNode: SCNNode, inView: ARSCNView) -> (x: Float, y: Float) {
         let nodePos = getPointerNode(inView: inView)!
         let position = transformPosition(originNode: originNode, targetNode: nodePos)
         
@@ -61,11 +63,11 @@ class Service: NSObject {
         return (position.y, -position.x)
     }
     
-    public static func transformPosition(originNode: SCNNode, targetNode: SCNNode) -> SCNVector3 {
+    public func transformPosition(originNode: SCNNode, targetNode: SCNNode) -> SCNVector3 {
         return targetNode.convertPosition(SCNVector3Make(0, 0, 0), to: originNode)
     }
 
-    public static func getPointerNode(inView: ARSCNView) -> SCNNode? {
+    public func getPointerNode(inView: ARSCNView) -> SCNNode? {
         guard let currentFrame = inView.session.currentFrame else { return nil }
         let node = SCNNode()
         
@@ -81,7 +83,7 @@ class Service: NSObject {
         return node
     }
     
-    public static func addNode(_ node: SCNNode, toNode: SCNNode, inView: ARSCNView, cameraRelativePosition: SCNVector3) {
+    public func addNode(_ node: SCNNode, toNode: SCNNode, inView: ARSCNView, cameraRelativePosition: SCNVector3) {
         
         guard let currentFrame = inView.session.currentFrame else { return }
         let camera = currentFrame.camera
@@ -102,7 +104,7 @@ class Service: NSObject {
      - Parameter view: UIView that needed to be faded in and out
      - Parameter delay: TimeInterval you want to stay between fade in and out
      */
-    static func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
+    func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
         
         let animationDuration = 1.5
         
@@ -122,7 +124,7 @@ class Service: NSObject {
 //MARK:- 3D shapes go here
 extension Service {
     
-    static func get3DShapeNode(forShape shape: Shape, nodePositions: [SCNVector3]) -> SCNNode? {
+    func get3DShapeNode(forShape shape: Shape, nodePositions: [SCNVector3]) -> SCNNode? {
         
         switch shape.type {
         case .circle:
@@ -166,7 +168,7 @@ extension Service {
      - Parameter shape: A Shape object
      - Returns: halfWidth and halfHeight
      */
-    private static func computeRectangle(shape: Shape) -> (halfWidth: CGFloat?, halfHeight: CGFloat?){
+    private func computeRectangle(shape: Shape) -> (halfWidth: CGFloat?, halfHeight: CGFloat?){
         let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
         guard let points = rectAndAngle.points else {return (nil, nil)}
         guard let angle = rectAndAngle.angle else {return (nil, nil)}
@@ -188,7 +190,7 @@ extension Service {
      - Parameter shape: A Shape object
      - Returns: lineHeight and angle
      */
-    private static func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
+    private func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
         let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
         let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
         let angle = pointsAndAngle.angle
@@ -201,7 +203,7 @@ extension Service {
      - Parameter shape: A Shape object
      - Returns: circle's radius
      */
-    private static func computeCircle(shape: Shape) -> CGFloat? {
+    private func computeCircle(shape: Shape) -> CGFloat? {
         guard let center = shape.center else {return nil}
         guard let firstPoint = farthestPointsAndAngle(center: center, points: shape.originalPoints, type: .circle).points?.first else {return nil}
         
@@ -217,7 +219,7 @@ extension Service {
      - Parameter type: Type of the shape, for returning different result
      - Returns: Sorted farthest points and angle between line(PointA - PointB) to (0.01, 0)
      */
-    static func farthestPointsAndAngle(center: Point, points: [Point], type: ShapeType) -> (points: [Point]?, angle: Float?) {
+    func farthestPointsAndAngle(center: Point, points: [Point], type: ShapeType) -> (points: [Point]?, angle: Float?) {
         let center = center
         let sorted = points.sorted { (pointA, pointB) -> Bool in
             let distA = Point.distanceBetween(pointA: pointA, pointB: center)

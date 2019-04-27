@@ -78,7 +78,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
             if let type = typeString {
                 typeLabel.text = type
                 infoLabel.text = "This is a \(type)"
-                Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
+                Service.shared.fadeViewInThenOut(view: infoLabel, delay: 0.1)
             }
         }
     }
@@ -99,13 +99,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
     
     private var screenDown: Bool = false
     
-    let cameraRelativePosition = Service.cameraRelativePosition
+    let cameraRelativePosition = Constants.shared.cameraRelativePosition
     
     var strokeIDCount: Int = 0
     
     var currentType: ShapeType = .circle
     var templatePoints: [[Point]] = [[]]
-    var testingShape: [Shape]?
+    var templateShapes: [Shape]?
     var testingPoints: [Point] = []
     
     // Be careful with the threshold
@@ -320,7 +320,7 @@ extension ViewController {
         sphere.name = "centerPosition"
         sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
         
-        Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+        Service.shared.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
     }
     
     func addSphere() {
@@ -331,11 +331,11 @@ extension ViewController {
         
         guard let startNode = self.startNode else {return}
 
-        let position = Service.to2D(originNode: startNode, inView: self.arView)
+        let position = Service.shared.to2D(originNode: startNode, inView: self.arView)
 
         self.addPoint(pointPos: position)
 
-        Service.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+        Service.shared.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
         
     }
     
@@ -365,8 +365,8 @@ extension ViewController {
         if interestNodePositions[id] == nil {interestNodePositions[id] = []}
         
         guard self.startNode != nil else {return}
-        let pointerNode = Service.getPointerNode(inView: self.arView)
-        let target = Service.transformPosition(originNode: self.startNode!, targetNode: pointerNode!)
+        let pointerNode = Service.shared.getPointerNode(inView: self.arView)
+        let target = Service.shared.transformPosition(originNode: self.startNode!, targetNode: pointerNode!)
         interestNodePositions[id]?.append(target)
     }
     
@@ -421,7 +421,7 @@ extension ViewController {
         screenDown = true
         templatePoints.append([])
         
-        startNode = Service.getPointerNode(inView: self.arView)
+        startNode = Service.shared.getPointerNode(inView: self.arView)
     }
     @objc
     func screenTouchUp() {
@@ -429,9 +429,9 @@ extension ViewController {
 
         if testingMode {
             let shape = Shape(points: self.testingPoints, type: .test)
-            guard let shapes = testingShape else {return}
-            let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
-            self.typeString = type.rawValue
+            guard let shapes = templateShapes else {return}
+            let resultType = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
+            self.typeString = resultType.rawValue
 
 
             self.testingPoints = []
@@ -439,53 +439,26 @@ extension ViewController {
             let latestPoints = templatePoints.filter({$0.count != 0}).last
             
             let latestShape = Shape(points: latestPoints!, type: self.currentType)
-            if testingShape == nil {
-                testingShape = []
+            if templateShapes == nil {
+                templateShapes = []
             }
 
             
             // make sure there are enough sample points for configuring shapes
             switch latestShape.type {
             case .rectangle:
-                guard latestShape.originalPoints.count >= 8 else {return}
+                guard latestShape.originalPoints.count >= 15 else {return}
+                break
             default:
                 guard latestShape.originalPoints.count >= 3 else {return}
             }
 
             self.hideDots()
 
-            testingShape?.append(latestShape)
-            strokeIDCount += 1
-            guard let shapes = testingShape else {return}
-            let type = QPointCloudRecognizer.classify(inputShape: latestShape, templateSet: shapes)
-            let count = shapes.filter({$0.type == type}).count - 1
-            infoLabel.text = "\(type):\(count) added"
-            Service.fadeViewInThenOut(view: infoLabel, delay: 0.1)
-            log.debug(type)
-
-            let currentStroke = strokeIDCount - 1
-
-            let pointerNode = Service.getPointerNode(inView: self.arView)!
-            let centerNode = Service.getShapeCenterNode(originNode: startNode!, nodePositions: self.interestNodePositions[currentStroke]!, targetNode: pointerNode)
+            templateShapes?.append(latestShape)
+            guard let shapes = templateShapes else {return}
             
-            if let node = Service.get3DShapeNode(forShape: latestShape, nodePositions:
-                
-                self.interestNodePositions[currentStroke]!) {
-
-                if latestShape.type == .line {
-                    let target = node as! Line
-                    node.eulerAngles.z -= target.angle
-                }
-                centerNode.childNodes.first?.addChildNode(node)
-                Service.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-                
-                let shouldSetHeightlighted = Float.random(in: 0 ... 1)
-                if shouldSetHeightlighted <= 0.3 {
-                    centerNode.setHighlighted()
-                }
-                
-            }
-
+            add3DShapeToScene(templateSet: shapes, targetShape: latestShape, strokeId: strokeIDCount)
         }
         
         startNode = nil
@@ -494,6 +467,40 @@ extension ViewController {
 
 //MARK: - SCNNode actions here
 extension ViewController {
+    
+    public func add3DShapeToScene(templateSet shapes: [Shape], targetShape shape: Shape, strokeId: Int) {
+        let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
+        let count = shapes.filter({$0.type == type}).count - 1
+        infoLabel.text = "\(type):\(count) added"
+        Service.shared.fadeViewInThenOut(view: infoLabel, delay: 0.1)
+        log.debug(type)
+        
+        let currentStroke = strokeId
+        
+        let pointerNode = Service.shared.getPointerNode(inView: self.arView)!
+        let centerNode = Service.shared.getShapeCenterNode(originNode: startNode!, nodePositions: self.interestNodePositions[strokeId]!, targetNode: pointerNode)
+        
+        if let node = Service.shared.get3DShapeNode(forShape: shape, nodePositions:
+            
+            self.interestNodePositions[currentStroke]!) {
+            
+            if shape.type == .line {
+                let target = node as! Line
+                node.eulerAngles.z -= target.angle
+            }
+            centerNode.childNodes.first?.addChildNode(node)
+            Service.shared.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+            
+            let shouldSetHeightlighted = Float.random(in: 0 ... 1)
+            if shouldSetHeightlighted <= 0.3 {
+                centerNode.setHighlighted()
+            }
+        }
+        
+        strokeIDCount += 1
+    }
+    
+    
     public func hideDots() {
         let dots = self.scene.rootNode.childNodes.filter({$0.name == "dot"})
         dots.forEach { (dot) in

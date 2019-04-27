@@ -8,13 +8,16 @@
 
 import Foundation
 import UIKit
+import SceneKit
 
 class Constants {
+    static let shared = Constants()
+
+    public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     
     public let black = UIColor.black
     public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.002)}}
     
-    static let shared = Constants()
     
     private let colors: [UIColor?] = [
         UIColor.init(hexString: "#3C1856"), UIColor.init(hexString: "#3362AE"),
