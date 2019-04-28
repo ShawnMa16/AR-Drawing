@@ -172,8 +172,6 @@ extension Service {
     private func computeHalfCircle(shape: Shape) -> CGFloat? {
         let pointsAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
         guard let points = pointsAndAngle.points else {return nil}
-        guard let angle = pointsAndAngle.angle else {return nil}
-        
         let dist = Point.distanceBetween(pointA: points[0], pointB: points[1])
         log.debug(dist)
         return dist
@@ -192,6 +190,13 @@ extension Service {
         let shortDist = Point.distanceBetween(pointA: shape.center!, pointB: points[1])
         let longDist = Point.distanceBetween(pointA: shape.center!, pointB: points[0])
         
+        // Make sure the rectangle to render correctly
+        // if the lenth is too short, it won't render correctly
+        // Threshold: 0.005(0.5cm)
+        if shortDist < 0.005 || longDist < 0.005 {
+            return (nil, nil)
+        }
+        
         // if |angle * 180 / Float.pi| > 45, means width < heigt
         log.debug(angle * 180 / Float.pi)
         let angleIn180 = abs(angle * 180 / Float.pi)
@@ -209,6 +214,8 @@ extension Service {
     private func computeLine(shape: Shape) -> (lineHeight: CGFloat?, angle: Float?) {
         let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
         let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
+        // If the line is too short, drop it(2cm)
+        if distance < 0.02 {return (nil, nil)}
         let angle = pointsAndAngle.angle
         return (distance, angle)
     }

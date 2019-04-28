@@ -143,7 +143,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     
     // Be careful with the threshold
     // This threshold should be related to numbers of sample points for shapes
-    let pointsThreshold: CGFloat = 0.005
+    let pointsDistanceThreshold: CGFloat = 0.003
     
     var testingMode: Bool = false
     let releaseMode = Constants.shared.releaseMode

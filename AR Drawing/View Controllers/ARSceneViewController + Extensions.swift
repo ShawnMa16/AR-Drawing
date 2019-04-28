@@ -35,7 +35,7 @@ extension ARSceneViewController {
                 let lastPoint = self.templatePoints[self.templatePoints.count - 1].last
                 let distance = Point.distanceBetween(pointA: point, pointB: lastPoint!)
                 
-                if distance > self.pointsThreshold {
+                if distance > self.pointsDistanceThreshold {
                     self.templatePoints[self.templatePoints.count - 1].append(point)
                     addInterestNode(id: self.strokeIDCount)
                 }
@@ -48,7 +48,7 @@ extension ARSceneViewController {
                 let lastPoint = self.testingPoints.last
                 let distance = Point.distanceBetween(pointA: point, pointB: lastPoint!)
                 
-                if distance > self.pointsThreshold {
+                if distance > self.pointsDistanceThreshold {
                     self.testingPoints.append(point)
                     addInterestNode(id: self.strokeIDCount)
                 }
@@ -93,14 +93,19 @@ extension ARSceneViewController {
         screenDown = false
         
         if testingMode {
+            self.hideDots()
+            
             guard let shapes = templateShapes else {return}
+            
+            // Make sure there are enough sampling points
+            guard self.testingPoints.count > 3 else {return}
+            
             let shape = Shape(points: self.testingPoints, type: .test)
             
             let resultType = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
             self.typeString = resultType.rawValue
             
             let target = Shape(points: self.testingPoints, type: resultType)
-            self.hideDots()
             
             add3DShapeToScene(templateSet: shapes, targetShape: target, strokeId: strokeIDCount)
             
@@ -116,10 +121,10 @@ extension ARSceneViewController {
             }
             
             
-            // make sure there are enough sample points for configuring shapes
+            // Make sure there are enough sample points for configuring shapes
             switch latestShape.type {
             case .rectangle, .triangle:
-                guard latestShape.originalPoints.count >= 15 else {return}
+                guard latestShape.originalPoints.count >= 6 else {return}
                 break
             default:
                 guard latestShape.originalPoints.count >= 3 else {return}
@@ -164,14 +169,18 @@ extension ARSceneViewController {
     public func add3DShapeToScene(templateSet shapes: [Shape], targetShape shape: Shape, strokeId: Int) {
         let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
         let count = shapes.filter({$0.type == type}).count - 1
-        infoLabel.text = testingMode ? "This is a \(type)" : "\(type):\(count) added"
-        Service.shared.fadeViewInThenOut(view: infoLabel, delay: 0.1)
+        
+        DispatchQueue.main.async {
+            self.infoLabel.text = self.testingMode ? "This is a \(type)" : "\(type):\(count) added"
+            Service.shared.fadeViewInThenOut(view: self.infoLabel, delay: 0.1)
+        }
+        
         log.debug(type)
         
         let currentStroke = strokeId
         
         let pointerNode = Service.shared.getPointerNode(inView: self.arView)!
-        let centerNode = Service.shared.getShapeCenterNode(originNode: startNode!, nodePositions: self.interestNodePositions[strokeId]!, targetNode: pointerNode)
+        let centerNode = Service.shared.getShapeCenterNode(originNode: self.startNode!, nodePositions: self.interestNodePositions[strokeId]!, targetNode: pointerNode)
         
         if let node = Service.shared.get3DShapeNode(forShape: shape, nodePositions:
             
@@ -181,6 +190,7 @@ extension ARSceneViewController {
                 let target = node as! Line
                 node.eulerAngles.z -= target.angle
             }
+
             centerNode.childNodes.first?.addChildNode(node)
             Service.shared.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
             
@@ -190,6 +200,7 @@ extension ARSceneViewController {
             }
         }
         
+        // Increase stroke ID when adding template shape action or testing shape action is done
         strokeIDCount += 1
     }
     

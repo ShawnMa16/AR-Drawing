@@ -19,7 +19,7 @@ class Constants {
     public let templateShapesURL: URL
     public let releaseMode: Bool = true
     public let black = UIColor.black
-    public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.0016)}}
+    public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.0012)}}
     
     private let colors: [UIColor?] = [
         UIColor.init(hexString: "#3C1856"), UIColor.init(hexString: "#3362AE"),
@@ -46,6 +46,6 @@ class Constants {
     }
     
     init() {
-        templateShapesURL = docsBaseURL.appendingPathComponent("shapes.plist")
+        templateShapesURL = docsBaseURL.appendingPathComponent("shapes.json")
     }
 }
