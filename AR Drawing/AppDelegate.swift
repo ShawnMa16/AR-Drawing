@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyBeaver
+import ARVideoKit
 
 let log = SwiftyBeaver.self
 
@@ -32,10 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         if let _window = window {
-            _window.rootViewController = ViewController()
+            _window.rootViewController = ARSceneViewController()
             _window.makeKeyAndVisible()
         }
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return ViewAR.orientation
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

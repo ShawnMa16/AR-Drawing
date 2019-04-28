@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ARSceneViewController.swift
 //  AR Drawing
 //
 //  Created by Shawn Ma on 4/7/19.
@@ -10,8 +10,12 @@ import UIKit
 import SceneKit
 import ARKit
 import SnapKit
+import ARVideoKit
 
-class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDelegate {
+class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDelegate {
+    
+    // recorder for screen recording
+    var recorder: RecordAR?
 
     private var arView: ARSCNView = {
         let view = ARSCNView()
@@ -108,6 +112,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
     var templateShapes: [Shape]?
     var testingPoints: [Point] = []
     
+    let penNode: SCNNode = {
+        let sphere = SCNNode()
+        sphere.name = "pointerNode"
+        sphere.geometry = SCNSphere(radius: 0.0015)
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.4)
+        return sphere
+    }()
+    
+    private var isRecording: Bool = false
+    private let recordButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    
+    
     // Be careful with the threshold
     // This threshold should be related to numbers of sample points for shapes
     private let pointsThreshold: CGFloat = 0.005
@@ -118,7 +137,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
     
     var interestNodePositions = [Int: [SCNVector3]]()
     
-    fileprivate func setupViews() {
+    fileprivate func setupARViewAndRecorder() {
         // Set the view's delegate
         arView.delegate = self
         
@@ -126,6 +145,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         arView.showsStatistics = true
         arView.autoenablesDefaultLighting = true
         arView.debugOptions = [.showWorldOrigin]
+        let pointer = penNode
+        pointer.scale = SCNVector3(1.2, 1.2, 1.2)
+        pointer.position = Constants.shared.cameraRelativePosition
+        
+        arView.pointOfView?.addChildNode(pointer)
         
         if let path = Bundle.main.path(forResource: "NodeTechnique", ofType: "plist") {
             if let dict = NSDictionary(contentsOfFile: path)  {
@@ -134,6 +158,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
                 self.arView.technique = technique
             }
         }
+        
+        recorder = RecordAR(ARSceneKit: arView)
+    }
+    
+    fileprivate func setupViews() {
+        setupARViewAndRecorder()
         
         view.addSubview(arView)
         arView.snp.makeConstraints { (make) in
@@ -254,6 +284,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
 
         // Run the view's session
         arView.session.run(configuration)
+        
+        recorder?.prepare(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -261,6 +293,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
         
         // Pause the view's session
         arView.session.pause()
+        
+        recorder?.rest()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -294,7 +328,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDe
     }
 }
 
-extension ViewController {
+extension ARSceneViewController {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
 
     }
@@ -306,7 +340,7 @@ extension ViewController {
     }
 }
 //MARK:- Add shape to scene
-extension ViewController {
+extension ARSceneViewController {
     
     func classify() {
         testingMode = !testingMode
@@ -325,9 +359,13 @@ extension ViewController {
     
     func addSphere() {
         let sphere = SCNNode()
-        sphere.name = "dot"
+        sphere.name = "penNode"
         sphere.geometry = SCNSphere(radius: 0.0015)
-        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.3)
+        
+
+        sphere.runAction(.fadeOut(duration: 4))
+        sphere.runAction(.scale(to: 0, duration: 4))
         
         guard let startNode = self.startNode else {return}
 
@@ -437,6 +475,7 @@ extension ViewController {
             self.testingPoints = []
         } else {
             let latestPoints = templatePoints.filter({$0.count != 0}).last
+            guard latestPoints!.count > 3 else {return}
             
             let latestShape = Shape(points: latestPoints!, type: self.currentType)
             if templateShapes == nil {
@@ -463,10 +502,15 @@ extension ViewController {
         
         startNode = nil
     }
+    
+    @objc
+    func switchRecording() {
+        isRecording = !isRecording
+    }
 }
 
 //MARK: - SCNNode actions here
-extension ViewController {
+extension ARSceneViewController {
     
     public func add3DShapeToScene(templateSet shapes: [Shape], targetShape shape: Shape, strokeId: Int) {
         let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)
@@ -502,7 +546,7 @@ extension ViewController {
     
     
     public func hideDots() {
-        let dots = self.scene.rootNode.childNodes.filter({$0.name == "dot"})
+        let dots = self.scene.rootNode.childNodes.filter({$0.name == "penNode"})
         dots.forEach { (dot) in
             DispatchQueue.main.async {
                 dot.removeFromParentNode()

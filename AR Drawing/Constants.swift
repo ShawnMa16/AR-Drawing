@@ -18,7 +18,6 @@ class Constants {
     public let black = UIColor.black
     public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.0016)}}
     
-    
     private let colors: [UIColor?] = [
         UIColor.init(hexString: "#3C1856"), UIColor.init(hexString: "#3362AE"),
         UIColor.init(hexString: "#AACABF"), UIColor.init(hexString: "#809FCD"),

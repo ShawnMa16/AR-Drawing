@@ -17,10 +17,12 @@
 		297BC325227382F900D62F5E /* NodeTechnique.plist in Resources */ = {isa = PBXBuildFile; fileRef = 297BC323227382F900D62F5E /* NodeTechnique.plist */; };
 		297BC32722738B6500D62F5E /* UIColor + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32622738B6500D62F5E /* UIColor + Extensions.swift */; };
 		297BC32F2273D9B400D62F5E /* HalfCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32E2273D9B400D62F5E /* HalfCircle.swift */; };
+		297BC3382276182C00D62F5E /* ARVideoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297BC3372276182C00D62F5E /* ARVideoKit.framework */; };
+		297BC3392276182C00D62F5E /* ARVideoKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 297BC3372276182C00D62F5E /* ARVideoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
-		29B034F2225A9C150096FB0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034F1225A9C150096FB0B /* ViewController.swift */; };
+		29B034F2225A9C150096FB0B /* ARSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034F1225A9C150096FB0B /* ARSceneViewController.swift */; };
 		29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F6225A9C170096FB0B /* Assets.xcassets */; };
 		29B034FA225A9C170096FB0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */; };
 		29B03505225A9C170096FB0B /* AR_DrawingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03504225A9C170096FB0B /* AR_DrawingTests.swift */; };
@@ -53,6 +55,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		297BC333227611F600D62F5E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				297BC3392276182C00D62F5E /* ARVideoKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_DrawingTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A1C206E40DB35C6D757C224 /* Pods-AR DrawingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,11 +85,12 @@
 		297BC323227382F900D62F5E /* NodeTechnique.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NodeTechnique.plist; sourceTree = "<group>"; };
 		297BC32622738B6500D62F5E /* UIColor + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extensions.swift"; sourceTree = "<group>"; };
 		297BC32E2273D9B400D62F5E /* HalfCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCircle.swift; sourceTree = "<group>"; };
+		297BC3372276182C00D62F5E /* ARVideoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ARVideoKit.framework; sourceTree = "<group>"; };
 		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29B034EF225A9C150096FB0B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
-		29B034F1225A9C150096FB0B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		29B034F1225A9C150096FB0B /* ARSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneViewController.swift; sourceTree = "<group>"; };
 		29B034F6225A9C170096FB0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29B034F9225A9C170096FB0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29B034FB225A9C170096FB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				297BC3382276182C00D62F5E /* ARVideoKit.framework in Frameworks */,
 				74B139B4C08B869C670DA9F6 /* Pods_AR_Drawing.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,7 +203,7 @@
 				29B0351D225AA1B00096FB0B /* QPoints */,
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				29B034EF225A9C150096FB0B /* art.scnassets */,
-				29B034F1225A9C150096FB0B /* ViewController.swift */,
+				29B034F1225A9C150096FB0B /* ARSceneViewController.swift */,
 				297BC31A227141CB00D62F5E /* Constants.swift */,
 				29B03528225CE9B90096FB0B /* Service.swift */,
 				298709722266530200FF3470 /* Extensions */,
@@ -241,6 +259,7 @@
 		536B1C75E3F72D3A7A2C0646 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				297BC3372276182C00D62F5E /* ARVideoKit.framework */,
 				C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */,
 				06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */,
 				F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */,
@@ -260,6 +279,7 @@
 				29B034E7225A9C150096FB0B /* Frameworks */,
 				29B034E8225A9C150096FB0B /* Resources */,
 				C15BF86AAF921E3D5E711FED /* [CP] Embed Pods Frameworks */,
+				297BC333227611F600D62F5E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -475,7 +495,7 @@
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
 				297BC32122737BAD00D62F5E /* SCNNode + Extensions.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
-				29B034F2225A9C150096FB0B /* ViewController.swift in Sources */,
+				29B034F2225A9C150096FB0B /* ARSceneViewController.swift in Sources */,
 				297BC31B227141CB00D62F5E /* Constants.swift in Sources */,
 				294BCD89226B9CD000AABDA0 /* Line.swift in Sources */,
 				29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */,
@@ -648,6 +668,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47XMMG9HCB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "AR Drawing/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -667,6 +691,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47XMMG9HCB;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "AR Drawing/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
