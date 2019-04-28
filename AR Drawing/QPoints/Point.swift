@@ -69,10 +69,10 @@ func -= (left: inout Point, right: Point) {
  Angle between line(PointA - PointB) to (0.01, 0)
  */
 
-func PointAngle(pontA: Point, pointB: Point) -> Float {
+func PointAngle(pointA: Point, pointB: Point) -> Float {
     let fixedPoint = Point(x: 0.01, y: 0, strokeID: -1)
     
-    let vector = pontA - pointB
+    let vector = pointA - pointB
     let dot = vector.dotProduct(point: fixedPoint)
     let cross = vector.crossProduct(point: fixedPoint)
     

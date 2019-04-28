@@ -29,7 +29,7 @@ class HalfCircle: SCNNode {
         
         strokeBezierPath.close()
         
-        let shape = SCNShape(path: strokeBezierPath, extrusionDepth: 0.01)
+        let shape = SCNShape(path: strokeBezierPath, extrusionDepth: 0.1)
         shape.firstMaterial?.diffuse.contents = Constants.shared.randomColor
         
         let node = SCNNode(geometry: shape)

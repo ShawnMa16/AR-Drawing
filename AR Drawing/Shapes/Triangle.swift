@@ -30,8 +30,8 @@ class Trianlge: SCNNode {
             miterLimit: strokeBezierPath.miterLimit)
         
         let bezierPath = UIBezierPath(cgPath: cgPath)
-        let shape = SCNShape(path: bezierPath, extrusionDepth: 0.001)
-        shape.firstMaterial?.diffuse.contents = Constants.shared.black
+        let shape = SCNShape(path: strokeBezierPath, extrusionDepth: 0.001)
+        shape.firstMaterial?.diffuse.contents = Constants.shared.randomColor
 
         let node = SCNNode(geometry: shape)
         self.addChildNode(node)

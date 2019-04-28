@@ -38,7 +38,7 @@ class Constants {
     public var randomColor: UIColor {
         get {
             let random = colors.randomElement()! ?? UIColor.white
-            let randomAlpha = CGFloat.random(in: 0.4 ... 0.8)
+            let randomAlpha = CGFloat.random(in: 0.5 ... 0.8)
             return random.withAlphaComponent(randomAlpha)
         }
     }

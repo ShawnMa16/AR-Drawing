@@ -136,7 +136,10 @@ extension Service {
             guard let angle = heightAndLine.angle else {return nil}
             return Line(height: height, angle: angle)
         case .triangle:
-            guard let points = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type).points else {return nil}
+            let pointsAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
+            guard let points = pointsAndAngle.points else {return nil}
+            guard let angle = pointsAndAngle.angle else {return nil}
+            
             return Trianlge(points: points)
         case .rectangle:
             let widthAndHeight = computeRectangle(shape: shape)
@@ -244,12 +247,12 @@ extension Service {
         switch type {
         case .triangle:
             let tri = sorted[0 ..< 3]
-            let angle = PointAngle(pontA: tri[1], pointB: tri[0])
+            let angle = PointAngle(pointA: tri[1], pointB: tri[0])
             return (Array(tri), angle)
         case .line, .halfCircle:
             // get the farthest two points to form a line
             let line = sorted[0 ..< 2]
-            let angle = PointAngle(pontA: line[1], pointB: line[0])
+            let angle = PointAngle(pointA: line[1], pointB: line[0])
             return (Array(line), angle)
         case .circle:
             // get the first point to form a circle
@@ -258,7 +261,7 @@ extension Service {
         case .rectangle:
             // get the closest and farthest points for calculating width and height for rectangle
             let points = [sorted.first!, sorted.last!]
-            let angle = PointAngle(pontA: points[1], pointB: Point(x: 0, y: 0, strokeID: -1))
+            let angle = PointAngle(pointA: points[1], pointB: Point(x: 0, y: 0, strokeID: -1))
             return (points, angle)
         default:
             return (nil, nil)
