@@ -11,12 +11,13 @@ import UIKit
 import SceneKit
 
 class Trianlge: SCNNode {
-    init(points: [Point]) {
+    init(points: [Point], angle: Float) {
         super.init()
         
         let stroke = Constants.shared.stroke
         let strokeBezierPath = UIBezierPath()
-        strokeBezierPath.lineWidth = stroke
+//        strokeBezierPath.lineWidth = stroke
+        strokeBezierPath.flatness = 0
         
         strokeBezierPath.move(to: CGPoint(x: CGFloat(points[0].x), y: CGFloat(points[0].y)))
         strokeBezierPath.addLine(to: CGPoint(x: CGFloat(points[1].x), y: CGFloat(points[1].y)))
@@ -32,8 +33,10 @@ class Trianlge: SCNNode {
         let bezierPath = UIBezierPath(cgPath: cgPath)
         let shape = SCNShape(path: strokeBezierPath, extrusionDepth: 0.001)
         shape.firstMaterial?.diffuse.contents = Constants.shared.randomColor
-
+        shape.firstMaterial?.isDoubleSided = true
         let node = SCNNode(geometry: shape)
+        
+        node.eulerAngles.z -= angle
         self.addChildNode(node)
     }
     

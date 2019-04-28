@@ -16,7 +16,7 @@ class Constants {
     public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     
     public let black = UIColor.black
-    public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.002)}}
+    public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.0016)}}
     
     
     private let colors: [UIColor?] = [

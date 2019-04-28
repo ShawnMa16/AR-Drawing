@@ -140,7 +140,7 @@ extension Service {
             guard let points = pointsAndAngle.points else {return nil}
             guard let angle = pointsAndAngle.angle else {return nil}
             
-            return Trianlge(points: points)
+            return Trianlge(points: points, angle: angle)
         case .rectangle:
             let widthAndHeight = computeRectangle(shape: shape)
             guard let halfWidth = widthAndHeight.halfWidth else {return nil}
@@ -246,6 +246,7 @@ extension Service {
         
         switch type {
         case .triangle:
+            // get the farthest three points to form a triangle
             let tri = sorted[0 ..< 3]
             let angle = PointAngle(pointA: tri[1], pointB: tri[0])
             return (Array(tri), angle)

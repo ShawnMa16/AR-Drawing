@@ -31,9 +31,9 @@ class HalfCircle: SCNNode {
         
         let shape = SCNShape(path: strokeBezierPath, extrusionDepth: 0.1)
         shape.firstMaterial?.diffuse.contents = Constants.shared.randomColor
+        shape.firstMaterial?.isDoubleSided = true
         
         let node = SCNNode(geometry: shape)
-
         node.scale = SCNVector3(0.01, 0.01, 0.01)
         node.eulerAngles.z += Float.pi / 2
         self.addChildNode(node)

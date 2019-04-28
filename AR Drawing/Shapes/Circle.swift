@@ -18,10 +18,12 @@ class Circle: SCNNode {
         super.init()
 
         let stroke = Constants.shared.stroke
-        let tube = SCNTube(innerRadius: radius, outerRadius: (radius + stroke), height: 0.001)
-        tube.firstMaterial?.diffuse.contents = Constants.shared.black
+        let torus = SCNTorus(ringRadius: radius, pipeRadius: stroke)
+        torus.firstMaterial?.diffuse.contents = Constants.shared.black
+        // control the roundness of the torus
+        torus.ringSegmentCount = 999
         
-        let node = SCNNode(geometry: tube)
+        let node = SCNNode(geometry: torus)
         
         let plane = SCNPlane(width: radius * 2, height: radius * 2)
         plane.cornerRadius = radius * 2
