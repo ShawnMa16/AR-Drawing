@@ -14,15 +14,25 @@ class Trianlge: SCNNode {
     init(points: [Point]) {
         super.init()
         
-        let bezierPath = UIBezierPath()
-        bezierPath.move(to: CGPoint(x: CGFloat(points[0].x), y: CGFloat(points[0].y)))
-        bezierPath.addLine(to: CGPoint(x: CGFloat(points[1].x), y: CGFloat(points[1].y)))
-        bezierPath.addLine(to: CGPoint(x: CGFloat(points[2].x), y: CGFloat(points[2].y)))
-        bezierPath.close()
+        let stroke = Constants.shared.stroke
+        let strokeBezierPath = UIBezierPath()
+        strokeBezierPath.lineWidth = stroke
         
+        strokeBezierPath.move(to: CGPoint(x: CGFloat(points[0].x), y: CGFloat(points[0].y)))
+        strokeBezierPath.addLine(to: CGPoint(x: CGFloat(points[1].x), y: CGFloat(points[1].y)))
+        strokeBezierPath.addLine(to: CGPoint(x: CGFloat(points[2].x), y: CGFloat(points[2].y)))
+        strokeBezierPath.close()
+        
+        let cgPath = strokeBezierPath.cgPath.copy(
+            strokingWithWidth: strokeBezierPath.lineWidth,
+            lineCap: strokeBezierPath.lineCapStyle,
+            lineJoin: strokeBezierPath.lineJoinStyle,
+            miterLimit: strokeBezierPath.miterLimit)
+        
+        let bezierPath = UIBezierPath(cgPath: cgPath)
         let shape = SCNShape(path: bezierPath, extrusionDepth: 0.001)
-        shape.materials.first?.diffuse.contents = UIColor.orange
-        shape.materials.first?.fillMode = .lines
+        shape.firstMaterial?.diffuse.contents = Constants.shared.black
+
         let node = SCNNode(geometry: shape)
         self.addChildNode(node)
     }

@@ -16,6 +16,7 @@
 		297BC324227382F900D62F5E /* NodeRender.metal in Sources */ = {isa = PBXBuildFile; fileRef = 297BC322227382F900D62F5E /* NodeRender.metal */; };
 		297BC325227382F900D62F5E /* NodeTechnique.plist in Resources */ = {isa = PBXBuildFile; fileRef = 297BC323227382F900D62F5E /* NodeTechnique.plist */; };
 		297BC32722738B6500D62F5E /* UIColor + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32622738B6500D62F5E /* UIColor + Extensions.swift */; };
+		297BC32F2273D9B400D62F5E /* HalfCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC32E2273D9B400D62F5E /* HalfCircle.swift */; };
 		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
@@ -67,6 +68,7 @@
 		297BC322227382F900D62F5E /* NodeRender.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = NodeRender.metal; sourceTree = "<group>"; };
 		297BC323227382F900D62F5E /* NodeTechnique.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NodeTechnique.plist; sourceTree = "<group>"; };
 		297BC32622738B6500D62F5E /* UIColor + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extensions.swift"; sourceTree = "<group>"; };
+		297BC32E2273D9B400D62F5E /* HalfCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCircle.swift; sourceTree = "<group>"; };
 		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				294BCD88226B9CD000AABDA0 /* Line.swift */,
 				294BCD8A226CF21500AABDA0 /* Triangle.swift */,
 				297BC31822712DB200D62F5E /* Rectangle.swift */,
+				297BC32E2273D9B400D62F5E /* HalfCircle.swift */,
 			);
 			path = Shapes;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 			files = (
 				29B03523225AA4D70096FB0B /* Shape.swift in Sources */,
 				29B0352B225D00D40096FB0B /* float4x4+Extensions.swift in Sources */,
+				297BC32F2273D9B400D62F5E /* HalfCircle.swift in Sources */,
 				29B03529225CE9B90096FB0B /* Service.swift in Sources */,
 				297BC32722738B6500D62F5E /* UIColor + Extensions.swift in Sources */,
 				297BC31922712DB200D62F5E /* Rectangle.swift in Sources */,

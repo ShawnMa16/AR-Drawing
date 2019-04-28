@@ -17,7 +17,7 @@ class Rectangle: SCNNode {
         let strokeBezierPath = UIBezierPath()
         strokeBezierPath.lineWidth = stroke
         
-        strokeBezierPath.move(to: CGPoint.zero)
+        strokeBezierPath.move(to: .zero)
         strokeBezierPath.addLine(to: CGPoint(x: width, y: 0))
         strokeBezierPath.addLine(to: CGPoint(x: width, y: height))
         strokeBezierPath.addLine(to: CGPoint(x: 0.0, y: height))
@@ -34,7 +34,7 @@ class Rectangle: SCNNode {
         shape.firstMaterial?.diffuse.contents = Constants.shared.black
         let node = SCNNode(geometry: shape)
         
-        
+        // fill the rectangle with a SCNPlane
         let plane = SCNPlane(width: width, height: height)
         plane.firstMaterial?.isDoubleSided = true
         plane.firstMaterial?.diffuse.contents = Constants.shared.randomColor

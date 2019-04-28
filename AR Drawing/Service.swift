@@ -143,6 +143,9 @@ extension Service {
             guard let halfWidth = widthAndHeight.halfWidth else {return nil}
             guard let halfHeight = widthAndHeight.halfHeight else {return nil}
             return Rectangle(width: halfWidth * 2, height: halfHeight * 2)
+        case .halfCircle:
+            guard let length = computeHalfCircle(shape: shape) else {return nil}
+            return HalfCircle(lineLength: length)
          default:
             return SCNNode()
         }
@@ -163,12 +166,22 @@ extension Service {
         
     }
     
+    private func computeHalfCircle(shape: Shape) -> CGFloat? {
+        let pointsAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
+        guard let points = pointsAndAngle.points else {return nil}
+        guard let angle = pointsAndAngle.angle else {return nil}
+        
+        let dist = Point.distanceBetween(pointA: points[0], pointB: points[1])
+        log.debug(dist)
+        return dist
+    }
+    
     /**
      Compute rectangle
      - Parameter shape: A Shape object
      - Returns: halfWidth and halfHeight
      */
-    private func computeRectangle(shape: Shape) -> (halfWidth: CGFloat?, halfHeight: CGFloat?){
+    private func computeRectangle(shape: Shape) -> (halfWidth: CGFloat?, halfHeight: CGFloat?) {
         let rectAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
         guard let points = rectAndAngle.points else {return (nil, nil)}
         guard let angle = rectAndAngle.angle else {return (nil, nil)}
@@ -231,8 +244,9 @@ extension Service {
         switch type {
         case .triangle:
             let tri = sorted[0 ..< 3]
-            return (Array(tri), nil)
-        case .line:
+            let angle = PointAngle(pontA: tri[1], pointB: tri[0])
+            return (Array(tri), angle)
+        case .line, .halfCircle:
             // get the farthest two points to form a line
             let line = sorted[0 ..< 2]
             let angle = PointAngle(pontA: line[1], pointB: line[0])

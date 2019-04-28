@@ -446,7 +446,7 @@ extension ViewController {
             
             // make sure there are enough sample points for configuring shapes
             switch latestShape.type {
-            case .rectangle:
+            case .rectangle, .triangle:
                 guard latestShape.originalPoints.count >= 15 else {return}
                 break
             default:
