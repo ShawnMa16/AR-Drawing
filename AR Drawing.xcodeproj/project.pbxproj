@@ -24,7 +24,6 @@
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
 		29B034F2225A9C150096FB0B /* ARSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034F1225A9C150096FB0B /* ARSceneViewController.swift */; };
 		29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F6225A9C170096FB0B /* Assets.xcassets */; };
-		29B034FA225A9C170096FB0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */; };
 		29B03505225A9C170096FB0B /* AR_DrawingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03504225A9C170096FB0B /* AR_DrawingTests.swift */; };
 		29B03510225A9C170096FB0B /* AR_DrawingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0350F225A9C170096FB0B /* AR_DrawingUITests.swift */; };
 		29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0351E225AA1CF0096FB0B /* QPointCloudRecognizer.swift */; };
@@ -92,7 +91,6 @@
 		29B034EF225A9C150096FB0B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		29B034F1225A9C150096FB0B /* ARSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneViewController.swift; sourceTree = "<group>"; };
 		29B034F6225A9C170096FB0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		29B034F9225A9C170096FB0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29B034FB225A9C170096FB0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29B03500225A9C170096FB0B /* AR DrawingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR DrawingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B03504225A9C170096FB0B /* AR_DrawingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_DrawingTests.swift; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 				29B03528225CE9B90096FB0B /* Service.swift */,
 				298709722266530200FF3470 /* Extensions */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
-				29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
 			);
 			path = "AR Drawing";
@@ -378,7 +375,6 @@
 			files = (
 				29B034F0225A9C150096FB0B /* art.scnassets in Resources */,
 				297BC325227382F900D62F5E /* NodeTechnique.plist in Resources */,
-				29B034FA225A9C170096FB0B /* LaunchScreen.storyboard in Resources */,
 				29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,17 +528,6 @@
 			targetProxy = 29B0350C225A9C170096FB0B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		29B034F8225A9C170096FB0B /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				29B034F9225A9C170096FB0B /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		29B03512225A9C170096FB0B /* Debug */ = {

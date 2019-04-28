@@ -120,7 +120,15 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         return sphere
     }()
     
-    private var isRecording: Bool = false
+    private var isRecording: Bool = false {
+        didSet {
+            if isRecording {
+                recordButton.setBackgroundImage(UIImage(named: "stop"), for: .normal)
+            } else {
+                recordButton.setBackgroundImage(UIImage(named: "record"), for: .normal)
+            }
+        }
+    }
     private let recordButton: UIButton = {
         let button = UIButton()
         return button
@@ -244,11 +252,22 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         infoLabel.textAlignment = .center
         infoLabel.alpha = 0
         
+        
+        view.addSubview(recordButton)
+        recordButton.snp.makeConstraints { (make) in
+            make.width.height.equalTo(44)
+            make.left.equalToSuperview().offset(20)
+            make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
+        }
+        recordButton.setBackgroundImage(UIImage(named: "record"), for: .normal)
+                recordButton.tintColor = UIColor.white.withAlphaComponent(0.8)
+        recordButton.imageView?.contentMode = .scaleAspectFill
     }
     
     fileprivate func setupGesture() {
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(tapHandler))
-        tap.minimumPressDuration = 0
+        tap.minimumPressDuration = 0.2
+        tap.delaysTouchesBegan = true
         tap.cancelsTouchesInView = false
         tap.delegate = self
         self.arView.addGestureRecognizer(tap)
@@ -264,6 +283,8 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         testButton.addTarget(self, action: #selector(testButtonDown), for: .touchUpInside)
         
         clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+        
+        recordButton.addTarget(self, action: #selector(switchRecording), for: .touchUpInside)
     }
     
     override func viewDidLoad() {
@@ -442,7 +463,7 @@ extension ARSceneViewController {
     
     // called by gesture recognizer
     @objc
-    func tapHandler(gesture: UITapGestureRecognizer) {
+    func tapHandler(gesture: UILongPressGestureRecognizer) {
         
         // handle touch down and touch up events separately
         if gesture.state == .began {
@@ -506,6 +527,11 @@ extension ARSceneViewController {
     @objc
     func switchRecording() {
         isRecording = !isRecording
+        if isRecording {
+            recorder?.record()
+        } else {
+            recorder?.stopAndExport()
+        }
     }
 }
 
