@@ -15,6 +15,9 @@ class Constants {
 
     public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     
+    private let docsBaseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    public let templateShapesURL: URL
+    public let releaseMode: Bool = true
     public let black = UIColor.black
     public var stroke: CGFloat {get {return CGFloat.random(in: 0 ... 0.0016)}}
     
@@ -40,5 +43,9 @@ class Constants {
             let randomAlpha = CGFloat.random(in: 0.5 ... 0.8)
             return random.withAlphaComponent(randomAlpha)
         }
+    }
+    
+    init() {
+        templateShapesURL = docsBaseURL.appendingPathComponent("shapes.plist")
     }
 }

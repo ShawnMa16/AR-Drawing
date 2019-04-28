@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-struct Shape {
+struct Shape: Codable {
     // original points
     public let originalPoints: [Point]
     
     // points for classification
     public var points: [Point]
-    public var type: ShapeType
+    public let type: ShapeType
     
     // center for orignal points
     public var center: Point? {
@@ -175,5 +175,4 @@ struct Shape {
         transformCoordinatesToIntegers()
         constructLUT()
     }
-    
 }

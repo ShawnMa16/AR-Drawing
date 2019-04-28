@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct Point {
+struct Point: Codable {
     public var x: Float
     public var y: Float
     

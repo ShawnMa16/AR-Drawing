@@ -9,7 +9,7 @@
 import Foundation
 import ARKit
 
-enum ShapeType: String {
+enum ShapeType: String, Codable {
     typealias RawValue = String
     case circle, rectangle, line, halfCircle, triangle
     case test
@@ -266,6 +266,48 @@ extension Service {
             return (points, angle)
         default:
             return (nil, nil)
+        }
+    }
+}
+
+//MARK:- File saving and reading goes here
+extension Service {
+    //TODO: for wtite in .plist file
+    func saveShapeToFile<T: Encodable>(shape: T) {
+        let url = Constants.shared.templateShapesURL
+
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(shape)
+            
+            if FileManager.default.fileExists(atPath: url.path) {
+                try FileManager.default.removeItem(at: url)
+            }
+            FileManager.default.createFile(atPath: url.path, contents: data, attributes: nil)
+            log.info("successfully saved")
+        } catch (let err) {
+            log.error(err.localizedDescription)
+        }
+    }
+    
+    //TODO: for read in .plist file
+    func readFile<T: Decodable>(type: T.Type) -> T? {
+        let url = Constants.shared.templateShapesURL
+        if !FileManager.default.fileExists(atPath: url.path) {
+            log.error("File at path \(url.path) does not exist!")
+            return nil
+        }
+        
+        if let data = FileManager.default.contents(atPath: url.path) {
+            let decoder = JSONDecoder()
+            do {
+                let model = try decoder.decode(type, from: data)
+                return model
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        } else {
+            fatalError("No data at \(url.path)!")
         }
     }
 }
