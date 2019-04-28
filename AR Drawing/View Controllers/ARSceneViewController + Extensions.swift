@@ -19,29 +19,10 @@ extension ARSceneViewController {
         }
     }
 }
-//MARK:- Add 3D shape to scene
+//MARK:- Points and node positions(SCNVector3)
 extension ARSceneViewController {
     
-    func addSphere() {
-        let sphere = SCNNode()
-        sphere.name = "penNode"
-        sphere.geometry = SCNSphere(radius: 0.0015)
-        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.3)
-        
-        
-        sphere.runAction(.fadeOut(duration: 4))
-        sphere.runAction(.scale(to: 0, duration: 4))
-        
-        guard let startNode = self.startNode else {return}
-        
-        let position = Service.shared.to2D(originNode: startNode, inView: self.arView)
-        
-        self.addPoint(pointPos: position)
-        
-        Service.shared.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-        
-    }
-    
+    // Push points into array for testing or classification
     private func addPoint(pointPos: (x: Float, y: Float)) {
         let point = Point(x: pointPos.x, y: pointPos.y, strokeID: self.strokeIDCount)
         guard !point.x.isNaN, !point.y.isNaN else {return}
@@ -91,10 +72,8 @@ extension ARSceneViewController {
         
         // handle touch down and touch up events separately
         if gesture.state == .began {
-            // do something...
             screenTouchDown()
-        } else if gesture.state == .ended { // optional for touch up event catching
-            // do something else...
+        } else if gesture.state == .ended {
             screenTouchUp()
         }
     }
@@ -102,10 +81,13 @@ extension ARSceneViewController {
     @objc
     func screenTouchDown() {
         screenDown = true
-        templatePoints.append([])
+        if !testingMode {
+            templatePoints.append([])
+        }
         
         startNode = Service.shared.getPointerNode(inView: self.arView)
     }
+    
     @objc
     func screenTouchUp() {
         screenDown = false
@@ -124,6 +106,7 @@ extension ARSceneViewController {
             
             self.testingPoints = []
         } else {
+            
             let latestPoints = templatePoints.filter({$0.count != 0}).last
             guard latestPoints!.count > 3 else {return}
             
@@ -158,6 +141,25 @@ extension ARSceneViewController {
 
 //MARK: - SCNNode actions here
 extension ARSceneViewController {
+    
+    func addSphere() {
+        let sphere = SCNNode()
+        sphere.name = "penNode"
+        sphere.geometry = SCNSphere(radius: 0.0015)
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.3)
+        
+        sphere.runAction(.fadeOut(duration: 4))
+        sphere.runAction(.scale(to: 0, duration: 4))
+        
+        guard let startNode = self.startNode else {return}
+        
+        let position = Service.shared.to2D(originNode: startNode, inView: self.arView)
+        
+        self.addPoint(pointPos: position)
+        
+        Service.shared.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+        
+    }
     
     public func add3DShapeToScene(templateSet shapes: [Shape], targetShape shape: Shape, strokeId: Int) {
         let type = QPointCloudRecognizer.classify(inputShape: shape, templateSet: shapes)

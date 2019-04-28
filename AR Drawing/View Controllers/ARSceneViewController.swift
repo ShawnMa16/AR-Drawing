@@ -110,6 +110,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     var currentType: ShapeType = .circle
     var templatePoints: [[Point]] = [[]]
     var templateShapes: [Shape]?
+    
     var testingPoints: [Point] = []
     
     let penNode: SCNNode = {
