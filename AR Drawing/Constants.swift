@@ -46,6 +46,53 @@ class Constants {
             return random.withAlphaComponent(randomAlpha)
         }
     }
+
+    public var randomRepeating: Int {
+        get {return Int.random(in: 0 ... 5)}
+    }
+    
+    public var nodeBlinkingAction: SCNAction {
+        return .sequence([
+            .wait(duration: 5.0),
+            .fadeOpacity(to: 0.2, duration: 0.06),
+            .fadeOpacity(to: 1.0, duration: 0.06),
+            .wait(duration: 0.25),
+            .fadeOpacity(to: 0.2, duration: 0.06),
+            .fadeOpacity(to: 1.0, duration: 0.06)
+            ])
+    }
+    
+    public var nodeBreathingAction: SCNAction {
+        return .sequence([
+            .wait(duration: 5.0),
+            .fadeOpacity(to: 0.8, duration: 0.8),
+            .fadeOpacity(to: 1.0, duration: 2.0),
+            .wait(duration: 0.25),
+            .fadeOpacity(to: 0.8, duration: 0.8),
+            .fadeOpacity(to: 1.0, duration: 2.0)
+            ])
+    }
+    
+    public var nodeScalingAction: SCNAction {
+        return .sequence([
+            .wait(duration: 5.0),
+            .scale(to: 0.9, duration: 0.8),
+            .scale(to: 1.0, duration: 2.0),
+            .wait(duration: 0.25),
+            .scale(to: 0.9, duration: 0.8),
+            .scale(to: 1.0, duration: 2.0)
+            ])
+    }
+    
+    public var randomColorAction: SCNAction {
+        get {
+            let randomFloat = Float.random(in: 0 ..< 1)
+            if randomFloat > 0.7 {
+                return [nodeBreathingAction, nodeBlinkingAction].randomElement() ?? SCNAction()
+            }
+            return SCNAction()
+        }
+    }
     
     init() {
         templateShapesURL = docsBaseURL.appendingPathComponent("shapes.json")

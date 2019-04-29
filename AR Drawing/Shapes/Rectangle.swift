@@ -39,12 +39,19 @@ class Rectangle: SCNNode {
         plane.firstMaterial?.isDoubleSided = true
         plane.firstMaterial?.diffuse.contents = Constants.shared.randomColor
         let planeNode = SCNNode(geometry: plane)
-        
+
         node.position.x = Float(-width / 2 )
         node.position.y = Float(-height / 2)
 
         self.addChildNode(node)
         self.addChildNode(planeNode)
+        
+        
+        if width > 0.1 || height > 0.1 {
+            planeNode.highlightNodeWithDurarion(5)
+        } else {
+            planeNode.runAction(.repeatForever(Constants.shared.nodeBlinkingAction))
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

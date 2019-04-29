@@ -88,7 +88,7 @@ vertex out_vertex_t blur_vertex(custom_vertex_t in [[stage_in]])
 // http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/
 constant float offset[] = { 0.0, 4.0, 5.0, 6.0, 7.0};
 constant float weight[] = { 0.2270270270, 0.1945945946, 0.1216216216, 0.0540540541, 0.0162162162 };
-constant float bufferSize = 1024.0;
+constant float bufferSize = 2048.0;
 
 fragment half4 blur_fragment_h(out_vertex_t vert [[stage_in]],
                                           texture2d<float, access::sample> maskSampler [[texture(0)]])

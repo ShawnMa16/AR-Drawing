@@ -220,10 +220,10 @@
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				297BC31A227141CB00D62F5E /* Constants.swift */,
 				29B03528225CE9B90096FB0B /* Service.swift */,
-				29A8F06922767CAF003543A6 /* shapes.json */,
 				298709722266530200FF3470 /* Extensions */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
+				29A8F06922767CAF003543A6 /* shapes.json */,
 			);
 			path = "AR Drawing";
 			sourceTree = "<group>";
