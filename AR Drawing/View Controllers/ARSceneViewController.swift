@@ -130,16 +130,20 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
             }
         }
     }
-    let recordButton: UIButton = {
+    private let recordButton: UIButton = {
         let button = UIButton()
         return button
     }()
     
-    let developmentView: UIView = {
+    private let infoButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    
+    private let developmentView: UIView = {
         let view = UIView()
         return view
     }()
-    
     
     // Be careful with the threshold
     // This threshold should be related to numbers of sample points for shapes
@@ -190,13 +194,23 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         
         view.addSubview(recordButton)
         recordButton.snp.makeConstraints { (make) in
-            make.width.height.equalTo(44)
+            make.width.height.equalTo(34)
             make.left.equalToSuperview().offset(20)
             make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
         }
-        recordButton.setBackgroundImage(UIImage(named: "record"), for: .normal)
         recordButton.tintColor = UIColor.white.withAlphaComponent(0.8)
         recordButton.imageView?.contentMode = .scaleAspectFill
+        recordButton.setBackgroundImage(UIImage(named: "record"), for: .normal)
+        
+        view.addSubview(infoButton)
+        infoButton.snp.makeConstraints { (make) in
+            make.width.height.equalTo(34)
+            make.right.equalToSuperview().offset(-20)
+            make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
+        }
+        infoButton.tintColor = UIColor.white.withAlphaComponent(0.8)
+        infoButton.imageView?.contentMode = .scaleAspectFill
+        infoButton.setBackgroundImage(UIImage(named: "information"), for: .normal)
         
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
@@ -286,7 +300,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(tapHandler))
         tap.minimumPressDuration = 0.2
         tap.delaysTouchesBegan = true
-        tap.cancelsTouchesInView = false
+//        tap.cancelsTouchesInView = false
         tap.delegate = self
         self.arView.addGestureRecognizer(tap)
     }
@@ -303,6 +317,8 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
         
         recordButton.addTarget(self, action: #selector(switchRecording), for: .touchUpInside)
+        
+        infoButton.addTarget(self, action: #selector(showInfo), for: .touchUpInside)
     }
     
     override func viewDidLoad() {
@@ -435,6 +451,14 @@ extension ARSceneViewController {
             recorder?.record()
         } else {
             recorder?.stopAndExport()
+        }
+    }
+    
+    @objc
+    func showInfo() {
+        let infoView = InforViewController()
+        self.present(infoView, animated: true) {
+            //
         }
     }
 }

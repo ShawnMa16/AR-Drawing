@@ -173,7 +173,7 @@ extension Service {
         let pointsAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
         guard let points = pointsAndAngle.points else {return nil}
         let dist = Point.distanceBetween(pointA: points[0], pointB: points[1])
-        log.debug(dist)
+        if dist < 0.01 {return nil}
         return dist
     }
     

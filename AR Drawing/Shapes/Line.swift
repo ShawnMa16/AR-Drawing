@@ -19,7 +19,7 @@ class Line: SCNNode {
 
         super.init()
         
-        let radius = CGFloat.random(in: 0.0001 ... 0.001)
+        let radius = CGFloat.random(in: 0.0001 ... 0.0008)
         
         let shape = SCNCylinder(radius: radius, height: height)
         

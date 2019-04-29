@@ -69,7 +69,6 @@ extension ARSceneViewController {
     // called by gesture recognizer
     @objc
     func tapHandler(gesture: UILongPressGestureRecognizer) {
-        
         // handle touch down and touch up events separately
         if gesture.state == .began {
             screenTouchDown()
@@ -81,6 +80,8 @@ extension ARSceneViewController {
     @objc
     func screenTouchDown() {
         screenDown = true
+        self.hideDots()
+        
         if !testingMode {
             templatePoints.append([])
         }
@@ -91,9 +92,8 @@ extension ARSceneViewController {
     @objc
     func screenTouchUp() {
         screenDown = false
-        
+        self.hideDots()
         if testingMode {
-            self.hideDots()
             
             guard let shapes = templateShapes else {return}
             
@@ -129,8 +129,6 @@ extension ARSceneViewController {
             default:
                 guard latestShape.originalPoints.count >= 3 else {return}
             }
-            
-            self.hideDots()
             
             templateShapes?.append(latestShape)
             guard let shapes = templateShapes else {return}
