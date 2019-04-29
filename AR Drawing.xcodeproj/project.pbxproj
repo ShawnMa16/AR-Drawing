@@ -22,6 +22,7 @@
 		298709752266534C00FF3470 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298709742266534C00FF3470 /* Circle.swift */; };
 		29A8F061227651A3003543A6 /* ARSceneViewController + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8F060227651A3003543A6 /* ARSceneViewController + Extensions.swift */; };
 		29A8F06822766517003543A6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A8F06722766517003543A6 /* InfoViewController.swift */; };
+		29A8F06A22767CAF003543A6 /* shapes.json in Resources */ = {isa = PBXBuildFile; fileRef = 29A8F06922767CAF003543A6 /* shapes.json */; };
 		29B034EE225A9C150096FB0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034ED225A9C150096FB0B /* AppDelegate.swift */; };
 		29B034F0225A9C150096FB0B /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 29B034EF225A9C150096FB0B /* art.scnassets */; };
 		29B034F2225A9C150096FB0B /* ARSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B034F1225A9C150096FB0B /* ARSceneViewController.swift */; };
@@ -90,6 +91,7 @@
 		298709742266534C00FF3470 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		29A8F060227651A3003543A6 /* ARSceneViewController + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARSceneViewController + Extensions.swift"; sourceTree = "<group>"; };
 		29A8F06722766517003543A6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		29A8F06922767CAF003543A6 /* shapes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = shapes.json; sourceTree = "<group>"; };
 		29B034EA225A9C150096FB0B /* AR Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B034ED225A9C150096FB0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29B034EF225A9C150096FB0B /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				29B034EF225A9C150096FB0B /* art.scnassets */,
 				297BC31A227141CB00D62F5E /* Constants.swift */,
 				29B03528225CE9B90096FB0B /* Service.swift */,
+				29A8F06922767CAF003543A6 /* shapes.json */,
 				298709722266530200FF3470 /* Extensions */,
 				29B034F6225A9C170096FB0B /* Assets.xcassets */,
 				29B034FB225A9C170096FB0B /* Info.plist */,
@@ -390,6 +393,7 @@
 				29B034F0225A9C150096FB0B /* art.scnassets in Resources */,
 				297BC325227382F900D62F5E /* NodeTechnique.plist in Resources */,
 				29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */,
+				29A8F06A22767CAF003543A6 /* shapes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

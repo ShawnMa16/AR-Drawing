@@ -397,7 +397,7 @@ extension ARSceneViewController {
         testingMode = true
         self.currentType = .test
         
-        if let shapes = Service.shared.readFile(type: [Shape].self) {
+        if let shapes = Service.shared.readFileFromBundle(name: Constants.shared.jsonFileName, type: [Shape].self) {
             self.templateShapes = shapes
         }
         

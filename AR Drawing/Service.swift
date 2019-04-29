@@ -317,4 +317,19 @@ extension Service {
             fatalError("No data at \(url.path)!")
         }
     }
+    
+    func readFileFromBundle<T: Decodable>(name: String, type: T.Type) -> T? {
+        if let path = Bundle.main.path(forResource: name, ofType: "json") {
+            let decoder = JSONDecoder()
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let model = try decoder.decode(type, from: data)
+                return model
+            } catch(let err) {
+                // handle error
+                log.error(err.localizedDescription)
+            }
+        }
+        return nil
+    }
 }
