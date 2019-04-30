@@ -194,23 +194,27 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         
         view.addSubview(recordButton)
         recordButton.snp.makeConstraints { (make) in
-            make.width.height.equalTo(34)
-            make.left.equalToSuperview().offset(20)
-            make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
-        }
-        recordButton.tintColor = UIColor.white.withAlphaComponent(0.8)
-        recordButton.imageView?.contentMode = .scaleAspectFill
-        recordButton.setBackgroundImage(UIImage(named: "record"), for: .normal)
-        
-        view.addSubview(infoButton)
-        infoButton.snp.makeConstraints { (make) in
-            make.width.height.equalTo(34)
+            make.width.height.equalTo(44)
             make.right.equalToSuperview().offset(-20)
             make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
         }
+        recordButton.tintColor = UIColor.white.withAlphaComponent(0.8)
+        recordButton.setImage(UIImage(named: "record"), for: .normal)
+        recordButton.contentVerticalAlignment = .fill
+        recordButton.contentHorizontalAlignment = .fill
+        recordButton.imageEdgeInsets = Constants.shared.buttonInsets
+        
+        view.addSubview(infoButton)
+        infoButton.snp.makeConstraints { (make) in
+            make.width.height.equalTo(44)
+            make.left.equalToSuperview().offset(20)
+            make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
+        }
         infoButton.tintColor = UIColor.white.withAlphaComponent(0.8)
-        infoButton.imageView?.contentMode = .scaleAspectFill
-        infoButton.setBackgroundImage(UIImage(named: "information"), for: .normal)
+        infoButton.setImage(UIImage(named: "information"), for: .normal)
+        infoButton.contentVerticalAlignment = .fill
+        infoButton.contentHorizontalAlignment = .fill
+        infoButton.imageEdgeInsets = Constants.shared.buttonInsets
         
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
@@ -456,6 +460,7 @@ extension ARSceneViewController {
     @objc
     func showInfo() {
         let infoView = InforViewController()
+        infoView.modalPresentationStyle = .overFullScreen
         self.present(infoView, animated: true) {
             //
         }

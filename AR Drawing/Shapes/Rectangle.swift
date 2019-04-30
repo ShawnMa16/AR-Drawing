@@ -48,7 +48,9 @@ class Rectangle: SCNNode {
         
         
         if width > 0.1 || height > 0.1 {
-            planeNode.runAction(.repeatForever(Constants.shared.nodeBreathingAction))
+            if let action = Constants.shared.nodeBreathingAction {
+                planeNode.runAction(.repeatForever(action))
+            }
         }
     }
     

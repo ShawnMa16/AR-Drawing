@@ -38,7 +38,9 @@ class Circle: SCNNode {
         self.addChildNode(planeNode)
         
         if radius > 0.05 {
-            planeNode.runAction(.repeatForever(Constants.shared.nodeBreathingAction))
+            if let action = Constants.shared.nodeBreathingAction {
+                planeNode.runAction(.repeatForever(action))
+            }
         }
     }
     
