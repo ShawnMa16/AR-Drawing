@@ -165,6 +165,15 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         arView.autoenablesDefaultLighting = true
         arView.debugOptions = [.showWorldOrigin]
         
+        
+        // Performance 
+        if let camera = arView.pointOfView?.camera {
+            camera.wantsHDR = false
+            camera.wantsExposureAdaptation = false
+            camera.exposureOffset = -1
+            camera.minimumExposure = -1
+        }
+        
         //MARK:-  Add Pointer to camera
         let pointer = penNode
         pointer.scale = SCNVector3(1.2, 1.2, 1.2)

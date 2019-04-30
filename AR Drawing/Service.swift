@@ -8,6 +8,7 @@
 
 import Foundation
 import ARKit
+import Photos
 
 enum ShapeType: String, Codable {
     typealias RawValue = String
@@ -20,6 +21,19 @@ class Service {
     let cameraRelativePosition = Constants.shared.cameraRelativePosition
     
     static let shared = Service()
+    
+    func saveVideo(at url: URL, on viewController: UIViewController) {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+        }) { saved, error in
+            if saved {
+                let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alertController.addAction(defaultAction)
+                viewController.present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
     
     public let testPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 0.05, height: 0.05))
     
