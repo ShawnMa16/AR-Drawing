@@ -124,9 +124,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     var isRecording: Bool = false {
         didSet {
             if isRecording {
-                recordButton.setBackgroundImage(UIImage(named: "stop"), for: .normal)
+                recordButton.setImage(UIImage(named: "stop"), for: .normal)
             } else {
-                recordButton.setBackgroundImage(UIImage(named: "record"), for: .normal)
+                recordButton.setImage(UIImage(named: "record"), for: .normal)
             }
         }
     }
