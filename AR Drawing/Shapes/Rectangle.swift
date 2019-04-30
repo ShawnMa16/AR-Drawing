@@ -48,9 +48,7 @@ class Rectangle: SCNNode {
         
         
         if width > 0.1 || height > 0.1 {
-            planeNode.highlightNodeWithDurarion(5)
-        } else {
-            planeNode.runAction(.repeatForever(Constants.shared.nodeBlinkingAction))
+            planeNode.runAction(.repeatForever(Constants.shared.nodeBreathingAction))
         }
     }
     

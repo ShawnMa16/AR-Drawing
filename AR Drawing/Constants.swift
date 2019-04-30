@@ -63,14 +63,18 @@ class Constants {
     }
     
     public var nodeBreathingAction: SCNAction {
-        return .sequence([
-            .wait(duration: 5.0),
-            .fadeOpacity(to: 0.8, duration: 0.8),
-            .fadeOpacity(to: 1.0, duration: 2.0),
-            .wait(duration: 0.25),
-            .fadeOpacity(to: 0.8, duration: 0.8),
-            .fadeOpacity(to: 1.0, duration: 2.0)
-            ])
+        let randomFloat = Float.random(in: 0 ..< 1)
+        if randomFloat > 0.7 {
+            return .sequence([
+                .wait(duration: 5.0),
+                .fadeOpacity(to: 0.5, duration: 0.8),
+                .fadeOpacity(to: 1.0, duration: 2.0),
+                .wait(duration: 0.25),
+                .fadeOpacity(to: 0.5, duration: 0.8),
+                .fadeOpacity(to: 1.0, duration: 2.0)
+                ])
+        }
+        return SCNAction()
     }
     
     public var nodeScalingAction: SCNAction {

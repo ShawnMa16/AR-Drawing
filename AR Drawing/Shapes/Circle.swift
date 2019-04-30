@@ -37,8 +37,9 @@ class Circle: SCNNode {
         self.addChildNode(node)
         self.addChildNode(planeNode)
         
-        planeNode.runAction(.repeatForever(Constants.shared.nodeBlinkingAction))
-//        self.runAction(.repeatForever(Constants.shared.nodeScalingAction))
+        if radius > 0.05 {
+            planeNode.runAction(.repeatForever(Constants.shared.nodeBreathingAction))
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

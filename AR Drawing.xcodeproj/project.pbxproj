@@ -35,6 +35,7 @@
 		29B03527225C35130096FB0B /* SCNVector3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03526225C35130096FB0B /* SCNVector3Extensions.swift */; };
 		29B03529225CE9B90096FB0B /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B03528225CE9B90096FB0B /* Service.swift */; };
 		29B0352B225D00D40096FB0B /* float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */; };
+		29F4443F2277E27E000D37CF /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F4443E2277E27D000D37CF /* BlurView.swift */; };
 		74B139B4C08B869C670DA9F6 /* Pods_AR_Drawing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */; };
 		DF6C5D78AC2CCB95EE8AE003 /* Pods_AR_DrawingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */; };
 /* End PBXBuildFile section */
@@ -109,6 +110,7 @@
 		29B03526225C35130096FB0B /* SCNVector3Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3Extensions.swift; sourceTree = "<group>"; };
 		29B03528225CE9B90096FB0B /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "float4x4+Extensions.swift"; sourceTree = "<group>"; };
+		29F4443E2277E27D000D37CF /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_Drawing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_DrawingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +157,7 @@
 		298709722266530200FF3470 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				29F4443E2277E27D000D37CF /* BlurView.swift */,
 				29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */,
 				29B03526225C35130096FB0B /* SCNVector3Extensions.swift */,
 				297BC32022737BAD00D62F5E /* SCNNode + Extensions.swift */,
@@ -499,6 +502,7 @@
 				297BC31922712DB200D62F5E /* Rectangle.swift in Sources */,
 				294BCD8B226CF21500AABDA0 /* Triangle.swift in Sources */,
 				29B03525225AAFEE0096FB0B /* Geometry.swift in Sources */,
+				29F4443F2277E27E000D37CF /* BlurView.swift in Sources */,
 				29B03527225C35130096FB0B /* SCNVector3Extensions.swift in Sources */,
 				297BC324227382F900D62F5E /* NodeRender.metal in Sources */,
 				298709752266534C00FF3470 /* Circle.swift in Sources */,
