@@ -464,14 +464,14 @@ extension ARSceneViewController {
         if isRecording {
             recorder?.record()
         } else {
-            recorder?.stopAndExport({ (_, _, success) in
+            recorder?.stopAndExport({ [weak self] (_, _, success) in
                 if success {
                     let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alertController.addAction(defaultAction)
                     
                     DispatchQueue.main.async {
-                        self.present(alertController, animated: true, completion: nil)
+                        self?.present(alertController, animated: true, completion: nil)
                     }
                 }
             })
