@@ -123,10 +123,12 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     
     var isRecording: Bool = false {
         didSet {
-            if isRecording {
-                recordButton.setImage(UIImage(named: "stop"), for: .normal)
-            } else {
-                recordButton.setImage(UIImage(named: "record"), for: .normal)
+            DispatchQueue.main.async {
+                if self.isRecording {
+                    self.recordButton.setImage(UIImage(named: "stop"), for: .normal)
+                } else {
+                    self.recordButton.setImage(UIImage(named: "record"), for: .normal)
+                }
             }
         }
     }
@@ -467,7 +469,10 @@ extension ARSceneViewController {
                     let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alertController.addAction(defaultAction)
-                    self.present(alertController, animated: true, completion: nil)
+                    
+                    DispatchQueue.main.async {
+                        self.present(alertController, animated: true, completion: nil)
+                    }
                 }
             })
         }
