@@ -300,7 +300,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(tapHandler))
         tap.minimumPressDuration = 0.2
         tap.delaysTouchesBegan = true
-//        tap.cancelsTouchesInView = false
         tap.delegate = self
         self.arView.addGestureRecognizer(tap)
     }
