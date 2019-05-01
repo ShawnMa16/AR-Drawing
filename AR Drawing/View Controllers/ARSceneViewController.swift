@@ -460,22 +460,29 @@ extension ARSceneViewController {
     // Switch between record and stop recording
     @objc
     func switchRecording() {
-        isRecording = !isRecording
-        if isRecording {
-            recorder?.record()
-        } else {
-            recorder?.stopAndExport({ [weak self] (_, _, success) in
-                if success {
-                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertController.addAction(defaultAction)
-                    
-                    DispatchQueue.main.async {
-                        self?.present(alertController, animated: true, completion: nil)
-                    }
-                }
-            })
+        DispatchQueue.main.async {
+            self.recordButton.isHidden = !self.recordButton.isHidden
+            self.infoButton.isHidden = !self.infoButton.isHidden
+            self.penNode.isHidden = !self.penNode.isHidden
         }
+        
+        
+//        isRecording = !isRecording
+//        if isRecording {
+//            recorder?.record()
+//        } else {
+//            recorder?.stopAndExport({ [weak self] (_, _, success) in
+//                if success {
+//                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
+//                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//                    alertController.addAction(defaultAction)
+//
+//                    DispatchQueue.main.async {
+//                        self?.present(alertController, animated: true, completion: nil)
+//                    }
+//                }
+//            })
+//        }
     }
     
     @objc

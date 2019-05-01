@@ -149,7 +149,7 @@ extension ARSceneViewController {
         let sphere = SCNNode()
         sphere.name = "penNode"
         sphere.geometry = SCNSphere(radius: 0.0015)
-        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.3)
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(1)
         
         sphere.runAction(.fadeOut(duration: 4))
         sphere.runAction(.scale(to: 0, duration: 4))
