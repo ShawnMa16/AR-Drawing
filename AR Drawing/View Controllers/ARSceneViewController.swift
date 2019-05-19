@@ -149,7 +149,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     
     // Be careful with the threshold
     // This threshold should be related to numbers of sample points for shapes
-    let pointsDistanceThreshold: CGFloat = 0.003
+    let pointsDistanceThreshold: CGFloat = 0.001
     
     var testingMode: Bool = false
     let releaseMode = Constants.shared.releaseMode
@@ -368,6 +368,12 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         arView.session.pause()
         
         recorder?.rest()
+        
+        DispatchQueue.main.async {
+            self.recordButton.isHidden = !self.recordButton.isHidden
+            self.infoButton.isHidden = !self.infoButton.isHidden
+            self.penNode.isHidden = !self.penNode.isHidden
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -456,15 +462,18 @@ extension ARSceneViewController {
         }
     }
     
-    
-    // Switch between record and stop recording
-    @objc
-    func switchRecording() {
+    func hideButton() {
         DispatchQueue.main.async {
             self.recordButton.isHidden = !self.recordButton.isHidden
             self.infoButton.isHidden = !self.infoButton.isHidden
             self.penNode.isHidden = !self.penNode.isHidden
         }
+    }
+    
+    // Switch between record and stop recording
+    @objc
+    func switchRecording() {
+        hideButton()
         
         
 //        isRecording = !isRecording
@@ -489,6 +498,9 @@ extension ARSceneViewController {
     func showInfo() {
         let infoView = InforViewController()
         infoView.modalPresentationStyle = .overFullScreen
+        infoView.dismissClosure = { [weak self] in
+            self?.hideButton()
+        }
         self.present(infoView, animated: true) {
             //
         }

@@ -17,6 +17,8 @@ class InforViewController: UIViewController {
         return button
     }()
     
+    var dismissClosure: (() -> ())?
+    
     fileprivate func setupViews() {
         view.addSubview(dismissButton)
         dismissButton.snp.makeConstraints { (make) in
@@ -47,6 +49,10 @@ class InforViewController: UIViewController {
     
     @objc
     func dismissView() {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            if let closure = self.dismissClosure {
+                closure()
+            }
+        }
     }
 }
