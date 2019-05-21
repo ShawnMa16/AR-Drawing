@@ -121,17 +121,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         return sphere
     }()
     
-    var isRecording: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                if self.isRecording {
-                    self.recordButton.setImage(UIImage(named: "stop"), for: .normal)
-                } else {
-                    self.recordButton.setImage(UIImage(named: "record"), for: .normal)
-                }
-            }
-        }
-    }
     private let recordButton: UIButton = {
         let button = UIButton()
         return button
@@ -141,6 +130,40 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         let button = UIButton()
         return button
     }()
+    
+    private let buttonBlur: UIVisualEffectView = {
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style:
+            .light))
+        blur.isUserInteractionEnabled = false //This allows touches to forward to the button.
+        blur.clipsToBounds = true
+        return blur
+    }()
+    
+    private let secondButtonBlur: UIVisualEffectView = {
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style:
+            .light))
+        blur.isUserInteractionEnabled = false //This allows touches to forward to the button.
+        blur.clipsToBounds = true
+        return blur
+    }()
+
+    var isRecording: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                if self.isRecording {
+                    self.recordButton.setTitle("Stop", for: .normal)
+                    self.recordButton.backgroundColor = UIColor.init(red: 1, green: 0, blue: 4/255, alpha: 0.4)
+                    self.recordButton.setTitleColor(.white, for: .normal)
+                    self.recordButton.setTitleColor(UIColor.white.withAlphaComponent(0.3), for: .highlighted)
+                } else {
+                    self.recordButton.setTitle("Record", for: .normal)
+                    self.recordButton.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+                    self.recordButton.setTitleColor(.black, for: .normal)
+                    self.recordButton.setTitleColor(UIColor.black.withAlphaComponent(0.3), for: .highlighted)
+                }
+            }
+        }
+    }
     
     private let developmentView: UIView = {
         let view = UIView()
@@ -205,28 +228,36 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         
         view.addSubview(recordButton)
         recordButton.snp.makeConstraints { (make) in
-            make.width.height.equalTo(44)
-            make.right.equalToSuperview().offset(-20)
-            make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
+            make.width.equalTo(90)
+            make.height.equalTo(49)
+            make.right.equalToSuperview().offset(-30)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-15)
         }
-        recordButton.tintColor = UIColor.white.withAlphaComponent(0.8)
-        recordButton.setImage(UIImage(named: "record"), for: .normal)
-        recordButton.contentVerticalAlignment = .fill
-        recordButton.contentHorizontalAlignment = .fill
-        recordButton.imageEdgeInsets = Constants.shared.buttonInsets
+        recordButton.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+        recordButton.setTitle("Record", for: .normal)
+        recordButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        recordButton.setTitleColor(.black, for: .normal)
+        recordButton.setTitleColor(UIColor.black.withAlphaComponent(0.3), for: .highlighted)
+        recordButton.layer.cornerRadius = 8.0
+        recordButton.contentHorizontalAlignment = .center
+        
+        recordButton.insertSubview(buttonBlur, at: 0)
         
         view.addSubview(infoButton)
         infoButton.snp.makeConstraints { (make) in
-            make.width.height.equalTo(44)
-            make.left.equalToSuperview().offset(20)
-            make.top.equalTo(self.view.safeAreaInsets.top).offset(50)
+            make.width.equalTo(90)
+            make.height.equalTo(49)
+            make.left.equalToSuperview().offset(30)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-15)
         }
-        infoButton.tintColor = UIColor.white.withAlphaComponent(0.8)
-        infoButton.setImage(UIImage(named: "information"), for: .normal)
-        infoButton.contentVerticalAlignment = .fill
-        infoButton.contentHorizontalAlignment = .fill
-        infoButton.imageEdgeInsets = Constants.shared.buttonInsets
-        
+        infoButton.backgroundColor = UIColor.white.withAlphaComponent(0.4)
+        infoButton.setTitle("About", for: .normal)
+        infoButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        infoButton.setTitleColor(.black, for: .normal)
+        infoButton.setTitleColor(UIColor.black.withAlphaComponent(0.3), for: .highlighted)
+        infoButton.layer.cornerRadius = 8.0
+
+        infoButton.insertSubview(secondButtonBlur, at: 0)
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
             
@@ -368,12 +399,15 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         arView.session.pause()
         
         recorder?.rest()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        buttonBlur.frame = recordButton.bounds
+        secondButtonBlur.frame = infoButton.bounds
         
-        DispatchQueue.main.async {
-            self.recordButton.isHidden = !self.recordButton.isHidden
-            self.infoButton.isHidden = !self.infoButton.isHidden
-            self.penNode.isHidden = !self.penNode.isHidden
-        }
+        buttonBlur.layer.cornerRadius = recordButton.layer.cornerRadius
+        secondButtonBlur.layer.cornerRadius = infoButton.layer.cornerRadius
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -473,34 +507,32 @@ extension ARSceneViewController {
     // Switch between record and stop recording
     @objc
     func switchRecording() {
-        hideButton()
         
-        
-//        isRecording = !isRecording
-//        if isRecording {
-//            recorder?.record()
-//        } else {
-//            recorder?.stopAndExport({ [weak self] (_, _, success) in
-//                if success {
-//                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
-//                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-//                    alertController.addAction(defaultAction)
-//
-//                    DispatchQueue.main.async {
-//                        self?.present(alertController, animated: true, completion: nil)
-//                    }
-//                }
-//            })
-//        }
+        isRecording = !isRecording
+        if isRecording {
+            recorder?.record()
+        } else {
+            recorder?.stopAndExport({ [weak self] (_, _, success) in
+                if success {
+                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alertController.addAction(defaultAction)
+
+                    DispatchQueue.main.async {
+                        self?.present(alertController, animated: true, completion: nil)
+                    }
+                }
+            })
+        }
     }
     
     @objc
     func showInfo() {
         let infoView = InforViewController()
         infoView.modalPresentationStyle = .overFullScreen
-        infoView.dismissClosure = { [weak self] in
-            self?.hideButton()
-        }
+//        infoView.dismissClosure = { [weak self] in
+//            self?.hideButton()
+//        }
         self.present(infoView, animated: true) {
             //
         }
