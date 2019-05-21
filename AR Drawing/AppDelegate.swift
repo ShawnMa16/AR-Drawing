@@ -33,7 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         if let _window = window {
-            _window.rootViewController = ARSceneViewController()
+            let cameraGranted = UserDefaults.standard.bool(forKey: Constants.shared.cameraAccess)
+            if cameraGranted {
+                _window.rootViewController = ARSceneViewController()
+            } else {
+                _window.rootViewController = OnboardingViewController()
+            }
             _window.makeKeyAndVisible()
         }
         return true

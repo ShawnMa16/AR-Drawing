@@ -12,6 +12,8 @@ import SceneKit
 
 class Constants {
     static let shared = Constants()
+    
+    public let cameraAccess: String = "camearAccess"
 
     public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     
