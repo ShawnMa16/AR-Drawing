@@ -16,8 +16,7 @@ class Trianlge: SCNNode {
         
         let stroke = Constants.shared.stroke
         let strokeBezierPath = UIBezierPath()
-//        strokeBezierPath.lineWidth = stroke
-        strokeBezierPath.flatness = 0
+        strokeBezierPath.lineWidth = stroke
         
         strokeBezierPath.move(to: CGPoint(x: CGFloat(points[0].x), y: CGFloat(points[0].y)))
         strokeBezierPath.addLine(to: CGPoint(x: CGFloat(points[1].x), y: CGFloat(points[1].y)))
@@ -31,7 +30,7 @@ class Trianlge: SCNNode {
             miterLimit: strokeBezierPath.miterLimit)
         
         let bezierPath = UIBezierPath(cgPath: cgPath)
-        let shape = SCNShape(path: strokeBezierPath, extrusionDepth: 0.001)
+        let shape = SCNShape(path: bezierPath, extrusionDepth: 0.001)
         shape.firstMaterial?.diffuse.contents = Constants.shared.randomColor
         shape.firstMaterial?.isDoubleSided = true
         let node = SCNNode(geometry: shape)

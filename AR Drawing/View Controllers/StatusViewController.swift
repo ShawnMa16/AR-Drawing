@@ -68,6 +68,7 @@ class StatusView: UIView {
             make.centerX.equalToSuperview()
         }
         messagePanel.layer.cornerRadius = 8.0
+        messagePanel.clipsToBounds = true
         
         messageLabel = UILabel()
         messagePanel.contentView.addSubview(messageLabel)
@@ -79,6 +80,7 @@ class StatusView: UIView {
         messageLabel.textColor = .white
         messageLabel.layer.cornerRadius = 8.0
         messageLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        messageLabel.clipsToBounds = true
         
         messageLabel.text = "place holder"
     }
