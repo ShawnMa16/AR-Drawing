@@ -16,7 +16,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     
     // recorder for screen recording
     var recorder: RecordAR?
-
+    
     var arView: ARSCNView = {
         let view = ARSCNView()
         return view
@@ -146,7 +146,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         blur.clipsToBounds = true
         return blur
     }()
-
+    
     var isRecording: Bool = false {
         didSet {
             DispatchQueue.main.async {
@@ -269,20 +269,20 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         infoButton.setTitleColor(.black, for: .normal)
         infoButton.setTitleColor(UIColor.black.withAlphaComponent(0.3), for: .highlighted)
         infoButton.layer.cornerRadius = 8.0
-
+        
         infoButton.insertSubview(secondButtonBlur, at: 0)
         
         
         self.view.addSubview(statusView)
         statusView.frame = self.view.bounds
         
-        self.view.addSubview(infoView)
-        infoView.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.95)
-            make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-        }
+        //        self.view.addSubview(infoView)
+        //        infoView.snp.makeConstraints { (make) in
+        //            make.width.equalToSuperview().multipliedBy(0.95)
+        //            make.centerX.equalToSuperview()
+        //            make.height.equalToSuperview().multipliedBy(0.5)
+        //            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+        //        }
         
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
@@ -411,7 +411,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
+        
         // Run the view's session
         arView.session.run(configuration)
         
@@ -527,7 +527,7 @@ extension ARSceneViewController {
                     let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
                     let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alertController.addAction(defaultAction)
-
+                    
                     DispatchQueue.main.async {
                         self?.present(alertController, animated: true, completion: nil)
                     }
@@ -538,9 +538,30 @@ extension ARSceneViewController {
     
     @objc
     func showInfo() {
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.view.addSubview(self.fullScreenBlurView)
-            self.fullScreenBlurView.frame = self.view.bounds
+        
+        self.view.addSubview(self.fullScreenBlurView)
+        self.fullScreenBlurView.frame = self.view.bounds
+        self.fullScreenBlurView.isActive = true
+        self.fullScreenBlurView.alpha = 0
+        
+        self.view.addSubview(self.infoView)
+        self.infoView.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.95)
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.5)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+        }
+        self.view.layoutIfNeeded()
+        
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
+            self.fullScreenBlurView.alpha = 1
+            
+            self.infoView.snp.updateConstraints({ (make) in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            })
+            
+            self.view.layoutIfNeeded()
             
         }) { (finished) in
             if finished {
@@ -548,14 +569,14 @@ extension ARSceneViewController {
             }
         }
         
-//        let infoView = InforViewController()
-//        infoView.modalPresentationStyle = .overFullScreen
-////        infoView.dismissClosure = { [weak self] in
-////            self?.hideButton()
-////        }
-//        self.present(infoView, animated: true) {
-//            //
-//        }
+        //        let infoView = InforViewController()
+        //        infoView.modalPresentationStyle = .overFullScreen
+        ////        infoView.dismissClosure = { [weak self] in
+        ////            self?.hideButton()
+        ////        }
+        //        self.present(infoView, animated: true) {
+        //            //
+        //        }
     }
     
 }

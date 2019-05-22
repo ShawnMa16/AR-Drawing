@@ -13,7 +13,7 @@ class BlurView: UIView {
     var isActive: Bool = false {
         didSet {
             if isActive {
-                self.visualEffectView.effect = UIBlurEffect(style: .light)
+                self.visualEffectView.effect = UIBlurEffect(style: .dark)
             } else {
                 self.visualEffectView.effect = nil
             }
