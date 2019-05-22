@@ -109,6 +109,8 @@ class Constants {
             ])
     }
     
+
+    public let defaultButtonColor: UIColor = UIColor.init(red: 12/255, green: 89/255, blue: 179/255, alpha: 1)
     
     init() {
         templateShapesURL = docsBaseURL.appendingPathComponent("shapes.json")

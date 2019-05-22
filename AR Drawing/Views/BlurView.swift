@@ -27,9 +27,7 @@ class BlurView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.isUserInteractionEnabled = false
-        
-        self.backgroundColor = .clear
+
         self.addSubview(visualEffectView)
         visualEffectView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview().offset(0)

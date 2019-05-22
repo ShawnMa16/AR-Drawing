@@ -541,16 +541,21 @@ extension ARSceneViewController {
         
         self.view.addSubview(self.fullScreenBlurView)
         self.fullScreenBlurView.frame = self.view.bounds
+        self.fullScreenBlurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissInfoView)))
         self.fullScreenBlurView.isActive = true
         self.fullScreenBlurView.alpha = 0
         
         self.view.addSubview(self.infoView)
+        self.infoView.closeViewHandler = { [unowned self] in
+            self.dismissInfoView()
+        }
         self.infoView.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.95)
+            make.width.equalToSuperview().multipliedBy(0.92)
             make.centerX.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.5)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
         }
+        
         self.view.layoutIfNeeded()
         
         
@@ -577,6 +582,26 @@ extension ARSceneViewController {
         //        self.present(infoView, animated: true) {
         //            //
         //        }
+    }
+    
+    @objc
+    func dismissInfoView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.fullScreenBlurView.alpha = 0
+            
+            self.infoView.snp.updateConstraints({ (make) in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+            })
+            self.view.layoutIfNeeded()
+        }) { (finished) in
+            if finished {
+                self.infoView.snp.removeConstraints()
+                self.infoView.removeFromSuperview()
+            
+                self.fullScreenBlurView.removeFromSuperview()
+//                self.view.layoutSubviews()
+            }
+        }
     }
     
 }

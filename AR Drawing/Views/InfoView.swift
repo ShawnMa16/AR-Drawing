@@ -27,6 +27,19 @@ class InfoView: UIView {
         bodyTextView.textColor = .black
         bodyTextView.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         bodyTextView.text = Constants.shared.appInfo
+        
+        privacyButton = UIButton()
+        privacyButton.setTitle("Privacy Policy", for: .normal)
+        privacyButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        privacyButton.setTitleColor(Constants.shared.defaultButtonColor, for: .normal)
+        privacyButton.setTitleColor(Constants.shared.defaultButtonColor.withAlphaComponent(0.3), for: .highlighted)
+        
+        closeButton = UIButton()
+        closeButton.setTitle("Close", for: .normal)
+        closeButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        closeButton.setTitleColor(Constants.shared.defaultButtonColor, for: .normal)
+        closeButton.setTitleColor(Constants.shared.defaultButtonColor.withAlphaComponent(0.3), for: .highlighted)
+
     }
     
     fileprivate func setupSubViews() {
@@ -43,6 +56,24 @@ class InfoView: UIView {
             make.width.equalToSuperview().multipliedBy(0.9)
             make.bottom.equalToSuperview().offset(-86)
         }
+        
+        self.addSubview(privacyButton)
+        privacyButton.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(49)
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-5)
+        }
+        
+        self.addSubview(closeButton)
+        closeButton.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(49)
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-5)
+        }
+        
+        closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -57,5 +88,10 @@ class InfoView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    func closeView() {
+        closeViewHandler()
     }
 }
