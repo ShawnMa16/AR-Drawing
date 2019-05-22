@@ -220,7 +220,7 @@ extension ARSceneViewController {
             Service.shared.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
             
             let shouldSetHeightlighted = Float.random(in: 0 ... 1)
-            if shouldSetHeightlighted <= 0.8 {
+            if shouldSetHeightlighted <= 0.3 {
                 centerNode.setHighlighted()
             }
         } else {

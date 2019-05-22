@@ -6,7 +6,7 @@ target 'AR Drawing' do
   use_frameworks!
 
   # Pods for AR Drawing
-  pod 'SnapKit', '~> 4.0.0'
+  pod 'SnapKit', '~> 5.0.0'
   pod 'SwiftyBeaver'
   
   target 'AR DrawingTests' do
