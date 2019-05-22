@@ -61,7 +61,7 @@ class InfoView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
-            make.bottom.equalToSuperview().offset(-86)
+            make.bottom.equalToSuperview().offset(-59)
         }
         
         bodyTextView.tag = Constants.shared.tagForInforView

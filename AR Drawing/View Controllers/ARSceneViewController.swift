@@ -563,8 +563,8 @@ extension ARSceneViewController {
         self.infoView.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.92)
             make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+            make.height.equalToSuperview().multipliedBy(0.6)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
         }
         
         self.infoView.privacyViewHandler = { [unowned self] in
@@ -597,7 +597,7 @@ extension ARSceneViewController {
             self.fullScreenBlurView.alpha = 0
             
             self.infoView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
@@ -628,9 +628,9 @@ extension ARSceneViewController {
         self.privacyView.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.92)
             make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
-            // set the view a little bit off the screen(50)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5 + 50)
+            make.height.equalToSuperview().multipliedBy(0.6)
+            // set the view a little bit off the screen(30)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
         }
         
         self.privacyView.setUpPrivacyView()
@@ -640,7 +640,7 @@ extension ARSceneViewController {
         UIView.animate(withDuration: 0.2, animations: {
             
             self.infoView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
@@ -667,7 +667,7 @@ extension ARSceneViewController {
             self.fullScreenBlurView.alpha = 0
             
             self.privacyView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
