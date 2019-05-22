@@ -31,6 +31,14 @@ class Constants {
     If you have any questions, feel free to contact us at iosxma@gmail.com. Thank you for the supporting!
 
     """
+    
+    public let privacy: String = """
+    Shape & Space uses the device’s rear camera to detect the space, and provides the function to record the screen and uses the microphone. The camera and microphone access can be toggled on and off at any time in your device’s settings.
+
+    The camera videos are only used for the intended purposes. The live video feed from the rear camera is never stored or sent outside your device in any form. All data is stored on the device only for the duration of your current launch session. Every time you go back to home screen or close the app, the data is deleted. We don’t collect your information in any form, whether you are using the app or not.
+
+    If you have any questions regarding privacy while using the app, please contact us at iosxma@gmail.com.
+    """
 
     public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     

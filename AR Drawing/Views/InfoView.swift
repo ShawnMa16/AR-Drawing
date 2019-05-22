@@ -16,6 +16,8 @@ class InfoView: UIView {
     private var closeButton: UIButton!
     
     var closeViewHandler: () -> Void = {}
+    var privacyViewHandler: () -> Void = {}
+    
     weak var textViewDelegate: UITextViewDelegate? {
         didSet {
             bodyTextView.delegate = textViewDelegate
@@ -79,6 +81,7 @@ class InfoView: UIView {
         }
         
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        privacyButton.addTarget(self, action: #selector(showPrivacyView), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -95,8 +98,28 @@ class InfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setUpPrivacyView() {
+        DispatchQueue.main.async {
+            self.titleLabel.text = "Privacy Policy"
+            self.bodyTextView.text = Constants.shared.privacy
+            
+            self.privacyButton.removeFromSuperview()
+            self.closeButton.snp.remakeConstraints({ (make) in
+                make.width.equalToSuperview()
+                make.height.equalTo(49)
+                make.right.equalToSuperview()
+                make.bottom.equalToSuperview().offset(-5)
+            })
+        }
+    }
+    
     @objc
     func closeView() {
         closeViewHandler()
+    }
+    
+    @objc
+    func showPrivacyView() {
+        privacyViewHandler()
     }
 }

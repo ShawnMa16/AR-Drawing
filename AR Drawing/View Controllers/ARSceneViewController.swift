@@ -190,9 +190,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         return InfoView()
     }()
     
+    lazy var privacyView: InfoView = {
+        return InfoView()
+    }()
+    
     lazy var fullScreenBlurView: BlurView = {
         return BlurView()
     }()
+    
     
     private var shouldDismissInfo: Bool = true
     private var dismissThreshold: CGFloat = 70
@@ -552,13 +557,18 @@ extension ARSceneViewController {
         self.infoView.textViewDelegate = self
         
         self.infoView.closeViewHandler = { [unowned self] in
-            self.dismissInfoView()
+            self.dismissInfoView(nil)
         }
+
         self.infoView.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.92)
             make.centerX.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.5)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+        }
+        
+        self.infoView.privacyViewHandler = { [unowned self] in
+            self.showPrivacyView()
         }
         
         self.view.layoutIfNeeded()
@@ -581,8 +591,9 @@ extension ARSceneViewController {
     }
     
     @objc
-    func dismissInfoView() {
-        UIView.animate(withDuration: 0.25, animations: {
+    func dismissInfoView(_ button: UIButton?) {
+        let duration = button == nil ? 0.2 : 0.25
+        UIView.animate(withDuration: duration, animations: {
             self.fullScreenBlurView.alpha = 0
             
             self.infoView.snp.updateConstraints({ (make) in
@@ -599,12 +610,85 @@ extension ARSceneViewController {
         }
     }
     
+    
+    @objc
+    func showPrivacyView() {
+        for recognizer in self.fullScreenBlurView.gestureRecognizers ?? [] {
+            self.fullScreenBlurView.removeGestureRecognizer(recognizer)
+        }
+        self.fullScreenBlurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissPrivacyView)))
+        
+        self.view.addSubview(privacyView)
+        self.privacyView.textViewDelegate = self
+        
+        self.privacyView.closeViewHandler = { [unowned self] in
+            self.dismissPrivacyView(nil)
+        }
+
+        self.privacyView.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.92)
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.5)
+            // set the view a little bit off the screen(50)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5 + 50)
+        }
+        
+        self.privacyView.setUpPrivacyView()
+        
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            
+            self.infoView.snp.updateConstraints({ (make) in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+            })
+            self.view.layoutIfNeeded()
+        }) { (finished) in
+            if finished {
+                self.infoView.snp.removeConstraints()
+                self.infoView.removeFromSuperview()
+                
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
+                    
+                    self.privacyView.snp.updateConstraints({ (make) in
+                        make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+                    })
+                    
+                    self.view.layoutIfNeeded()
+                })
+            }
+        }
+    }
+    
+    @objc
+    func dismissPrivacyView(_ button: UIButton?) {
+        let duration = button == nil ? 0.2 : 0.25
+        UIView.animate(withDuration: duration, animations: {
+            self.fullScreenBlurView.alpha = 0
+            
+            self.privacyView.snp.updateConstraints({ (make) in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.5)
+            })
+            self.view.layoutIfNeeded()
+        }) { (finished) in
+            if finished {
+                self.privacyView.snp.removeConstraints()
+                self.privacyView.removeFromSuperview()
+                
+                self.fullScreenBlurView.removeFromSuperview()
+            }
+        }
+    }
+    
 }
 
+//MARK: - functions for dimiss information view and privacy view
 extension ARSceneViewController: UITextViewDelegate {
     
     func animateInforViewAndBlurView(offset: CGFloat) {
         DispatchQueue.main.async {
+            self.fullScreenBlurView.alpha = (self.dismissThreshold - offset/6) / self.dismissThreshold
+            
             self.infoView.snp.updateConstraints({ (make) in
                 make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20 + offset)
             })
@@ -620,7 +704,7 @@ extension ARSceneViewController: UITextViewDelegate {
         }
         if threshold > dismissThreshold, shouldDismissInfo {
             shouldDismissInfo = false
-            dismissInfoView()
+            dismissInfoView(nil)
         }
     }
 }
