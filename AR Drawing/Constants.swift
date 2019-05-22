@@ -39,6 +39,9 @@ class Constants {
 
     If you have any questions regarding privacy while using the app, please contact us at iosxma@gmail.com.
     """
+    
+    public let tagForInforView: Int = 10001
+    public let tagForPrivacyView: Int = 10002
 
     public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     

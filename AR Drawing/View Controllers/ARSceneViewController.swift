@@ -685,11 +685,14 @@ extension ARSceneViewController {
 //MARK: - functions for dimiss information view and privacy view
 extension ARSceneViewController: UITextViewDelegate {
     
-    func animateInforViewAndBlurView(offset: CGFloat) {
+    func animateInforViewAndBlurView(offset: CGFloat, tag: Int) {
+        
+        let targetView = tag == Constants.shared.tagForInforView ? self.infoView : self.privacyView
+        
         DispatchQueue.main.async {
             self.fullScreenBlurView.alpha = (self.dismissThreshold - offset/6) / self.dismissThreshold
             
-            self.infoView.snp.updateConstraints({ (make) in
+            targetView.snp.updateConstraints({ (make) in
                 make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20 + offset)
             })
             self.view.layoutIfNeeded()
@@ -699,12 +702,18 @@ extension ARSceneViewController: UITextViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let threshold = -scrollView.contentOffset.y
+        let tag = scrollView.tag
+        
         if threshold >= 0, threshold < dismissThreshold - 1, shouldDismissInfo {
-            animateInforViewAndBlurView(offset: threshold)
+            animateInforViewAndBlurView(offset: threshold, tag: tag)
         }
         if threshold > dismissThreshold, shouldDismissInfo {
             shouldDismissInfo = false
-            dismissInfoView(nil)
+            if tag == Constants.shared.tagForInforView {
+                dismissInfoView(nil)
+            } else {
+                dismissPrivacyView(nil)
+            }
         }
     }
 }

@@ -64,6 +64,8 @@ class InfoView: UIView {
             make.bottom.equalToSuperview().offset(-86)
         }
         
+        bodyTextView.tag = Constants.shared.tagForInforView
+        
         self.addSubview(privacyButton)
         privacyButton.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.5)
@@ -111,6 +113,7 @@ class InfoView: UIView {
                 make.bottom.equalToSuperview().offset(-5)
             })
         }
+        bodyTextView.tag = Constants.shared.tagForPrivacyView
     }
     
     @objc
