@@ -187,7 +187,7 @@ extension Service {
         let pointsAndAngle = farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: shape.type)
         guard let points = pointsAndAngle.points else {return nil}
         let dist = Point.distanceBetween(pointA: points[0], pointB: points[1])
-        if dist < 0.01 {return nil}
+        if dist < 0.005 {return nil}
         return dist
     }
     
@@ -229,7 +229,7 @@ extension Service {
         let pointsAndAngle = self.farthestPointsAndAngle(center: shape.center!, points: shape.originalPoints, type: .line)
         let distance = Point.distanceBetween(pointA: pointsAndAngle.points![0], pointB: pointsAndAngle.points![1])
         // If the line is too short, drop it(2cm)
-        if distance < 0.02 {return (nil, nil)}
+        if distance < 0.005 {return (nil, nil)}
         let angle = pointsAndAngle.angle
         return (distance, angle)
     }
@@ -271,11 +271,16 @@ extension Service {
             let tri = sorted[0 ..< 3]
             let angle = PointAngle(pointA: tri[1], pointB: tri[0])
             return (Array(tri), angle)
-        case .line, .halfCircle:
+        case .line:
             // get the farthest two points to form a line
             let line = sorted[0 ..< 2]
             let angle = PointAngle(pointA: line[1], pointB: line[0])
             return (Array(line), angle)
+        case .halfCircle:
+            // get two farthest points that to center point's left and right to form a half circle
+            let leftPoints = sorted.filter({$0.x < center.x})
+            let rightPoints = sorted.filter({$0.x > center.x})
+            return ([leftPoints.first!, rightPoints.first!], nil)
         case .circle:
             // get the first point to form a circle
             let point = sorted.first

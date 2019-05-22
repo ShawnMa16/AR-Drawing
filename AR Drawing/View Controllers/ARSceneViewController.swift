@@ -533,8 +533,8 @@ extension ARSceneViewController {
                 if success {
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
-                        hud.show(in: self.view)
-                        hud.dismiss(afterDelay: 2.0)
+                        self.hud.show(in: self.view)
+                        self.hud.dismiss(afterDelay: 2.0)
                     }
                 }
             })
