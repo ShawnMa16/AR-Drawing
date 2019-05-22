@@ -16,6 +16,11 @@ class InfoView: UIView {
     private var closeButton: UIButton!
     
     var closeViewHandler: () -> Void = {}
+    weak var textViewDelegate: UITextViewDelegate? {
+        didSet {
+            bodyTextView.delegate = textViewDelegate
+        }
+    }
     
     fileprivate func initSubViews() {
         titleLabel = UILabel()

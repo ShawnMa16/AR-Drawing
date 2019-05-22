@@ -194,6 +194,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         return BlurView()
     }()
     
+    private var shouldDismissInfo: Bool = true
+    private var dismissThreshold: CGFloat = 70
+    
     fileprivate func setupARViewAndRecorder() {
         // Set the view's delegate
         arView.delegate = self
@@ -538,7 +541,7 @@ extension ARSceneViewController {
     
     @objc
     func showInfo() {
-        
+        self.shouldDismissInfo = true
         self.view.addSubview(self.fullScreenBlurView)
         self.fullScreenBlurView.frame = self.view.bounds
         self.fullScreenBlurView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissInfoView)))
@@ -546,6 +549,8 @@ extension ARSceneViewController {
         self.fullScreenBlurView.alpha = 0
         
         self.view.addSubview(self.infoView)
+        self.infoView.textViewDelegate = self
+        
         self.infoView.closeViewHandler = { [unowned self] in
             self.dismissInfoView()
         }
@@ -573,20 +578,11 @@ extension ARSceneViewController {
                 
             }
         }
-        
-        //        let infoView = InforViewController()
-        //        infoView.modalPresentationStyle = .overFullScreen
-        ////        infoView.dismissClosure = { [weak self] in
-        ////            self?.hideButton()
-        ////        }
-        //        self.present(infoView, animated: true) {
-        //            //
-        //        }
     }
     
     @objc
     func dismissInfoView() {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             self.fullScreenBlurView.alpha = 0
             
             self.infoView.snp.updateConstraints({ (make) in
@@ -599,9 +595,32 @@ extension ARSceneViewController {
                 self.infoView.removeFromSuperview()
             
                 self.fullScreenBlurView.removeFromSuperview()
-//                self.view.layoutSubviews()
             }
         }
     }
     
+}
+
+extension ARSceneViewController: UITextViewDelegate {
+    
+    func animateInforViewAndBlurView(offset: CGFloat) {
+        DispatchQueue.main.async {
+            self.infoView.snp.updateConstraints({ (make) in
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20 + offset)
+            })
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let threshold = -scrollView.contentOffset.y
+        if threshold >= 0, threshold < dismissThreshold - 1, shouldDismissInfo {
+            animateInforViewAndBlurView(offset: threshold)
+        }
+        if threshold > dismissThreshold, shouldDismissInfo {
+            shouldDismissInfo = false
+            dismissInfoView()
+        }
+    }
 }
