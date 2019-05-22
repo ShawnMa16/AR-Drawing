@@ -109,7 +109,10 @@ extension ARSceneViewController {
             guard let shapes = templateShapes else {return}
             
             // Make sure there are enough sampling points
-            guard self.testingPoints.count > 3 else {return}
+            guard self.testingPoints.count > 3 else {
+                statusView.showMessage("Please draw larger", autoHide: true)
+                return
+            }
             
             let shape = Shape(points: self.testingPoints, type: .test)
             
@@ -117,6 +120,19 @@ extension ARSceneViewController {
             self.typeString = resultType.rawValue
             
             let target = Shape(points: self.testingPoints, type: resultType)
+            
+            // Make sure there are enough sample points for configuring shapes
+            switch target.type {
+            case .rectangle, .triangle:
+                guard target.originalPoints.count >= 6 else {
+                    statusView.showMessage("Please draw larger", autoHide: true)
+                    return}
+                break
+            default:
+                guard target.originalPoints.count >= 3 else {
+                    statusView.showMessage("Please draw larger", autoHide: true)
+                    return}
+            }
             
             add3DShapeToScene(templateSet: shapes, targetShape: target, strokeId: strokeIDCount)
             
@@ -204,9 +220,11 @@ extension ARSceneViewController {
             Service.shared.addNode(centerNode, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
             
             let shouldSetHeightlighted = Float.random(in: 0 ... 1)
-            if shouldSetHeightlighted <= 0.3 {
+            if shouldSetHeightlighted <= 0.8 {
                 centerNode.setHighlighted()
             }
+        } else {
+            statusView.showMessage("Hints: line, circle, rectangle, triangle", autoHide: true)
         }
         
         // Increase stroke ID when adding template shape action or testing shape action is done

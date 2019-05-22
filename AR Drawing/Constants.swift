@@ -14,6 +14,23 @@ class Constants {
     static let shared = Constants()
     
     public let cameraAccess: String = "camearAccess"
+    
+    public let appInfo: String = """
+    Shape & Space is an Augmented Reality experience that intends to describe spaces that lie beyond the normal range of sensual experience. When the world is your canvas, something magical happens, with the virtual lines you draw livened up to be colorful geometric shapes with different angles – circles, semi-circles, and rectangles.
+
+    This app uses the following open-source libraries:
+
+    ARVideoKit
+    (https://github.com/AFathi/ARVideoKit)
+    Apache License, Version 2.0
+
+    $Q Super-Quick Recognizer
+    (https://depts.washington.edu/madlab/proj/dollar/qdollar.html)
+    New BSD License
+
+    If you have any questions, feel free to contact us at iosxma@gmail.com. Thank you for the supporting!
+
+    """
 
     public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
     

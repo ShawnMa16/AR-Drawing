@@ -186,6 +186,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         return StatusView()
     }()
     
+    lazy var infoView: InfoView = {
+        return InfoView()
+    }()
+    
+    lazy var fullScreenBlurView: BlurView = {
+        return BlurView()
+    }()
+    
     fileprivate func setupARViewAndRecorder() {
         // Set the view's delegate
         arView.delegate = self
@@ -236,7 +244,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
             make.width.equalTo(90)
             make.height.equalTo(49)
             make.right.equalToSuperview().offset(-30)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-15)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
         }
         recordButton.backgroundColor = UIColor.white.withAlphaComponent(0.4)
         recordButton.setTitle("Record", for: .normal)
@@ -253,7 +261,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
             make.width.equalTo(90)
             make.height.equalTo(49)
             make.left.equalToSuperview().offset(30)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-15)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
         }
         infoButton.backgroundColor = UIColor.white.withAlphaComponent(0.4)
         infoButton.setTitle("About", for: .normal)
@@ -267,6 +275,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         
         self.view.addSubview(statusView)
         statusView.frame = self.view.bounds
+        
+        self.view.addSubview(infoView)
+        infoView.snp.makeConstraints { (make) in
+            make.width.equalToSuperview().multipliedBy(0.95)
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.5)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+        }
         
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
@@ -522,13 +538,24 @@ extension ARSceneViewController {
     
     @objc
     func showInfo() {
-        let infoView = InforViewController()
-        infoView.modalPresentationStyle = .overFullScreen
-//        infoView.dismissClosure = { [weak self] in
-//            self?.hideButton()
-//        }
-        self.present(infoView, animated: true) {
-            //
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            self.view.addSubview(self.fullScreenBlurView)
+            self.fullScreenBlurView.frame = self.view.bounds
+            
+        }) { (finished) in
+            if finished {
+                
+            }
         }
+        
+//        let infoView = InforViewController()
+//        infoView.modalPresentationStyle = .overFullScreen
+////        infoView.dismissClosure = { [weak self] in
+////            self?.hideButton()
+////        }
+//        self.present(infoView, animated: true) {
+//            //
+//        }
     }
+    
 }

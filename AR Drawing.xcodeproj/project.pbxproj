@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		1F5C7B6FC1707EBA12B7DBAC /* Pods_AR_DrawingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */; };
 		29364A4622947E1400342754 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A4522947E1400342754 /* OnboardingViewController.swift */; };
-		29364A482294C5C900342754 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A472294C5C900342754 /* StatusViewController.swift */; };
+		29364A482294C5C900342754 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A472294C5C900342754 /* StatusView.swift */; };
+		29364A4B2294D65400342754 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A4A2294D65400342754 /* InfoView.swift */; };
 		294BCD89226B9CD000AABDA0 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BCD88226B9CD000AABDA0 /* Line.swift */; };
 		294BCD8B226CF21500AABDA0 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294BCD8A226CF21500AABDA0 /* Triangle.swift */; };
 		297BC31922712DB200D62F5E /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297BC31822712DB200D62F5E /* Rectangle.swift */; };
@@ -81,7 +82,8 @@
 		10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.release.xcconfig"; sourceTree = "<group>"; };
 		13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.release.xcconfig"; sourceTree = "<group>"; };
 		29364A4522947E1400342754 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		29364A472294C5C900342754 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		29364A472294C5C900342754 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		29364A4A2294D65400342754 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		294BCD88226B9CD000AABDA0 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		294BCD8A226CF21500AABDA0 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
 		297BC31822712DB200D62F5E /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
@@ -149,6 +151,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29364A492294D63000342754 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				29F4443E2277E27D000D37CF /* BlurView.swift */,
+				29364A472294C5C900342754 /* StatusView.swift */,
+				29364A4A2294D65400342754 /* InfoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		297BC32822738DF100D62F5E /* Shader */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +173,6 @@
 		298709722266530200FF3470 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				29F4443E2277E27D000D37CF /* BlurView.swift */,
 				29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */,
 				29B03526225C35130096FB0B /* SCNVector3Extensions.swift */,
 				297BC32022737BAD00D62F5E /* SCNNode + Extensions.swift */,
@@ -189,7 +200,6 @@
 				29A8F060227651A3003543A6 /* ARSceneViewController + Extensions.swift */,
 				29A8F06722766517003543A6 /* InfoViewController.swift */,
 				29364A4522947E1400342754 /* OnboardingViewController.swift */,
-				29364A472294C5C900342754 /* StatusViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -222,6 +232,7 @@
 				297BC32822738DF100D62F5E /* Shader */,
 				298709732266533600FF3470 /* Shapes */,
 				29B0351D225AA1B00096FB0B /* QPoints */,
+				29364A492294D63000342754 /* Views */,
 				29A8F06222765241003543A6 /* View Controllers */,
 				29B034ED225A9C150096FB0B /* AppDelegate.swift */,
 				297BC31A227141CB00D62F5E /* Constants.swift */,
@@ -516,9 +527,10 @@
 				29B03521225AA3640096FB0B /* Point.swift in Sources */,
 				297BC32122737BAD00D62F5E /* SCNNode + Extensions.swift in Sources */,
 				29B0351F225AA1CF0096FB0B /* QPointCloudRecognizer.swift in Sources */,
+				29364A4B2294D65400342754 /* InfoView.swift in Sources */,
 				29A8F06822766517003543A6 /* InfoViewController.swift in Sources */,
 				29B034F2225A9C150096FB0B /* ARSceneViewController.swift in Sources */,
-				29364A482294C5C900342754 /* StatusViewController.swift in Sources */,
+				29364A482294C5C900342754 /* StatusView.swift in Sources */,
 				297BC31B227141CB00D62F5E /* Constants.swift in Sources */,
 				29A8F061227651A3003543A6 /* ARSceneViewController + Extensions.swift in Sources */,
 				294BCD89226B9CD000AABDA0 /* Line.swift in Sources */,

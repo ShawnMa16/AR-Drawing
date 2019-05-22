@@ -64,7 +64,7 @@ class StatusView: UIView {
         messagePanel.snp.makeConstraints { (make) in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(28)
             make.width.equalToSuperview().multipliedBy(0.8)
-            make.height.equalTo(49)
+            make.height.greaterThanOrEqualTo(49)
             make.centerX.equalToSuperview()
         }
         messagePanel.layer.cornerRadius = 8.0
@@ -81,8 +81,7 @@ class StatusView: UIView {
         messageLabel.layer.cornerRadius = 8.0
         messageLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         messageLabel.clipsToBounds = true
-        
-        messageLabel.text = "place holder"
+        messageLabel.numberOfLines = 0
     }
     
     required init?(coder aDecoder: NSCoder) {

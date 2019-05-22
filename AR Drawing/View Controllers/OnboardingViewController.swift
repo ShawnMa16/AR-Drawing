@@ -81,8 +81,8 @@ class OnboardingViewController: UIViewController {
     }
     
     private func startAR() {
-        let arVC = ARSceneViewController()
         DispatchQueue.main.async {
+            let arVC = ARSceneViewController()
             self.present(arVC, animated: true) {
                 UserDefaults.standard.set(true, forKey: Constants.shared.cameraAccess)
             }
