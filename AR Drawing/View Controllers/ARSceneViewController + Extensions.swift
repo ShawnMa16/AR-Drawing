@@ -13,6 +13,17 @@ import ARVideoKit
 
 extension ARSceneViewController {
     
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        statusView.showTrackingQualityInfo(for: camera.trackingState, autoHide: true)
+        
+        switch camera.trackingState {
+        case .notAvailable, .limited:
+            statusView.escalateFeedback(for: camera.trackingState, inSeconds: 3.0)
+        case .normal:
+            statusView.cancelScheduledMessage(for: .trackingStateEscalation)
+        }
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if screenDown {
             addSphere()

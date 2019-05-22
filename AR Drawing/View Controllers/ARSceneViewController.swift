@@ -172,7 +172,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     
     // Be careful with the threshold
     // This threshold should be related to numbers of sample points for shapes
-    let pointsDistanceThreshold: CGFloat = 0.001
+    let pointsDistanceThreshold: CGFloat = 0.003
     
     var testingMode: Bool = false
     let releaseMode = Constants.shared.releaseMode
@@ -180,6 +180,11 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     var startNode: SCNNode?
     
     var interestNodePositions = [Int: [SCNVector3]]()
+    
+    /// The view controller that displays the status and "restart experience" UI.
+    lazy var statusView: StatusView = {
+        return StatusView()
+    }()
     
     fileprivate func setupARViewAndRecorder() {
         // Set the view's delegate
@@ -258,6 +263,11 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         infoButton.layer.cornerRadius = 8.0
 
         infoButton.insertSubview(secondButtonBlur, at: 0)
+        
+        
+        self.view.addSubview(statusView)
+        statusView.frame = self.view.bounds
+        
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
             
@@ -412,22 +422,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    }
-
-
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
     }
 }
 
