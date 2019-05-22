@@ -11,6 +11,7 @@ import SceneKit
 import ARKit
 import SnapKit
 import ARVideoKit
+import JGProgressHUD
 
 class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDelegate {
     
@@ -198,6 +199,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         return BlurView()
     }()
     
+    lazy var hud = JGProgressHUD(style: .light)
     
     private var shouldDismissInfo: Bool = true
     private var dismissThreshold: CGFloat = 70
@@ -284,13 +286,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
         self.view.addSubview(statusView)
         statusView.frame = self.view.bounds
         
-        //        self.view.addSubview(infoView)
-        //        infoView.snp.makeConstraints { (make) in
-        //            make.width.equalToSuperview().multipliedBy(0.95)
-        //            make.centerX.equalToSuperview()
-        //            make.height.equalToSuperview().multipliedBy(0.5)
-        //            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-20)
-        //        }
+        
+        hud.textLabel.text = "Record video saved\n to Photos!"
+        hud.detailTextLabel.text = nil
+        hud.indicatorView = JGProgressHUDSuccessIndicatorView()
         
         // if is not in releaseMode, initiate all components to developmentView
         if !releaseMode {
@@ -530,14 +529,12 @@ extension ARSceneViewController {
         if isRecording {
             recorder?.record()
         } else {
-            recorder?.stopAndExport({ [weak self] (_, _, success) in
+            recorder?.stopAndExport({ [unowned self] (_, _, success) in
                 if success {
-                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
-                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alertController.addAction(defaultAction)
-                    
-                    DispatchQueue.main.async {
-                        self?.present(alertController, animated: true, completion: nil)
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+                        hud.show(in: self.view)
+                        hud.dismiss(afterDelay: 2.0)
                     }
                 }
             })
@@ -559,7 +556,7 @@ extension ARSceneViewController {
         self.infoView.closeViewHandler = { [unowned self] in
             self.dismissInfoView(nil)
         }
-
+        
         self.infoView.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.92)
             make.centerX.equalToSuperview()
@@ -604,7 +601,7 @@ extension ARSceneViewController {
             if finished {
                 self.infoView.snp.removeConstraints()
                 self.infoView.removeFromSuperview()
-            
+                
                 self.fullScreenBlurView.removeFromSuperview()
             }
         }
@@ -624,7 +621,7 @@ extension ARSceneViewController {
         self.privacyView.closeViewHandler = { [unowned self] in
             self.dismissPrivacyView(nil)
         }
-
+        
         self.privacyView.snp.makeConstraints { (make) in
             make.width.equalToSuperview().multipliedBy(0.92)
             make.centerX.equalToSuperview()
@@ -699,7 +696,7 @@ extension ARSceneViewController: UITextViewDelegate {
         }
     }
     
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let threshold = -scrollView.contentOffset.y
         let tag = scrollView.tag

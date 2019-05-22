@@ -8,6 +8,7 @@ target 'AR Drawing' do
   # Pods for AR Drawing
   pod 'SnapKit', '~> 5.0.0'
   pod 'SwiftyBeaver'
+  pod 'JGProgressHUD'
   
   target 'AR DrawingTests' do
     inherit! :search_paths

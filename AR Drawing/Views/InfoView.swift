@@ -63,7 +63,8 @@ class InfoView: UIView {
             make.width.equalToSuperview().multipliedBy(0.9)
             make.bottom.equalToSuperview().offset(-59)
         }
-        
+        bodyTextView.dataDetectorTypes = .link
+        bodyTextView.isSelectable = true
         bodyTextView.tag = Constants.shared.tagForInforView
         
         self.addSubview(privacyButton)
