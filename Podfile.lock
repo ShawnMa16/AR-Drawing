@@ -1,24 +1,28 @@
 PODS:
   - JGProgressHUD (2.0.3)
+  - SCNLine (1.0.1)
   - SnapKit (5.0.0)
   - SwiftyBeaver (1.7.0)
 
 DEPENDENCIES:
   - JGProgressHUD
+  - SCNLine
   - SnapKit (~> 5.0.0)
   - SwiftyBeaver
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - JGProgressHUD
+    - SCNLine
     - SnapKit
     - SwiftyBeaver
 
 SPEC CHECKSUMS:
   JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
+  SCNLine: bf30dbe298ed31cb250431a6e5eeb72cfb35ed2e
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   SwiftyBeaver: 4cc0080d2e23f980652e28978db11a5c9da39165
 
-PODFILE CHECKSUM: 90a92fd06018281e0c8b0f57af6791ab63fe239e
+PODFILE CHECKSUM: 06f43915ac4a8c948b00ac5079136a3b6197ded1
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.0
