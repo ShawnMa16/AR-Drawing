@@ -110,7 +110,7 @@ extension ARSceneViewController {
             
             // Make sure there are enough sampling points
             guard self.testingPoints.count > 3 else {
-                statusView.showMessage("Please draw larger", autoHide: true)
+                statusView.showMessage("Slow down, and try a larger shape", autoHide: true)
                 return
             }
             
@@ -125,12 +125,12 @@ extension ARSceneViewController {
             switch target.type {
             case .rectangle, .triangle:
                 guard target.originalPoints.count >= 6 else {
-                    statusView.showMessage("Please draw larger", autoHide: true)
+                    statusView.showMessage("Slow down, and try a larger shape", autoHide: true)
                     return}
                 break
             default:
                 guard target.originalPoints.count >= 3 else {
-                    statusView.showMessage("Please draw larger", autoHide: true)
+                    statusView.showMessage("Slow down, and try a larger shape", autoHide: true)
                     return}
             }
             
