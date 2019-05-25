@@ -32,7 +32,7 @@ class Constants {
     public let tagForInforView: Int = 10001
     public let tagForPrivacyView: Int = 10002
 
-    public let cameraRelativePosition = SCNVector3(0, 0, -0.1)
+    public let cameraRelativePosition = SCNVector3(0, 0, -0.5)
     
     private let docsBaseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     public let templateShapesURL: URL

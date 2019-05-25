@@ -9,6 +9,7 @@
 import Foundation
 import ARKit
 import Photos
+import SCNLine
 
 enum ShapeType: String, Codable {
     typealias RawValue = String
@@ -84,7 +85,7 @@ class Service {
     public func getPointerNode(inView: ARSCNView) -> SCNNode? {
         guard let currentFrame = inView.session.currentFrame else { return nil }
         let node = SCNNode()
-        
+
         let camera = currentFrame.camera
         let transform = camera.transform
         var translationMatrix = matrix_identity_float4x4
@@ -93,10 +94,10 @@ class Service {
         translationMatrix.columns.3.z = cameraRelativePosition.z
         let modifiedMatrix = simd_mul(transform, translationMatrix)
         node.simdTransform = modifiedMatrix
-        
+
         return node
     }
-    
+
     public func addNode(_ node: SCNNode, toNode: SCNNode, inView: ARSCNView, cameraRelativePosition: SCNVector3) {
         
         guard let currentFrame = inView.session.currentFrame else { return }
@@ -112,7 +113,21 @@ class Service {
             toNode.addChildNode(node)
         }
     }
-    
+
+    public func addPoint(toNode: SCNLineNode, inView: ARSCNView, cameraRelativePosition: SCNVector3) {
+        guard let currentFrame = inView.session.currentFrame else { return }
+        let camera = currentFrame.camera
+        let transform = camera.transform
+        var translationMatrix = matrix_identity_float4x4
+        translationMatrix.columns.3.x = cameraRelativePosition.x
+        translationMatrix.columns.3.y = cameraRelativePosition.y
+        translationMatrix.columns.3.z = cameraRelativePosition.z
+        let modifiedMatrix = simd_mul(transform, translationMatrix)
+        let point = SCNVector3(modifiedMatrix.columns.3.x, modifiedMatrix.columns.3.y, modifiedMatrix.columns.3.z)
+        toNode.add(point: point)
+        print(toNode.presentation.boundingSphere)
+    }
+
     /**
      Fade in a UIView in 1.5s and show it for a certain than fade it out in 1.5s
      - Parameter view: UIView that needed to be faded in and out
@@ -168,7 +183,6 @@ extension Service {
         }
     }
 
-    
 }
 
 extension Service {

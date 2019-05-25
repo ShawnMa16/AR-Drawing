@@ -68,6 +68,7 @@ public class SCNLineNode: SCNNode {
 	}
 	public func add(point: SCNVector3) {
 		self.points.append(point)
+    print(self.points.count)
 		self.update(points: points)
 
 		// TODO: optimise this function to not recalculate all points

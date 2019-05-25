@@ -12,6 +12,7 @@ import ARKit
 import SnapKit
 import ARVideoKit
 import JGProgressHUD
+import SCNLine
 
 class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecognizerDelegate {
     
@@ -179,7 +180,13 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     let releaseMode = Constants.shared.releaseMode
     
     var startNode: SCNNode?
-    
+    var drawingNode: SCNLineNode?
+    /// Used for calculating where to draw using hitTesting
+    var cameraFrameNode = SCNNode(geometry: SCNFloor())
+
+    var viewCenter: CGPoint? = nil
+    var lastPosition: SCNVector3? = nil
+
     var interestNodePositions = [Int: [SCNVector3]]()
     
     /// The view controller that displays the status and "restart experience" UI.
@@ -236,7 +243,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
                 self.arView.technique = technique
             }
         }
-        
+
+
+        // Attaching the cameraFrameNode to the pointOfView
+        self.cameraFrameNode.isHidden = true
+        arView.pointOfView?.addChildNode(self.cameraFrameNode)
+        cameraFrameNode.position = Constants.shared.cameraRelativePosition
+        cameraFrameNode.eulerAngles.x = -.pi / 2
+
         //MARK:- Setup screen recorder
         recorder = RecordAR(ARSceneKit: arView)
     }
