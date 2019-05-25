@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F5C7B6FC1707EBA12B7DBAC /* Pods_AR_DrawingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06ADFA9C3C03278426FF0821 /* Pods_AR_DrawingTests.framework */; };
+		291FBB0A2299F7A6002281D1 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 291FBB092299F7A6002281D1 /* Settings.bundle */; };
 		29364A4622947E1400342754 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A4522947E1400342754 /* OnboardingViewController.swift */; };
 		29364A482294C5C900342754 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A472294C5C900342754 /* StatusView.swift */; };
 		29364A4B2294D65400342754 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29364A4A2294D65400342754 /* InfoView.swift */; };
@@ -80,6 +81,7 @@
 		0DA38F407BC6F6571C626CB6 /* Pods-AR Drawing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR Drawing.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR Drawing/Pods-AR Drawing.release.xcconfig"; sourceTree = "<group>"; };
 		10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingTests/Pods-AR DrawingTests.release.xcconfig"; sourceTree = "<group>"; };
 		13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.release.xcconfig"; sourceTree = "<group>"; };
+		291FBB092299F7A6002281D1 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		29364A4522947E1400342754 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		29364A472294C5C900342754 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		29364A4A2294D65400342754 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -115,8 +117,11 @@
 		29B03528225CE9B90096FB0B /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		29B0352A225D00D40096FB0B /* float4x4+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "float4x4+Extensions.swift"; sourceTree = "<group>"; };
 		29F4443E2277E27D000D37CF /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		854779C645BD555B83830CA7 /* Pods-AR Drawing-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-AR Drawing-settings-metadata.plist"; path = "AR Drawing/Settings.bundle/Pods-AR Drawing-settings-metadata.plist"; sourceTree = "<group>"; };
+		91FF927467E57F79C82012BC /* Pods-AR Drawing-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-AR Drawing-metadata.plist"; path = "Pods/Pods-AR Drawing-metadata.plist"; sourceTree = "<group>"; };
 		C10BEB21A2249C3BC5BA0560 /* Pods_AR_Drawing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_Drawing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR DrawingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR DrawingUITests/Pods-AR DrawingUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EA22C9AAE42030EF6856C295 /* Pods-AR Drawing-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-AR Drawing-settings-metadata.plist"; path = "Settings.bundle/Pods-AR Drawing-settings-metadata.plist"; sourceTree = "<group>"; };
 		F42D36FD76D0C7D4A5CF1C1B /* Pods_AR_DrawingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_DrawingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -226,6 +231,7 @@
 		29B034EC225A9C150096FB0B /* AR Drawing */ = {
 			isa = PBXGroup;
 			children = (
+				291FBB092299F7A6002281D1 /* Settings.bundle */,
 				297BC32822738DF100D62F5E /* Shader */,
 				298709732266533600FF3470 /* Shapes */,
 				29B0351D225AA1B00096FB0B /* QPoints */,
@@ -280,6 +286,9 @@
 				10307DBB41DDB6DD2F4A36AB /* Pods-AR DrawingTests.release.xcconfig */,
 				E38EBA81D0D992C8D2564BD6 /* Pods-AR DrawingUITests.debug.xcconfig */,
 				13326852A2D2D2D479570C5F /* Pods-AR DrawingUITests.release.xcconfig */,
+				91FF927467E57F79C82012BC /* Pods-AR Drawing-metadata.plist */,
+				854779C645BD555B83830CA7 /* Pods-AR Drawing-settings-metadata.plist */,
+				EA22C9AAE42030EF6856C295 /* Pods-AR Drawing-settings-metadata.plist */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -407,6 +416,7 @@
 				297BC325227382F900D62F5E /* NodeTechnique.plist in Resources */,
 				29B034F7225A9C170096FB0B /* Assets.xcassets in Resources */,
 				29A8F06A22767CAF003543A6 /* shapes.json in Resources */,
+				291FBB0A2299F7A6002281D1 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

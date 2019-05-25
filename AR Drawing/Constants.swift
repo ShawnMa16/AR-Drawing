@@ -16,24 +16,16 @@ class Constants {
     public let cameraAccess: String = "camearAccess"
     
     public let appInfo: String = """
-    Shape & Space is an Augmented Reality experience that intends to describe spaces that lie beyond the normal range of sensual experience. When the world is your canvas, something magical happens, with the virtual lines you draw livened up to be colorful geometric shapes with different angles – circles, semi-circles, and rectangles.
+    AR Masters is an Augmented Reality experience that intends to describe spaces that lie beyond the normal range of sensual experience. When the world is your canvas, something magical happens, with the virtual lines you draw livened up to be colorful geometric shapes with different angles – circles, semi-circles, and rectangles.
 
-    This app uses the following open-source libraries:
+    Please see licenses in AR Master's settings
 
-    ARVideoKit
-    (https://github.com/AFathi/ARVideoKit)
-    Apache License, Version 2.0
-
-    $Q Super-Quick Recognizer
-    (https://depts.washington.edu/madlab/proj/dollar/qdollar.html)
-    New BSD License
-
-    If you have any questions, feel free to contact us at iosxma@gmail.com. Thank you for the supporting!
-
+    If you have any questions, feel free to contact us at iosxma@gmail.com.
+    Thank you for the supporting!
     """
     
     public let privacy: String = """
-    Shape & Space uses the device’s rear camera to detect the space, and provides the function to record the screen and uses the microphone. The camera and microphone access can be toggled on and off at any time in your device’s settings.
+    AR Masters uses the device’s rear camera to detect the space, and provides the function to record the screen and uses the microphone. The camera and microphone access can be toggled on and off at any time in your device’s settings.
 
     The camera videos are only used for the intended purposes. The live video feed from the rear camera is never stored or sent outside your device in any form. All data is stored on the device only for the duration of your current launch session. Every time you go back to home screen or close the app, the data is deleted. We don’t collect your information in any form, whether you are using the app or not.
 
