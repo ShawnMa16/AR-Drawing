@@ -63,7 +63,7 @@ class StatusView: UIView {
 
         messagePanel.snp.makeConstraints { (make) in
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(28)
-            make.width.equalToSuperview().multipliedBy(0.8)
+            make.width.greaterThanOrEqualTo(100)
             make.height.greaterThanOrEqualTo(49)
             make.centerX.equalToSuperview()
         }
@@ -74,7 +74,10 @@ class StatusView: UIView {
         messagePanel.contentView.addSubview(messageLabel)
         
         messageLabel.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.left.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(5)
+            make.right.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
         }
         messageLabel.textAlignment = .center
         messageLabel.textColor = .white

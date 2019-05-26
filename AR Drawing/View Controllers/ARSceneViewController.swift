@@ -202,7 +202,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, UIGestureRecog
     lazy var hud = JGProgressHUD(style: .light)
     
     private var shouldDismissInfo: Bool = true
-    private var dismissThreshold: CGFloat = 70
+    private var dismissThreshold: CGFloat = 50
     
     fileprivate func setupARViewAndRecorder() {
         // Set the view's delegate
@@ -558,10 +558,22 @@ extension ARSceneViewController {
         }
         
         self.infoView.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.92)
-            make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.4)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.4 + 30)
+            
+            switch UIDevice.current.userInterfaceIdiom {
+            case .phone:
+                make.width.equalToSuperview().multipliedBy(0.92)
+                make.centerX.equalToSuperview()
+                make.height.equalToSuperview().multipliedBy(0.4)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.4 + 30)
+                break
+            case .pad:
+                make.width.equalTo(300)
+                make.height.equalTo(350)
+                make.left.equalToSuperview().offset(24)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(380)
+            default:
+                break
+            }
         }
         
         self.infoView.privacyViewHandler = { [unowned self] in
@@ -594,7 +606,7 @@ extension ARSceneViewController {
             self.fullScreenBlurView.alpha = 0
             
             self.infoView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.4 + 30)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(380)
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
@@ -623,11 +635,24 @@ extension ARSceneViewController {
         }
         
         self.privacyView.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().multipliedBy(0.92)
-            make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.6)
-            // set the view a little bit off the screen(30)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
+            
+            
+            switch UIDevice.current.userInterfaceIdiom {
+            case .phone:
+                make.width.equalToSuperview().multipliedBy(0.92)
+                make.centerX.equalToSuperview()
+                make.height.equalToSuperview().multipliedBy(0.6)
+                // set the view a little bit off the screen(30)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
+                break
+            case .pad:
+                make.width.equalTo(300)
+                make.height.equalTo(450)
+                make.left.equalToSuperview().offset(24)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(480)
+            default:
+                break
+            }
         }
         
         self.privacyView.setUpPrivacyView()
@@ -637,7 +662,7 @@ extension ARSceneViewController {
         UIView.animate(withDuration: 0.2, animations: {
             
             self.infoView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(480)
             })
             self.view.layoutIfNeeded()
         }) { (finished) in

@@ -16,12 +16,9 @@ class Constants {
     public let cameraAccess: String = "camearAccess"
     
     public let appInfo: String = """
-    AR Masters is an Augmented Reality experience that intends to describe spaces that lie beyond the normal range of sensual experience. When the world is your canvas, something magical happens, with the virtual lines you draw livened up to be colorful geometric shapes with different angles – circles, semi-circles, and rectangles.
+    AR Masters is an Augmented Reality experience that intends to describe spaces that lie beyond the normal range of sensual experience. When the world is your canvas, something magical happens, with the virtual lines you draw livened up to be colorful geometric shapes with different angles – lines, circles, semi-circles, and rectangles.
 
-    Please see licenses in AR Master's settings
-
-    If you have any questions, feel free to contact us at iosxma@gmail.com.
-    Thank you for the supporting!
+    Please see licenses in AR Master's settings. If you have any questions, feel free to contact us at iosxma@gmail.com. Thank you for the supporting!
     """
     
     public let privacy: String = """
