@@ -567,10 +567,10 @@ extension ARSceneViewController {
                 make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.4 + 30)
                 break
             case .pad:
-                make.width.equalTo(300)
-                make.height.equalTo(350)
+                make.width.equalTo(320)
+                make.height.equalTo(340)
                 make.left.equalToSuperview().offset(24)
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(380)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(370)
             default:
                 break
             }
@@ -582,7 +582,7 @@ extension ARSceneViewController {
         
         self.view.layoutIfNeeded()
         
-        
+        // animate info view to show
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.fullScreenBlurView.alpha = 1
             
@@ -606,7 +606,15 @@ extension ARSceneViewController {
             self.fullScreenBlurView.alpha = 0
             
             self.infoView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(380)
+                switch UIDevice.current.userInterfaceIdiom {
+                case .phone:
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.4 + 30)
+                    break
+                case .pad:
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(370)
+                default:
+                    break
+                }
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
@@ -641,12 +649,12 @@ extension ARSceneViewController {
             case .phone:
                 make.width.equalToSuperview().multipliedBy(0.92)
                 make.centerX.equalToSuperview()
-                make.height.equalToSuperview().multipliedBy(0.6)
+                make.height.equalToSuperview().multipliedBy(0.55)
                 // set the view a little bit off the screen(30)
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.55 + 30)
                 break
             case .pad:
-                make.width.equalTo(300)
+                make.width.equalTo(320)
                 make.height.equalTo(450)
                 make.left.equalToSuperview().offset(24)
                 make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(480)
@@ -659,13 +667,23 @@ extension ARSceneViewController {
         
         self.view.layoutIfNeeded()
         
+        // dismiss info view first
         UIView.animate(withDuration: 0.2, animations: {
             
             self.infoView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(480)
+                switch UIDevice.current.userInterfaceIdiom {
+                case .phone:
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.4 + 30)
+                    break
+                case .pad:
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(370)
+                default:
+                    break
+                }
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
+            // show privacy view
             if finished {
                 self.infoView.snp.removeConstraints()
                 self.infoView.removeFromSuperview()
@@ -689,7 +707,15 @@ extension ARSceneViewController {
             self.fullScreenBlurView.alpha = 0
             
             self.privacyView.snp.updateConstraints({ (make) in
-                make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.6 + 30)
+                switch UIDevice.current.userInterfaceIdiom {
+                case .phone:
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.view.frame.height*0.55 + 30)
+                    break
+                case .pad:
+                    make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(480)
+                default:
+                    break
+                }
             })
             self.view.layoutIfNeeded()
         }) { (finished) in
