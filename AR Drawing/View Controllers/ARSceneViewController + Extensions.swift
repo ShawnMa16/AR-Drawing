@@ -5,11 +5,11 @@
 //  Created by Shawn Ma on 4/28/19.
 //  Copyright © 2019 Shawn Ma. All rights reserved.
 //
-import UIKit
-import SceneKit
+
 import ARKit
 import SnapKit
 import ARVideoKit
+import SCNLine
 
 extension ARSceneViewController {
     
@@ -26,7 +26,8 @@ extension ARSceneViewController {
     
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if screenDown {
-            addSphere()
+//            addSphere()
+            addPoint()
         }
     }
 }
@@ -34,10 +35,10 @@ extension ARSceneViewController {
 extension ARSceneViewController {
     
     // Push points into array for testing or classification
-    private func addPoint(pointPos: (x: Float, y: Float)) {
+    private func addPoint(pointPos: (x: Float, y: Float)) -> Bool {
         let point = Point(x: pointPos.x, y: pointPos.y, strokeID: self.strokeIDCount)
-        guard !point.x.isNaN, !point.y.isNaN else {return}
-        
+        guard !point.x.isNaN, !point.y.isNaN else { return false }
+
         if !self.testingMode {
             if self.templatePoints[self.templatePoints.count - 1].isEmpty {
                 self.templatePoints[self.templatePoints.count - 1].append(point)
@@ -49,6 +50,8 @@ extension ARSceneViewController {
                 if distance > self.pointsDistanceThreshold {
                     self.templatePoints[self.templatePoints.count - 1].append(point)
                     addInterestNode(id: self.strokeIDCount)
+                } else {
+                    return false
                 }
             }
         } else {
@@ -62,17 +65,20 @@ extension ARSceneViewController {
                 if distance > self.pointsDistanceThreshold {
                     self.testingPoints.append(point)
                     addInterestNode(id: self.strokeIDCount)
+                } else {
+                    return false
                 }
             }
         }
+        return true
     }
     
     private func addInterestNode(id: Int) {
         if interestNodePositions[id] == nil {interestNodePositions[id] = []}
         
-        guard self.startNode != nil else {return}
+        guard let startNode = self.startNode else {return}
         let pointerNode = Service.shared.getPointerNode(inView: self.arView)
-        let target = Service.shared.transformPosition(originNode: self.startNode!, targetNode: pointerNode!)
+        let target = Service.shared.transformPosition(originNode: startNode, targetNode: pointerNode!)
         interestNodePositions[id]?.append(target)
     }
 
@@ -90,14 +96,27 @@ extension ARSceneViewController {
     
     @objc
     func screenTouchDown() {
-        screenDown = true
         self.hideDots()
         
         if !testingMode {
             templatePoints.append([])
         }
-        
-        startNode = Service.shared.getPointerNode(inView: self.arView)
+        DispatchQueue.main.async {
+          let viewCenter = CGPoint(x: self.arView.frame.width / 2, y: self.arView.frame.height / 2)
+          self.viewCenter = viewCenter
+          guard let hitPosition = self.positionInScene(point: viewCenter) else {
+              return
+          }
+          self.lastPosition = hitPosition
+
+          self.startNode = Service.shared.getPointerNode(inView: self.arView)
+          let drawingNode = SCNLineNode(with: [hitPosition], radius: 0.002, edges: 12, maxTurning: 12)
+          drawingNode.lineMaterials.first?.diffuse.contents = UIColor.black
+          drawingNode.lineMaterials.first?.isDoubleSided = true
+          self.arView.scene.rootNode.addChildNode(drawingNode)
+          self.drawingNode = drawingNode
+          self.screenDown = true
+        }
     }
     
     @objc
@@ -164,8 +183,9 @@ extension ARSceneViewController {
             
             Service.shared.saveShapeToFile(shape: templateShapes)
         }
-        
         startNode = nil
+        drawingNode?.removeFromParentNode()
+        drawingNode = nil
     }
 }
 
@@ -185,10 +205,39 @@ extension ARSceneViewController {
         
         let position = Service.shared.to2D(originNode: startNode, inView: self.arView)
         
-        self.addPoint(pointPos: position)
-        
-        Service.shared.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
-        
+        if self.addPoint(pointPos: position) {
+            Service.shared.addNode(sphere, toNode: self.scene.rootNode, inView: self.arView, cameraRelativePosition: self.cameraRelativePosition)
+        }
+    }
+
+    /// Use hidden plane attached to the camera to get the position it hits the scene.
+    /// This could be used to take the touch from anywhere on the screen, not just the centre.
+    ///
+    /// - Parameter point: point where the tap on the screen is taken from
+    /// - Returns: Position in the scene graph where the touch hits
+    func positionInScene(point: CGPoint) -> SCNVector3? {
+        let hitPosition = self.arView.hitTest(point, options: [
+            SCNHitTestOption.rootNode: cameraFrameNode, SCNHitTestOption.ignoreHiddenNodes: false
+        ]).first
+        return hitPosition?.worldCoordinates
+    }
+
+    /// Add point to the line the user is currently drawing
+    func addPoint() {
+        guard let viewCenter = self.viewCenter else {
+            return
+        }
+        guard let hitPosition = positionInScene(point: viewCenter),
+          let lastPos = self.lastPosition, lastPos.distance(vector: hitPosition) > 0.01,
+          let startNode = self.startNode, let drawingNode = self.drawingNode else {
+              return
+        }
+        self.lastPosition = lastPos
+        let position = Service.shared.to2D(originNode: startNode, inView: self.arView)
+
+        if self.addPoint(pointPos: position) {
+            drawingNode.add(point: hitPosition)
+        }
     }
     
     public func add3DShapeToScene(templateSet shapes: [Shape], targetShape shape: Shape, strokeId: Int) {
