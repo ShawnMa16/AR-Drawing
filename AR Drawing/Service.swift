@@ -73,7 +73,8 @@ class Service {
         let nodePos = getPointerNode(inView: inView)!
         let position = transformPosition(originNode: originNode, targetNode: nodePos)
         
-        // some how the actual x and y for point is pos.y and -pos.x
+        // actual x and y for point is pos.y and -pos.x
+        // rotate the cooridinate system for -pi/2 to get the right points
         return (position.y, -position.x)
     }
     
